@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8E3FFA43-4659-420E-93A1-3FFA9441C76E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FrameWork.Entity</RootNamespace>
+    <AssemblyName>FrameWork.Entity</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.2.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\Admin.Web\packages\AutoMapper.6.2.2\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entity\Log4net.cs" />
+    <Compile Include="Entity\T_Industry.cs" />
+    <Compile Include="Entity\T_Banner.cs" />
+    <Compile Include="Entity\T_Course.cs" />
+    <Compile Include="Entity\T_Section.cs" />
+    <Compile Include="Entity\T_Student.cs" />
+    <Compile Include="Model\Account\GetMyCourseListModel.cs" />
+    <Compile Include="Model\Account\GetUserCollectModel.cs" />
+    <Compile Include="Model\Classmate\GetClassmateInfoModel.cs" />
+    <Compile Include="Model\Classmate\GetClassmateNumModel.cs" />
+    <Compile Include="Model\Classmate\GetMyClassmateDeatilModel.cs" />
+    <Compile Include="Model\Classmate\GetMyClassmateListModel.cs" />
+    <Compile Include="Model\Classmate\GetMyClassmateMapDataModel.cs" />
+    <Compile Include="Model\Course\GetCourseMenuListModel.cs" />
+    <Compile Include="Model\Course\GetSectionDetailModel.cs" />
+    <Compile Include="Model\Course\GetTeacherDetailModel.cs" />
+    <Compile Include="ViewModel\Account\GetIdentityCodeRequest.cs" />
+    <Compile Include="ViewModel\Account\GetMyCourseListRequest.cs" />
+    <Compile Include="ViewModel\Account\GetMyCourseListViewModel.cs" />
+    <Compile Include="ViewModel\Account\GetUserCollectViewModel.cs" />
+    <Compile Include="ViewModel\Account\GetUserEnergyViewModel.cs" />
+    <Compile Include="ViewModel\Account\GetUserInfoRequest.cs" />
+    <Compile Include="ViewModel\Account\GetUserInfoViewModel.cs" />
+    <Compile Include="ViewModel\Account\GetWeChatPayParameterRequest.cs" />
+    <Compile Include="ViewModel\Account\GetWeChatPayParameterViewModel.cs" />
+    <Compile Include="ViewModel\Account\LogoutViewModel.cs" />
+    <Compile Include="ViewModel\Account\SubmitUserInfoRequest.cs" />
+    <Compile Include="ViewModel\Account\SubmitUserPositionViewModel.cs" />
+    <Compile Include="ViewModel\Account\WeChatSuccessRequest.cs" />
+    <Compile Include="ViewModel\Classmate\AddEnergyValueRequest.cs" />
+    <Compile Include="ViewModel\Classmate\GetClassmateInfoViewModel.cs" />
+    <Compile Include="ViewModel\Classmate\GetClassmateNumViewModel.cs" />
+    <Compile Include="ViewModel\Classmate\GetMyClassmateDeatilViewModel.cs" />
+    <Compile Include="ViewModel\Classmate\GetMyClassmateListViewModel.cs" />
+    <Compile Include="ViewModel\Classmate\GetMyClassmateMapDataViewModel.cs" />
+    <Compile Include="ViewModel\Course\FreeVideoListViewModel.cs" />
+    <Compile Include="ViewModel\Course\FreeVideoViewModel.cs" />
+    <Compile Include="Model\News\NewsDetailsModel.cs" />
+    <Compile Include="Entity\T_News.cs" />
+    <Compile Include="Entity\T_SectionVideo.cs" />
+    <Compile Include="Entity\T_User.cs" />
+    <Compile Include="Model\Course\CourseDetailModel.cs" />
+    <Compile Include="Model\Course\CourseModel.cs" />
+    <Compile Include="ViewModel\Course\GetCourseMenuListRequest.cs" />
+    <Compile Include="ViewModel\Course\GetCourseMenuListViewModel.cs" />
+    <Compile Include="ViewModel\Course\GetFreeVideoRequest.cs" />
+    <Compile Include="ViewModel\Course\GetSectionDetailRequest.cs" />
+    <Compile Include="ViewModel\Course\GetSectionDetailViewModel.cs" />
+    <Compile Include="ViewModel\Course\GetTeacherDetailRequest.cs" />
+    <Compile Include="ViewModel\Course\GetTeacherDetailViewModel.cs" />
+    <Compile Include="ViewModel\Course\SubmitVideoCollectionRequest.cs" />
+    <Compile Include="ViewModel\Course\SubmitVideoProgressRequest.cs" />
+    <Compile Include="ViewModel\Course\SubmitVideoUpvoteRequest.cs" />
+    <Compile Include="ViewModel\Course\UpdateSectionVideoBrowseCountRequest.cs" />
+    <Compile Include="ViewModel\News\NewsDetailViewModel.cs" />
+    <Compile Include="ViewModel\News\NewsForListViewModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Model\News\NewsModelForList.cs" />
+    <Compile Include="ViewModel\Account\LoginViewModel.cs" />
+    <Compile Include="Model\Course\FreeVideoModel.cs" />
+    <Compile Include="ViewModel\Account\UserShowModel.cs" />
+    <Compile Include="ViewModel\Account\UserViewModel.cs" />
+    <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\Course\GetCourseDetailRequest.cs" />
+    <Compile Include="ViewModel\Course\GetCourseDetailViewModel.cs" />
+    <Compile Include="ViewModel\Course\GetPayCourseListRequest.cs" />
+    <Compile Include="ViewModel\Course\GetPayCourseListViewModel.cs" />
+    <Compile Include="ViewModel\News\ShareNewsRequest.cs" />
+    <Compile Include="ViewModel\News\UpvoteNewsRequest.cs" />
+    <Compile Include="ViewModel\News\CollectNewsRequest.cs" />
+    <Compile Include="ViewModel\ShareVideo\ShareVideoConst.cs" />
+    <Compile Include="ViewModel\ShareVideo\SyncByBViewModel.cs" />
+    <Compile Include="ViewModel\ShareVideo\SyncByAViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FrameWork.Common\FrameWork.Common.csproj">
+      <Project>{92D88550-FD22-48C7-A1CE-FA73ABBD6D0A}</Project>
+      <Name>FrameWork.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrameWork.DbUtility\FrameWork.DbUtility.csproj">
+      <Project>{144d22dc-fe54-46a6-8972-a63e83d8c63e}</Project>
+      <Name>FrameWork.DbUtility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

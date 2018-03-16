@@ -85,11 +85,17 @@ namespace FrameWork.Common
 
         /// <summary>
         /// 根据token获取对应的用户或企业信息
+        /// Mark值为0.缓存失效，
         /// </summary>
         public static RedisModel GetRedisModel(string token)
         {
-            var rdStr = RedisInfoHelper.RedisManager.Getstring(token);
-            var model = rdStr.ToTheObject<RedisModel>();
+            var rdStr = RedisManager.Getstring(token);
+
+            var model = new RedisModel { Mark = 0 };
+            if (!string.IsNullOrEmpty(rdStr))
+            {
+                model = rdStr.ToTheObject<RedisModel>();
+            }
             return model;
         }
     }

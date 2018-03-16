@@ -52,7 +52,7 @@ namespace FrameWork.Common.Models
         public string DicRegionId { get; set; }
 
         /// <summary>
-        /// 身份标志，1.求职者，2.企业
+        /// 身份标志，0.缓存失效，1.求职者，2.企业
         /// </summary>
         public int Mark { set; get; }
     }

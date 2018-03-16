@@ -9,6 +9,32 @@ using FrameWork.Entity.Entity;
 
 namespace FrameWork.Entity.ViewModel.Account
 {
+    /// <summary>
+    /// 参数
+    /// </summary>
+    public class GetUserInfoRequest
+    {
+        /// <summary>
+        /// 微信账号
+        /// </summary>
+        public string Code { set; get; }
+
+        /// <summary>
+        /// 用户头像
+        /// </summary>
+        public string HeadImg { get; set; }
+
+        /// <summary>
+        /// 城市编号
+        /// </summary>
+        public string City { set; get; }
+
+        /// <summary>
+        /// 用户名 
+        /// </summary>
+        public string UserName { get; set; }
+    }
+
     public class GetUserInfoViewModel
     {
         /// <summary>
@@ -17,54 +43,14 @@ namespace FrameWork.Entity.ViewModel.Account
         public int UserId { get; set; }
 
         /// <summary>
-        /// 用户名 
+        /// 用户标识符 GUID字符串
         /// </summary>
-        public string UserName { get; set; }
-
-        /// <summary>
-        /// 性别：0.保密，1.男，女 
-        /// </summary>
-        public byte Sex { get; set; }
-
-        /// <summary>
-        /// 手机号 
-        /// </summary>
-        public string Phone { get; set; }
-
-        /// <summary>
-        /// 毕业院校 
-        /// </summary>
-        public string School { get; set; }
-
-        /// <summary>
-        /// 毕业专业 
-        /// </summary>
-        public string Major { get; set; }
-
-        /// <summary>
-        /// 工作单位 
-        /// </summary>
-        public string Company { get; set; }
-
-        /// <summary>
-        /// 职位 
-        /// </summary>
-        public string Position { get; set; }
+        public string Token { set; get; }
 
         /// <summary>
         /// 微信账户唯一标识符
         /// </summary>
         public string OpenId { set; get; }
-
-        /// <summary>
-        /// 学号
-        /// </summary>
-        public string StudyNumber { set; get; }
-
-        /// <summary>
-        /// 真实姓名
-        /// </summary>
-        public string RealName { set; get; }
 
         /// <summary>
         /// 实体转化为
@@ -74,16 +60,7 @@ namespace FrameWork.Entity.ViewModel.Account
             var viewModel = new GetUserInfoViewModel
             {
                 UserId = model.Id,
-                Company = StringHelper.NullOrEmpty(model.Company),
-                Major = StringHelper.NullOrEmpty(model.Major),
-                Phone = StringHelper.NullOrEmpty(model.Phone),
-                Position = StringHelper.NullOrEmpty(model.Position),
-                School = StringHelper.NullOrEmpty(model.School),
-                Sex = model.Sex,
-                UserName = StringHelper.NullOrEmpty(model.UserName),
-                OpenId = StringHelper.NullOrEmpty(model.OpenId),
-                StudyNumber = model.StudyNumber ?? string.Empty,
-                RealName = model.RealName ?? string.Empty
+                OpenId = StringHelper.NullOrEmpty(model.OpenId)
             };
             return viewModel;
         }

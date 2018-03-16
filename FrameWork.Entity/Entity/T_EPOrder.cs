@@ -3,9 +3,9 @@ using PetaPoco;
 
 namespace FrameWork.Entity.Entity
 {
-    [TableName("T_User")]
+    [TableName("T_EPOrder")]
     [PrimaryKey("Id")]
-    public class T_User
+    public class T_EPOrder
     {
         
         /// <summary>
@@ -14,54 +14,49 @@ namespace FrameWork.Entity.Entity
         public int Id {get;set;}
 
         /// <summary>
-        /// 微信标识符 
+        /// 企业id 
         /// </summary>
-        public string WxAccount {get;set;}
+        public int EnterpriseId {get;set;}
 
         /// <summary>
-        /// 微信用户名 
+        /// 商户订单号，接口生成的订单号 
         /// </summary>
-        public string WxName {get;set;}
+        public string OutTradeNo {get;set;}
 
         /// <summary>
-        /// 手机号 
+        /// 第三方支付平台生成的订单号 
         /// </summary>
-        public string Phone {get;set;}
+        public string TradeNo {get;set;}
 
         /// <summary>
-        /// 总积分 
+        /// 支付金额 
         /// </summary>
-        public int TotalIntegral {get;set;}
+        public Decimal Price {get;set;}
 
         /// <summary>
-        /// 真实姓名 
+        /// 购买商品数量 
         /// </summary>
-        public string RealName {get;set;}
+        public int Count {get;set;}
 
         /// <summary>
-        /// 性别：1.男，2.女 
+        /// 购买的商品类型：0.会员，1.简历，2.广告位 
         /// </summary>
-        public Byte Sex {get;set;}
+        public Byte Type {get;set;}
 
         /// <summary>
-        /// 出生日期：1992-06 
+        /// 购买的商品的id：0.会员id，1.简历id 
         /// </summary>
-        public string Birthday {get;set;}
+        public int KeyId {get;set;}
 
         /// <summary>
-        /// 现居住地区id，存储值为区id 
+        /// 支付状态：0.未支付，1.支付中，2.支付成功，3.支付失败 
         /// </summary>
-        public string DicRegionId {get;set;}
+        public Byte Status {get;set;}
 
         /// <summary>
-        /// 户口所在地省id 
+        /// 支付备注 
         /// </summary>
-        public string OriginalProvinceId {get;set;}
-
-        /// <summary>
-        /// 户口所在地市id 
-        /// </summary>
-        public string OriginalCityId {get;set;}
+        public string Note {get;set;}
 
         /// <summary>
         /// 是否删除 

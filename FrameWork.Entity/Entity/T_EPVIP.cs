@@ -3,9 +3,9 @@ using PetaPoco;
 
 namespace FrameWork.Entity.Entity
 {
-    [TableName("T_User")]
+    [TableName("T_EPVIP")]
     [PrimaryKey("Id")]
-    public class T_User
+    public class T_EPVIP
     {
         
         /// <summary>
@@ -14,54 +14,34 @@ namespace FrameWork.Entity.Entity
         public int Id {get;set;}
 
         /// <summary>
-        /// 微信标识符 
+        /// 企业id 
         /// </summary>
-        public string WxAccount {get;set;}
+        public int EnterpriseId {get;set;}
 
         /// <summary>
-        /// 微信用户名 
+        /// 省id 
         /// </summary>
-        public string WxName {get;set;}
+        public string ProvinceId {get;set;}
 
         /// <summary>
-        /// 手机号 
+        /// 市id 
         /// </summary>
-        public string Phone {get;set;}
+        public string CityId {get;set;}
 
         /// <summary>
-        /// 总积分 
+        /// 会员信息id 
         /// </summary>
-        public int TotalIntegral {get;set;}
+        public int VIPInfoId {get;set;}
 
         /// <summary>
-        /// 真实姓名 
+        /// 过期时间，5号24点过期，存的日期就是6号 
         /// </summary>
-        public string RealName {get;set;}
+        public DateTime PassDate {get;set;}
 
         /// <summary>
-        /// 性别：1.男，2.女 
+        /// 订单id 
         /// </summary>
-        public Byte Sex {get;set;}
-
-        /// <summary>
-        /// 出生日期：1992-06 
-        /// </summary>
-        public string Birthday {get;set;}
-
-        /// <summary>
-        /// 现居住地区id，存储值为区id 
-        /// </summary>
-        public string DicRegionId {get;set;}
-
-        /// <summary>
-        /// 户口所在地省id 
-        /// </summary>
-        public string OriginalProvinceId {get;set;}
-
-        /// <summary>
-        /// 户口所在地市id 
-        /// </summary>
-        public string OriginalCityId {get;set;}
+        public int EPOrderId {get;set;}
 
         /// <summary>
         /// 是否删除 

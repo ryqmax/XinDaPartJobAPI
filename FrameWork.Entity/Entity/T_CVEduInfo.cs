@@ -3,9 +3,9 @@ using PetaPoco;
 
 namespace FrameWork.Entity.Entity
 {
-    [TableName("T_User")]
+    [TableName("T_CVEduInfo")]
     [PrimaryKey("Id")]
-    public class T_User
+    public class T_CVEduInfo
     {
         
         /// <summary>
@@ -14,54 +14,39 @@ namespace FrameWork.Entity.Entity
         public int Id {get;set;}
 
         /// <summary>
-        /// 微信标识符 
+        /// 简历id 
         /// </summary>
-        public string WxAccount {get;set;}
+        public int CVId {get;set;}
 
         /// <summary>
-        /// 微信用户名 
+        /// 院校名称 
         /// </summary>
-        public string WxName {get;set;}
+        public string SchoolName {get;set;}
 
         /// <summary>
-        /// 手机号 
+        /// 专业名称 
         /// </summary>
-        public string Phone {get;set;}
+        public string MajorName {get;set;}
 
         /// <summary>
-        /// 总积分 
+        /// 学历id 
         /// </summary>
-        public int TotalIntegral {get;set;}
+        public int DicEducationId {get;set;}
 
         /// <summary>
-        /// 真实姓名 
+        /// 学位id 
         /// </summary>
-        public string RealName {get;set;}
+        public int DicGradeId {get;set;}
 
         /// <summary>
-        /// 性别：1.男，2.女 
+        /// 入学时间 
         /// </summary>
-        public Byte Sex {get;set;}
+        public DateTime EnterTime {get;set;}
 
         /// <summary>
-        /// 出生日期：1992-06 
+        /// 毕业时间 
         /// </summary>
-        public string Birthday {get;set;}
-
-        /// <summary>
-        /// 现居住地区id，存储值为区id 
-        /// </summary>
-        public string DicRegionId {get;set;}
-
-        /// <summary>
-        /// 户口所在地省id 
-        /// </summary>
-        public string OriginalProvinceId {get;set;}
-
-        /// <summary>
-        /// 户口所在地市id 
-        /// </summary>
-        public string OriginalCityId {get;set;}
+        public DateTime GraduateTime {get;set;}
 
         /// <summary>
         /// 是否删除 

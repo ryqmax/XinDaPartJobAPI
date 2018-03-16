@@ -34,7 +34,7 @@ namespace XinDaPartJobAPI.Controllers
         {
             var weChatAppId = ConfigurationManager.AppSettings["WeChatAppId"];
             var weChatSecret = ConfigurationManager.AppSettings["WeChatSecret"];
-            var url = $@"https://api.weixin.qq.com/sns/jscode2session?appid={weChatAppId}&secret={weChatSecret}&js_code={request.WeChatAccount}&grant_type=authorization_code";
+            var url = $@"https://api.weixin.qq.com/sns/jscode2session?appid={weChatAppId}&secret={weChatSecret}&js_code={request.Code}&grant_type=authorization_code";
             var rs = HttpClientHelper.SendMessage(url);
             var openidModel = JObject.Parse(rs).GetValue("openid");
             var result = new BaseViewModel
@@ -59,7 +59,6 @@ namespace XinDaPartJobAPI.Controllers
                     Msg = true,
                     ResultCode = CourseConst.SuccessCode
                 };
-                return result.ToJson();
             }
             return result.ToJson();
         }

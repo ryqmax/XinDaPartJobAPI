@@ -3,9 +3,9 @@ using PetaPoco;
 
 namespace FrameWork.Entity.Entity
 {
-    [TableName("T_User")]
+    [TableName("T_VIPInfo")]
     [PrimaryKey("Id")]
-    public class T_User
+    public class T_VIPInfo
     {
         
         /// <summary>
@@ -14,54 +14,49 @@ namespace FrameWork.Entity.Entity
         public int Id {get;set;}
 
         /// <summary>
-        /// 微信标识符 
+        /// 会员名称：年度会员，半年会员，季度会员，月度会员 
         /// </summary>
-        public string WxAccount {get;set;}
+        public string Name {get;set;}
 
         /// <summary>
-        /// 微信用户名 
+        /// 会员描述：有效期一年 
         /// </summary>
-        public string WxName {get;set;}
+        public string Description {get;set;}
 
         /// <summary>
-        /// 手机号 
+        /// 序号 
         /// </summary>
-        public string Phone {get;set;}
+        public Double Seq {get;set;}
 
         /// <summary>
-        /// 总积分 
+        /// 原价 
         /// </summary>
-        public int TotalIntegral {get;set;}
+        public Decimal OldPrice {get;set;}
 
         /// <summary>
-        /// 真实姓名 
+        /// 现价 
         /// </summary>
-        public string RealName {get;set;}
+        public Decimal NewPrice {get;set;}
 
         /// <summary>
-        /// 性别：1.男，2.女 
+        /// 子账号数量上限 
         /// </summary>
-        public Byte Sex {get;set;}
+        public int AccountCount {get;set;}
 
         /// <summary>
-        /// 出生日期：1992-06 
+        /// 每个岗位可以添加的地址数量 
         /// </summary>
-        public string Birthday {get;set;}
+        public int AddressPerJob {get;set;}
 
         /// <summary>
-        /// 现居住地区id，存储值为区id 
+        /// 每天职位刷新次数限制 
         /// </summary>
-        public string DicRegionId {get;set;}
+        public int JobRefreshPerDayCount {get;set;}
 
         /// <summary>
-        /// 户口所在地省id 
+        /// 可以获得的积分 
         /// </summary>
-        public string OriginalProvinceId {get;set;}
-
-        /// <summary>
-        /// 户口所在地市id 
-        /// </summary>
-        public string OriginalCityId {get;set;}
+        public int Integral {get;set;}
 
         /// <summary>
         /// 是否删除 

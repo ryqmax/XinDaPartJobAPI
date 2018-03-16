@@ -3,9 +3,9 @@ using PetaPoco;
 
 namespace FrameWork.Entity.Entity
 {
-    [TableName("T_User")]
+    [TableName("T_EPHiringManager")]
     [PrimaryKey("Id")]
-    public class T_User
+    public class T_EPHiringManager
     {
         
         /// <summary>
@@ -14,14 +14,14 @@ namespace FrameWork.Entity.Entity
         public int Id {get;set;}
 
         /// <summary>
-        /// 微信标识符 
+        /// 企业id 
         /// </summary>
-        public string WxAccount {get;set;}
+        public int EnterpriseId {get;set;}
 
         /// <summary>
-        /// 微信用户名 
+        /// 名称或称呼 
         /// </summary>
-        public string WxName {get;set;}
+        public string Name {get;set;}
 
         /// <summary>
         /// 手机号 
@@ -29,39 +29,14 @@ namespace FrameWork.Entity.Entity
         public string Phone {get;set;}
 
         /// <summary>
-        /// 总积分 
+        /// 头像地址 
         /// </summary>
-        public int TotalIntegral {get;set;}
+        public string HeadPicUrl {get;set;}
 
         /// <summary>
-        /// 真实姓名 
+        /// 认证状态：0.未认证，1.认证成功 
         /// </summary>
-        public string RealName {get;set;}
-
-        /// <summary>
-        /// 性别：1.男，2.女 
-        /// </summary>
-        public Byte Sex {get;set;}
-
-        /// <summary>
-        /// 出生日期：1992-06 
-        /// </summary>
-        public string Birthday {get;set;}
-
-        /// <summary>
-        /// 现居住地区id，存储值为区id 
-        /// </summary>
-        public string DicRegionId {get;set;}
-
-        /// <summary>
-        /// 户口所在地省id 
-        /// </summary>
-        public string OriginalProvinceId {get;set;}
-
-        /// <summary>
-        /// 户口所在地市id 
-        /// </summary>
-        public string OriginalCityId {get;set;}
+        public Byte AuthStatus {get;set;}
 
         /// <summary>
         /// 是否删除 

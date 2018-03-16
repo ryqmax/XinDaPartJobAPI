@@ -3,9 +3,9 @@ using PetaPoco;
 
 namespace FrameWork.Entity.Entity
 {
-    [TableName("T_User")]
+    [TableName("T_EPAddress")]
     [PrimaryKey("Id")]
-    public class T_User
+    public class T_EPAddress
     {
         
         /// <summary>
@@ -14,54 +14,44 @@ namespace FrameWork.Entity.Entity
         public int Id {get;set;}
 
         /// <summary>
-        /// 微信标识符 
+        /// 企业id 
         /// </summary>
-        public string WxAccount {get;set;}
+        public int EnterpriseId {get;set;}
 
         /// <summary>
-        /// 微信用户名 
+        /// 企业地址 
         /// </summary>
-        public string WxName {get;set;}
+        public string Address {get;set;}
 
         /// <summary>
-        /// 手机号 
+        /// 经度 
         /// </summary>
-        public string Phone {get;set;}
+        public decimal? Lng {get;set;}
 
         /// <summary>
-        /// 总积分 
+        /// 纬度 
         /// </summary>
-        public int TotalIntegral {get;set;}
+        public decimal? Lat {get;set;}
 
         /// <summary>
-        /// 真实姓名 
+        /// 省id 
         /// </summary>
-        public string RealName {get;set;}
+        public string ProvinceId {get;set;}
 
         /// <summary>
-        /// 性别：1.男，2.女 
+        /// 市id 
         /// </summary>
-        public Byte Sex {get;set;}
+        public string CityId {get;set;}
 
         /// <summary>
-        /// 出生日期：1992-06 
+        /// 区id 
         /// </summary>
-        public string Birthday {get;set;}
+        public string AreaId {get;set;}
 
         /// <summary>
-        /// 现居住地区id，存储值为区id 
+        /// 地址所属类别：0.全部，1.兼职，2.全职 
         /// </summary>
-        public string DicRegionId {get;set;}
-
-        /// <summary>
-        /// 户口所在地省id 
-        /// </summary>
-        public string OriginalProvinceId {get;set;}
-
-        /// <summary>
-        /// 户口所在地市id 
-        /// </summary>
-        public string OriginalCityId {get;set;}
+        public Byte Type {get;set;}
 
         /// <summary>
         /// 是否删除 

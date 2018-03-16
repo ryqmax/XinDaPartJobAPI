@@ -14,7 +14,7 @@
  ***********************************************************************************/
 
 
-namespace FrameWork.Entity.Model
+namespace FrameWork.Common.Models
 {
     /// <summary>
     /// RedisModel

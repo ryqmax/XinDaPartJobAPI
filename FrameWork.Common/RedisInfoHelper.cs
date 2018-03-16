@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using FrameWork.Common.Models;
 using FrameWork.Common.ReadSql;
 using Newtonsoft.Json;
 using Plugins.Redis;
@@ -80,6 +81,16 @@ namespace FrameWork.Common
             }
 
             return data;
+        }
+
+        /// <summary>
+        /// 根据token获取对应的用户或企业信息
+        /// </summary>
+        public static RedisModel GetRedisModel(string token)
+        {
+            var rdStr = RedisInfoHelper.RedisManager.Getstring(token);
+            var model = rdStr.ToTheObject<RedisModel>();
+            return model;
         }
     }
 }

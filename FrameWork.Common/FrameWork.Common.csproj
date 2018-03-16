@@ -132,6 +132,7 @@
     <Compile Include="Models\CacheConfig.cs" />
     <Compile Include="Models\ConfigFileBase.cs" />
     <Compile Include="Models\ConfigNodeBase.cs" />
+    <Compile Include="Models\RedisModel.cs" />
     <Compile Include="PageHelper.cs" />
     <Compile Include="PictureHelper.cs" />
     <Compile Include="DESProvider.cs" />

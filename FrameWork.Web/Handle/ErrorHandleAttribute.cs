@@ -23,7 +23,7 @@ namespace FrameWork.Web.Handle
             var email = new Email
             {
                 mailSubject = "错误信息",
-                mailBody = $"参数：{GetExceptionMessage(filterContext)}\r\n 异常内容：{filterContext.Exception.ToJson()}",
+                mailBody = $"参数：{GetExceptionMessage(filterContext)}\r\n 异常内容：{filterContext.Exception.ToJsonStr()}",
                 isbodyHtml = false,
                 mailToArray = ConfigurationManager.AppSettings["recevier"].Split(','),
                 mailCcArray = ConfigurationManager.AppSettings["recevier"].Split(',')

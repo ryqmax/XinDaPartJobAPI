@@ -44,6 +44,8 @@ namespace XinDaPartJobAPI.Controllers
                 Msg = false,
                 ResultCode = CourseConst.FailCode
             };
+
+            //RedisInfoHelper.RedisManager.Set("test", result.ToJsonStr());
             if (openidModel != null)
             {
                 var openid = openidModel.ToString();

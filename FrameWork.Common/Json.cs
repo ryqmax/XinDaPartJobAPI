@@ -39,6 +39,18 @@ namespace FrameWork.Common
         {
             return json == null ? default(T) : JsonConvert.DeserializeObject<T>(json);
         }
+
+        /// <summary>
+        /// 从redis缓存获取出来的json字符串转化为指定的实体
+        /// </summary>
+        public static T ToTheObject<T>(this string json)
+        {
+            if (json == null)
+                return default(T);
+            var jsonObj = JsonConvert.DeserializeObject(json);
+            return JsonConvert.DeserializeObject<T>(jsonObj.ToString());
+        }
+
         public static List<T> ToList<T>(this string json)
         {
             return json == null ? null : JsonConvert.DeserializeObject<List<T>>(json);

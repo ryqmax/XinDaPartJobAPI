@@ -4,7 +4,6 @@ using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Web.Http.Filters;
-using System.Web.Mvc;
 using FrameWork.Common;
 using FrameWork.Common.Const;
 

@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace FrameWork.Common.Models
+﻿namespace FrameWork.Common.Models
 {
     /// <summary>
     /// 数据库配置

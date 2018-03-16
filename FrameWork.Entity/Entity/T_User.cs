@@ -64,6 +64,11 @@ namespace FrameWork.Entity.Entity
         public string OriginalCityId {get;set;}
 
         /// <summary>
+        /// 微信头像
+        /// </summary>
+        public string HeadImg { get;set;}
+
+        /// <summary>
         /// 是否删除 
         /// </summary>
         public Boolean IsDel {get;set;}

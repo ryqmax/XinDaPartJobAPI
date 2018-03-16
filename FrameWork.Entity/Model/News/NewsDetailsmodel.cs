@@ -9,7 +9,6 @@
 //------------------------------------------------------------------------------
 
 using System;
-using PetaPoco;
 namespace FrameWork.Entity.Entity
 {
     /// <summary>

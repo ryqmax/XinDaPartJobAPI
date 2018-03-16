@@ -43,9 +43,6 @@
   <ItemGroup>
     <Compile Include="AccountService.cs" />
     <Compile Include="BaseService.cs" />
-    <Compile Include="StudentService.cs" />
-    <Compile Include="NewsService.cs" />
-    <Compile Include="CourseService.cs" />
     <Compile Include="LogService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

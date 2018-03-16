@@ -51,9 +51,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IBaseService.cs" />
-    <Compile Include="ICourseService.cs" />
-    <Compile Include="IStudentService.cs" />
-    <Compile Include="INewsService.cs" />
     <Compile Include="ILogService.cs" />
     <Compile Include="IAccountService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

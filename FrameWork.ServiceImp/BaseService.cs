@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 using FrameWork.Common.ReadSql;
 using FrameWork.Interface;
 using PetaPoco;

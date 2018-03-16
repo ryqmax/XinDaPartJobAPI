@@ -1,28 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Net.Http;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
-using System.Web;
+﻿using System.Configuration;
 using System.Web.Http;
-using System.Web.Http.ModelBinding;
 using FrameWork.Common;
 using FrameWork.Common.Const;
 using FrameWork.Entity.ViewModel;
 using FrameWork.Entity.ViewModel.Account;
 using FrameWork.Web;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Linq;
-using XinDaPartJobAPI.Models;
-using XinDaPartJobAPI.Providers;
-using XinDaPartJobAPI.Results;
 
 namespace XinDaPartJobAPI.Controllers
 {
@@ -34,9 +17,9 @@ namespace XinDaPartJobAPI.Controllers
         {
             var weChatAppId = ConfigurationManager.AppSettings["WeChatAppId"];
             var weChatSecret = ConfigurationManager.AppSettings["WeChatSecret"];
-            var url = $@"https://api.weixin.qq.com/sns/jscode2session?appid={weChatAppId}&secret={weChatSecret}&js_code={request.Code}&grant_type=authorization_code";
-            var rs = HttpClientHelper.SendMessage(url);
-            var openidModel = JObject.Parse(rs).GetValue("openid");
+            //var url = $@"https://api.weixin.qq.com/sns/jscode2session?appid={weChatAppId}&secret={weChatSecret}&js_code={request.Code}&grant_type=authorization_code";
+            //var rs = HttpClientHelper.SendMessage(url);
+            var openidModel = "wx123456789";
             var result = new BaseViewModel
             {
                 Info = CourseConst.FailStr,
@@ -48,8 +31,8 @@ namespace XinDaPartJobAPI.Controllers
             //RedisInfoHelper.RedisManager.Set("test", result.ToJsonStr());
             if (openidModel != null)
             {
-                var openid = openidModel.ToString();
-                var model = AccountService.GetStudent(openid, request);
+                request.OpenId = openidModel.ToString();
+                var model = AccountService.GetUserInfo(request);
 
                 var viewModel = new GetUserInfoViewModel().GetViewModel(model);
                 result = new BaseViewModel

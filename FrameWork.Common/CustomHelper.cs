@@ -13,7 +13,6 @@
  ***********************************************************************************/
 
 using System;
-using System.Configuration;
 
 namespace FrameWork.Common
 {

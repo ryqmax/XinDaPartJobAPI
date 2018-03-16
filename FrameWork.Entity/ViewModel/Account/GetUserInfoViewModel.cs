@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
-using FrameWork.Common;
+﻿using FrameWork.Common;
 using FrameWork.Entity.Entity;
 
 namespace FrameWork.Entity.ViewModel.Account
@@ -33,6 +27,11 @@ namespace FrameWork.Entity.ViewModel.Account
         /// 用户名 
         /// </summary>
         public string UserName { get; set; }
+
+        /// <summary>
+        /// 微信唯一标识符
+        /// </summary>
+        public string OpenId { set; get; }
     }
 
     public class GetUserInfoViewModel
@@ -55,12 +54,12 @@ namespace FrameWork.Entity.ViewModel.Account
         /// <summary>
         /// 实体转化为
         /// </summary>
-        public GetUserInfoViewModel GetViewModel(T_Student model)
+        public GetUserInfoViewModel GetViewModel(T_User model)
         {
             var viewModel = new GetUserInfoViewModel
             {
                 UserId = model.Id,
-                OpenId = StringHelper.NullOrEmpty(model.OpenId)
+                OpenId = StringHelper.NullOrEmpty(model.WxAccount)
             };
             return viewModel;
         }

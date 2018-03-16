@@ -72,7 +72,7 @@ namespace FrameWork.ServiceImp
 		                        )
 	                END
                 ";
-            DbQuestionBank.Execute(insertSql,new { WxAccount = request.OpenId,request.UserName,request.HeadImg});
+            DbQuestionBank.Execute(insertSql,new { WxAccount = request.OpenId, WxName=request.UserName,request.HeadImg});
             var sql = @"
                     SELECT
 	                    *

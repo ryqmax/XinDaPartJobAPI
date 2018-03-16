@@ -31,19 +31,5 @@ namespace FrameWork.Web
         /// </summary>
         protected IAccountService AccountService => ServiceHelper.CreateService<IAccountService>();
 
-        /// <summary>
-        /// 课程
-        /// </summary>
-        protected ICourseService CourseService => ServiceHelper.CreateService<ICourseService>();
-
-        /// <summary>
-        /// 资讯
-        /// </summary>
-        protected INewsService NewsService => ServiceHelper.CreateService<INewsService>();
-
-        /// <summary>
-        /// 学生
-        /// </summary>
-        protected IStudentService StudentService => ServiceHelper.CreateService<IStudentService>();
     }
 }

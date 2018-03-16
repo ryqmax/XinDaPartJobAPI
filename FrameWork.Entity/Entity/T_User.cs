@@ -46,7 +46,7 @@ namespace FrameWork.Entity.Entity
         /// <summary>
         /// 出生日期：1992-06 
         /// </summary>
-        public string Birthday {get;set;}
+        public DateTime Birthday {get;set;}
 
         /// <summary>
         /// 现居住地区id，存储值为区id 

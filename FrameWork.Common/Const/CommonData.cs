@@ -42,5 +42,19 @@ namespace FrameWork.Common.Const
         /// 发送验证码模板id
         /// </summary>
         public static int TemplateId = int.Parse(ConfigurationManager.AppSettings["templateId"]);
+
+        #region 签到相关
+        /// <summary>
+        /// 积分原因（签到）
+        /// </summary>
+        public static string SignIn = "签到";
+
+        /// <summary>
+        /// 获取成功
+        /// </summary>
+        public static string SignInSuccess = "签到成功";
+
+        #endregion
+
     }
 }

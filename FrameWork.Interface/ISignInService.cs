@@ -17,5 +17,24 @@ namespace FrameWork.Interface
         /// </summary>
         List<RecentSignInInfo> GetEnterpriseRecentSignInInfo(int enId);
 
+        /// <summary>
+        /// 用户签到
+        /// </summary>
+        bool UserSignIn(T_UserSignLog userSignLog);
+
+        /// <summary>
+        /// 企业签到
+        /// </summary>
+        bool EnterpriseSignIn(T_EPSignLog epSignLog);
+
+        /// <summary>
+        /// 更新用户积分
+        /// </summary>
+        bool UpdateUserIntegral(int userId, int addValue, string addReason);
+
+        /// <summary>
+        /// 更新企业积分
+        /// </summary>
+        bool UpdateEnterpriseIntegral(int userId, int addValue, string addReason);
     }
 }

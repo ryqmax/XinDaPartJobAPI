@@ -71,7 +71,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Const\CourseConst.cs" />
+    <Compile Include="Const\CommonData.cs" />
     <Compile Include="DotNETCache\CacheConfigContext.cs" />
     <Compile Include="DotNETCache\CacheHelper.cs" />
     <Compile Include="DotNETCache\Caching.cs" />
@@ -84,6 +84,7 @@
     <Compile Include="Email.cs" />
     <Compile Include="Json.cs" />
     <Compile Include="Models\CacheConfig.cs" />
+    <Compile Include="Models\CommonEnum.cs" />
     <Compile Include="Models\ConfigFileBase.cs" />
     <Compile Include="Models\ConfigNodeBase.cs" />
     <Compile Include="Models\RedisModel.cs" />

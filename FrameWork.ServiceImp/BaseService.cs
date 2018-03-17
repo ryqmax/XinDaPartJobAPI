@@ -11,23 +11,23 @@ namespace FrameWork.ServiceImp
     /// </summary>
     public abstract class BaseService<T> : IBaseService<T> where T : class
     {
-        protected Database DbQuestionBank = new Database(CachedConfigContext.Current.DaoConfig.QuestionBank);
+        protected Database DbPartJob = new Database(CachedConfigContext.Current.DaoConfig.PartJob);
 
         public BaseService() { }
         public BaseService(Database currDb)
         {
             //db = currDb;
         }
-        public object Add(T entity) { return DbQuestionBank.Insert(entity); }
+        public object Add(T entity) { return DbPartJob.Insert(entity); }
 
-        public int Update(T entity) { return DbQuestionBank.Update(entity); }
+        public int Update(T entity) { return DbPartJob.Update(entity); }
 
-        public int Delete(T entity) { return DbQuestionBank.Delete(entity); }
+        public int Delete(T entity) { return DbPartJob.Delete(entity); }
         public dynamic GetData(string sql, object paramsList)
         {
             try
             {
-                return DbQuestionBank.Fetch<T>(sql, paramsList);
+                return DbPartJob.Fetch<T>(sql, paramsList);
             }
             catch (Exception ex)
             {
@@ -39,7 +39,7 @@ namespace FrameWork.ServiceImp
 
         public Database GetDatabase()
         {
-            return DbQuestionBank;
+            return DbPartJob;
         }
     }
 }

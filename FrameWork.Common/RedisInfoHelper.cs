@@ -91,7 +91,7 @@ namespace FrameWork.Common
         {
             var rdStr = RedisManager.Getstring(token);
 
-            var model = new RedisModel { Mark = 0 };
+            var model = new RedisModel { Mark = TokenMarkEnum.CacheInvalid };
             if (!string.IsNullOrEmpty(rdStr))
             {
                 model = rdStr.ToTheObject<RedisModel>();

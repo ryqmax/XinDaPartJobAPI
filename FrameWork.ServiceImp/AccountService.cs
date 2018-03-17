@@ -72,7 +72,7 @@ namespace FrameWork.ServiceImp
 		                        )
 	                END
                 ";
-            DbQuestionBank.Execute(insertSql,new { WxAccount = request.OpenId, WxName=request.UserName,request.HeadImg});
+            DbPartJob.Execute(insertSql,new { WxAccount = request.OpenId, WxName=request.UserName,request.HeadImg});
             var sql = @"
                     SELECT
 	                    *
@@ -81,7 +81,7 @@ namespace FrameWork.ServiceImp
                     WHERE
 	                    WxAccount = @WxAccount 
 	                    AND IsDel = 0 ";
-            return DbQuestionBank.FirstOrDefault<T_User>(sql,new { WxAccount = request.OpenId });
+            return DbPartJob.FirstOrDefault<T_User>(sql,new { WxAccount = request.OpenId });
         }
 
     }

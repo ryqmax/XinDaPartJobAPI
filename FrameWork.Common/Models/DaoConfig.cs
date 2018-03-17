@@ -10,7 +10,7 @@
         {
         }
         #region 序列化属性
-        public string QuestionBank { get; set; }
+        public string PartJob { get; set; }
 
         #endregion
 

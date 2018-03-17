@@ -6,7 +6,7 @@ namespace FrameWork.Entity.ViewModel.SignIn
     /// <summary>
     /// 参数
     /// </summary>
-    public class GetSignInInfoRequest
+    public class GetSignInInfoReq
     {
         /// <summary>
         /// token

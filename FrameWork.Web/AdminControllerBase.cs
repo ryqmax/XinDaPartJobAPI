@@ -31,5 +31,10 @@ namespace FrameWork.Web
         /// </summary>
         protected IAccountService AccountService => ServiceHelper.CreateService<IAccountService>();
 
+        /// <summary>
+        /// 实例化ISignInService
+        /// </summary>
+        protected ISignInService SignInService => ServiceHelper.CreateService<ISignInService>();
+
     }
 }

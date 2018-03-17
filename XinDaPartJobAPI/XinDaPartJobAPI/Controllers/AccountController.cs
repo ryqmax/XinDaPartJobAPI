@@ -26,10 +26,10 @@ namespace XinDaPartJobAPI.Controllers
             //var openidModel = "wx123456789";
             var result = new BaseViewModel
             {
-                Info = CourseConst.FailStr,
-                Message = CourseConst.FailStr,
+                Info = CommonData.FailStr,
+                Message = CommonData.FailStr,
                 Msg = false,
-                ResultCode = CourseConst.FailCode
+                ResultCode = CommonData.FailCode
             };
             
             if (openidModel != null)
@@ -42,9 +42,9 @@ namespace XinDaPartJobAPI.Controllers
                 result = new BaseViewModel
                 {
                     Info = viewModel,
-                    Message = CourseConst.SuccessStr,
+                    Message = CommonData.SuccessStr,
                     Msg = true,
-                    ResultCode = CourseConst.SuccessCode
+                    ResultCode = CommonData.SuccessCode
                 };
             }
             return result.ToJson();
@@ -68,7 +68,7 @@ namespace XinDaPartJobAPI.Controllers
             {
                 DicRegionId = request.City,
                 EPId = 0,
-                Mark = 1,
+                Mark = TokenMarkEnum.User,
                 OpenId = model.WxAccount,
                 Token = token,
                 UserId = model.Id,

@@ -26,7 +26,7 @@ namespace XinDaPartJobAPI.Controllers
             HttpRequestMessage request, CancellationToken cancellationToken)
         {
 #if DEBUG
-            return await base.SendAsync(request, cancellationToken);//调试时打开注释
+            //return await base.SendAsync(request, cancellationToken);//调试时打开注释
 #endif
             //做一些其他安全验证工作，比如Token验证，签名验证  在此共分为3步。
             var methodType = request.Method;
@@ -39,11 +39,11 @@ namespace XinDaPartJobAPI.Controllers
                 var token = tokenModel.Token;
                 if (string.IsNullOrEmpty(token))
                 {
-                    return ReturnHelper(CommonEnum.TokenError, CourseConst.TokenError);
+                    return ReturnHelper(CommonEnum.TokenError, CommonData.TokenError);
                 }
                 if (!string.IsNullOrEmpty(token) && !TokenIseffective(tokenModel.Token))
                 {
-                    return ReturnHelper(CommonEnum.TokenError, CourseConst.TokenError);
+                    return ReturnHelper(CommonEnum.TokenError, CommonData.TokenError);
                 }
             }
             else
@@ -54,7 +54,7 @@ namespace XinDaPartJobAPI.Controllers
                     string[] getTokenStrings = paramGet.Query.Split('&');
                     if (!CheckToken(getTokenStrings))
                     {
-                        return ReturnHelper(CommonEnum.TokenError, CourseConst.TokenError);
+                        return ReturnHelper(CommonEnum.TokenError, CommonData.TokenError);
                     }
                 }
             }

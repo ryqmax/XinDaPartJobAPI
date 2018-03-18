@@ -22,7 +22,7 @@ namespace FrameWork.Common.Models
     public class RedisModel
     {
         /// <summary>
-        /// 用户id
+        /// 个人登录时未求职者用户id，企业登录时为企业用户id
         /// </summary>
         public int UserId { get; set; }
 

@@ -112,7 +112,8 @@ namespace XinDaPartJobAPI.Controllers
             {
                 Msg = false,
                 ResultCode = errorCode,
-                Message = message
+                Message = message,
+                Info = string.Empty
             }.ToJson();
         }
     }

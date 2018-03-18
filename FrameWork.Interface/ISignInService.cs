@@ -35,6 +35,6 @@ namespace FrameWork.Interface
         /// <summary>
         /// 更新企业积分
         /// </summary>
-        bool UpdateEnterpriseIntegral(int userId, int addValue, string addReason);
+        bool UpdateEnterpriseIntegral(int epId, int userId, int addValue, string addReason);
     }
 }

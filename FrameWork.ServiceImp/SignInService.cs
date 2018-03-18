@@ -131,19 +131,47 @@ namespace FrameWork.ServiceImp
             return sqlResult > 0;
         }
 
-        public bool UpdateEnterpriseIntegral(int userId, int addValue, string addReason)
+        public bool UpdateEnterpriseIntegral(int epId, int userId, int addValue, string addReason)
         {
             var sql = @"DECLARE @@currentTotalIntegral INT;
                         UPDATE  dbo.T_Enterprise
                         SET     TotalIntegral = TotalIntegral + @addValue
-                        WHERE   Id = @userId;
+                        WHERE   Id = @epId;
+
+                        SELECT  @@currentTotalIntegral = TotalIntegral
+                        FROM    dbo.T_Enterprise
+                        WHERE   Id = @epId;
+
+                        INSERT  INTO dbo.T_EPIntegralLog
+                                ( EnterpriseId ,
+		                          UserId,
+                                  AddValue ,
+                                  AddReason ,
+                                  TotalIntegral ,
+                                  IsDel ,
+                                  ModifyUserId ,
+                                  ModifyTime ,
+                                  CreateUserId ,
+                                  CreateTime
+                                )
+                        VALUES  ( @epId ,
+		                          @userId , -- UserId - int
+                                  @addValue , -- AddValue - int
+                                  @addReason , -- AddReason - nvarchar(50)
+                                  @@currentTotalIntegral , -- TotalIntegral - int
+                                  0 , -- IsDel - bit
+                                  @userId , -- ModifyUserId - int
+                                  GETDATE() , -- ModifyTime - datetime
+                                  @userId , -- CreateUserId - int
+                                  GETDATE()  -- CreateTime - datetime
+                                );
                         SELECT  1;";
             var sqlResult = 0;
             using (var scope = DbPartJob.GetTransaction())
             {
                 try
                 {
-                    sqlResult = DbPartJob.ExecuteScalar<int>(sql, new { userId, addValue, addReason });
+                    sqlResult = DbPartJob.ExecuteScalar<int>(sql, new { epId, userId, addValue, addReason });
                     scope.Complete();
                 }
                 catch (Exception e)

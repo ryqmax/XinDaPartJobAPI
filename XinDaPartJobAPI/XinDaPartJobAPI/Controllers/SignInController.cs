@@ -240,7 +240,7 @@ namespace XinDaPartJobAPI.Controllers
                     //插入积分记录表
                     signInResult = SignInService.EnterpriseSignIn(enterpriseSignIn);
                     //更新企业积分
-                    SignInService.UpdateEnterpriseIntegral(userInfo.EPId, currentValue, CommonData.SignIn);
+                    SignInService.UpdateEnterpriseIntegral(TODO, userInfo.EPId, currentValue, CommonData.SignIn);
                     if (signInResult)
                     {
                         result.Info = CommonData.SignInSuccess;

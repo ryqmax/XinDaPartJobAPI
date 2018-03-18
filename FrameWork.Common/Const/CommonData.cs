@@ -34,6 +34,11 @@ namespace FrameWork.Common.Const
         public static int FailCode = 20000;
 
         /// <summary>
+        /// token值错误码
+        /// </summary>
+        public static int TokenErrorCode = 20000;
+
+        /// <summary>
         /// 验证码错误提示
         /// </summary>
         public static string CodeNotCorrect = "验证码不正确";

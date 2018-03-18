@@ -39,11 +39,11 @@ namespace XinDaPartJobAPI.Controllers
                 var token = tokenModel.Token;
                 if (string.IsNullOrEmpty(token))
                 {
-                    return ReturnHelper(CommonEnum.TokenError, CommonData.TokenError);
+                    return ReturnHelper(CommonData.TokenErrorCode, CommonData.TokenError);
                 }
                 if (!string.IsNullOrEmpty(token) && !TokenIseffective(tokenModel.Token))
                 {
-                    return ReturnHelper(CommonEnum.TokenError, CommonData.TokenError);
+                    return ReturnHelper(CommonData.TokenErrorCode, CommonData.TokenError);
                 }
             }
             else
@@ -54,29 +54,13 @@ namespace XinDaPartJobAPI.Controllers
                     string[] getTokenStrings = paramGet.Query.Split('&');
                     if (!CheckToken(getTokenStrings))
                     {
-                        return ReturnHelper(CommonEnum.TokenError, CommonData.TokenError);
+                        return ReturnHelper(CommonData.TokenErrorCode, CommonData.TokenError);
                     }
                 }
             }
 
             #endregion
             return await base.SendAsync(request, cancellationToken);
-        }
-
-        /// <summary>
-        /// 判断所调用的方法是否需要参数
-        /// </summary>
-        /// <param name="controllerType">controller类型</param>
-        /// <param name="methodName">方法名称</param>
-        /// <returns></returns>
-        private bool IsHaveParam(Type controllerType, string methodName)
-        {
-            MethodInfo method = controllerType.GetMethod(methodName);
-            if (method == null || method.GetParameters().Length <= 0)
-            {
-                return false;
-            }
-            return true;
         }
 
         /// <summary>
@@ -122,12 +106,12 @@ namespace XinDaPartJobAPI.Controllers
         /// <summary>
         /// 返回错误消息帮助方法
         /// </summary>
-        private HttpResponseMessage ReturnHelper(Enum errorEnum, string message)
+        private HttpResponseMessage ReturnHelper(int errorCode, string message)
         {
-            return new
+            return new BaseViewModel
             {
                 Msg = false,
-                Info = Convert.ToInt32(errorEnum),
+                ResultCode = errorCode,
                 Message = message
             }.ToJson();
         }

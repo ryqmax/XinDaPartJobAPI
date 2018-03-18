@@ -71,10 +71,10 @@ namespace FrameWork.Web.Handle
         {
             return JsonHelper.ToJson(new
             {
-                Info = CourseConst.FailStr,
-                Message = CourseConst.FailStr,
+                Info = CommonData.FailStr,
+                Message = CommonData.FailStr,
                 Msg = false,
-                ResultCode = CourseConst.FailCode
+                ResultCode = CommonData.FailCode
             });
         }
     }

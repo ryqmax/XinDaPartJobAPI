@@ -43,11 +43,12 @@ namespace FrameWork.ServiceImp
                       FROM [TestPartJob].[dbo].[T_UserSignLog]
                       WHERE
 	                    IsDel=0
-	                    AND SignDate>=@date";
-            return DbPartJob.Fetch<RecentSignInInfo>(sql, new {date});
+	                    AND SignDate>=@date
+                        AND UserId=userId";
+            return DbPartJob.Fetch<RecentSignInInfo>(sql, new {date, userId});
         }
 
-        public List<RecentSignInInfo> GetEnterpriseRecentSignInInfo(int enId)
+        public List<RecentSignInInfo> GetEnterpriseRecentSignInInfo(int enId, int userId)
         {
             var date = DateTime.Now.AddDays(-12).Date;
             var sql = @"SELECT [Id]
@@ -64,8 +65,10 @@ namespace FrameWork.ServiceImp
                       FROM [TestPartJob].[dbo].[T_EPSignLog]
                       WHERE
 	                    IsDel=0
-	                    AND SignDate>=@date";
-            return DbPartJob.Fetch<RecentSignInInfo>(sql, new { date });
+	                    AND SignDate>=@date
+                        AND EnterpriseId=@enId
+						AND UserId=@userId";
+            return DbPartJob.Fetch<RecentSignInInfo>(sql, new { date, enId, userId });
         }
         
         public bool UserSignIn(T_UserSignLog userSignLog)

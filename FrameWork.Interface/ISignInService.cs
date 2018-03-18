@@ -15,7 +15,7 @@ namespace FrameWork.Interface
         /// <summary>
         /// 获取最近的企业签到记录信息
         /// </summary>
-        List<RecentSignInInfo> GetEnterpriseRecentSignInInfo(int enId);
+        List<RecentSignInInfo> GetEnterpriseRecentSignInInfo(int enId, int userId);
 
         /// <summary>
         /// 用户签到

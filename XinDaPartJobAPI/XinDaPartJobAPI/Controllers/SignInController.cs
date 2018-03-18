@@ -38,7 +38,7 @@ namespace XinDaPartJobAPI.Controllers
                     break;
                 case TokenMarkEnum.Enterprise:
                     var b = 0;
-                    recentSignInInfoList = SignInService.GetEnterpriseRecentSignInInfo(userInfo.EPId);
+                    recentSignInInfoList = SignInService.GetEnterpriseRecentSignInInfo(userInfo.EPId, userInfo.UserId);
                     break;
             }
 
@@ -194,7 +194,7 @@ namespace XinDaPartJobAPI.Controllers
                     break;
                 case TokenMarkEnum.Enterprise:
                     var b = 0;
-                    recentSignInInfoList = SignInService.GetEnterpriseRecentSignInInfo(userInfo.EPId);
+                    recentSignInInfoList = SignInService.GetEnterpriseRecentSignInInfo(userInfo.EPId, userInfo.UserId);
 
                     //判断今天有没有签到
                     todayIsSigned = recentSignInInfoList.Exists(r => r.SignDate == DateTime.Now.Date);

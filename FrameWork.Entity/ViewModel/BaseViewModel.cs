@@ -14,7 +14,7 @@
 
         /// <summary>
         /// 返回结果码
-        /// 成功：10000，失败：20000
+        /// 成功：10000，失败：20000,token值错误:20001
         /// </summary>
         public int ResultCode { set; get; }
 

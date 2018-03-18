@@ -36,6 +36,11 @@ namespace FrameWork.Common.Const
         public static string CodeNotCorrect = "验证码不正确";
 
         /// <summary>
+        /// Token验证错误
+        /// </summary>
+        public static string TokenError = "Token验证错误";
+
+        /// <summary>
         /// 发送验证码模板id
         /// </summary>
         public static int TemplateId = int.Parse(ConfigurationManager.AppSettings["templateId"]);

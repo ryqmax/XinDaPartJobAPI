@@ -1,5 +1,6 @@
 ﻿using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
+using XinDaPartJobAPI.Controllers;
 
 namespace XinDaPartJobAPI
 {
@@ -8,6 +9,7 @@ namespace XinDaPartJobAPI
         public static void Register(HttpConfiguration config)
         {
             // Web API 配置和服务
+            config.MessageHandlers.Add(new RequestHandler());
             // 将 Web API 配置为仅使用不记名令牌身份验证。
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));

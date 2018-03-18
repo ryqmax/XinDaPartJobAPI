@@ -20,10 +20,10 @@ namespace XinDaPartJobAPI.Controllers
         {
             var weChatAppId = ConfigurationManager.AppSettings["WeChatAppId"];
             var weChatSecret = ConfigurationManager.AppSettings["WeChatSecret"];
-            var url = $@"https://api.weixin.qq.com/sns/jscode2session?appid={weChatAppId}&secret={weChatSecret}&js_code={request.Code}&grant_type=authorization_code";
-            var rs = HttpClientHelper.SendMessage(url);
-            var openidModel = JObject.Parse(rs).GetValue("openid");
-            //var openidModel = "wx123456789";
+            //var url = $@"https://api.weixin.qq.com/sns/jscode2session?appid={weChatAppId}&secret={weChatSecret}&js_code={request.Code}&grant_type=authorization_code";
+            //var rs = HttpClientHelper.SendMessage(url);
+            //var openidModel = JObject.Parse(rs).GetValue("openid");
+            var openidModel = "wx123456789";
             var result = new BaseViewModel
             {
                 Info = CourseConst.FailStr,
@@ -59,9 +59,9 @@ namespace XinDaPartJobAPI.Controllers
         {
             var token = GuidHelper.GetPrimarykey();
             var oldToken = RedisInfoHelper.RedisManager.Getstring("uid" + model.Id);
-            oldToken = oldToken.Replace("\"", "");
             if (!string.IsNullOrEmpty(oldToken))//如果是重新登录，移除原来的token对应的值
             {
+                oldToken = oldToken.Replace("\"", "");
                 RedisInfoHelper.RedisManager.Remove(oldToken);
             }
             var rdModel = new RedisModel

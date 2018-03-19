@@ -405,7 +405,7 @@ namespace XinDaPartJobAPI.Controllers
                 Token = token,
                 UserId = model.EPAId,
                 WxName = string.Empty,
-                Phone = request.Phone
+                Phone = redisModel.Phone
             };
 
             RedisInfoHelper.RedisManager.Set("epid" + model.EPId, token, DateTime.Now.AddDays(1));

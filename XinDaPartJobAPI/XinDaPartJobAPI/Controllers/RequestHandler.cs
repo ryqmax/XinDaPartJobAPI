@@ -8,6 +8,7 @@ using FrameWork.Common.Const;
 using FrameWork.Common.Enum;
 using FrameWork.Entity.ViewModel;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace XinDaPartJobAPI.Controllers
 {
@@ -28,19 +29,41 @@ namespace XinDaPartJobAPI.Controllers
 #if DEBUG
             return await base.SendAsync(request, cancellationToken);//调试时打开注释
 #endif
+            //获取路由值
+            var requesPath = request.RequestUri.AbsolutePath.Split('/');
+
             //做一些其他安全验证工作，比如Token验证，签名验证  在此共分为3步。
-            var methodType = request.Method;
+
+            #region 验证参数是否为空
+
+            var controllerName = requesPath[2];
+            var declaringType = MethodBase.GetCurrentMethod().DeclaringType;
+            if (declaringType != null)
+            {
+                var controllerPath = declaringType.Namespace + "." + controllerName + "Controller";
+                var controllerType = Type.GetType(controllerPath);
+                if (controllerType == null)
+                {
+                    return ReturnHelper(CommonData.ActionNameErrorCode, CommonData.ActionNameError);
+                }
+                var methodName = requesPath.Last();
+                var isHaveParam = IsHaveParam(controllerType, methodName);
+            
+                if (!isHaveParam)//不需要参数，直接返回true
+                {
+                    return await base.SendAsync(request, cancellationToken);
+                }
+            }
+
+            #endregion
 
             #region 验证token
-
+            var methodType = request.Method;
             if (methodType.Method == "POST")
             {
                 var tokenModel = JsonConvert.DeserializeObject<TokenModel>(request.Content.ReadAsStringAsync().Result);
                 var token = tokenModel.Token;
-                if (string.IsNullOrEmpty(token))
-                {
-                    return ReturnHelper(CommonData.TokenErrorCode, CommonData.TokenError);
-                }
+
                 if (!string.IsNullOrEmpty(token) && !TokenIseffective(tokenModel.Token))
                 {
                     return ReturnHelper(CommonData.TokenErrorCode, CommonData.TokenError);
@@ -51,7 +74,7 @@ namespace XinDaPartJobAPI.Controllers
                 var paramGet = request.RequestUri;    //Get请求
                 if (!string.IsNullOrEmpty(paramGet.Query) && paramGet.Query.ToLower().Contains("token"))
                 {
-                    string[] getTokenStrings = paramGet.Query.Split('&');
+                    var getTokenStrings = paramGet.Query.Split('&');
                     if (!CheckToken(getTokenStrings))
                     {
                         return ReturnHelper(CommonData.TokenErrorCode, CommonData.TokenError);
@@ -61,6 +84,21 @@ namespace XinDaPartJobAPI.Controllers
 
             #endregion
             return await base.SendAsync(request, cancellationToken);
+        }
+
+        /// <summary>
+        /// 判断所调用的方法是否需要参数
+        /// </summary>
+        /// <param name="controllerType">controller类型</param>
+        /// <param name="methodName">方法名称</param>
+        private bool IsHaveParam(Type controllerType, string methodName)
+        {
+            var method = controllerType.GetMethod(methodName);
+            if (method == null || method.GetParameters().Length <= 0)
+            {
+                return false;
+            }
+            return true;
         }
 
         /// <summary>

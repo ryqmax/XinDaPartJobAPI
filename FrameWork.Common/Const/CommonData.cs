@@ -36,7 +36,12 @@ namespace FrameWork.Common.Const
         /// <summary>
         /// token值错误码
         /// </summary>
-        public static int TokenErrorCode = 20000;
+        public static int TokenErrorCode = 20001;
+
+        /// <summary>
+        /// 方法名不存在
+        /// </summary>
+        public static int ActionNameErrorCode = 20002;
 
         /// <summary>
         /// 验证码错误提示
@@ -47,6 +52,11 @@ namespace FrameWork.Common.Const
         /// Token验证错误
         /// </summary>
         public static string TokenError = "Token验证错误";
+
+        /// <summary>
+        /// 方法名不存在
+        /// </summary>
+        public static string ActionNameError = "方法名不存在";
 
         /// <summary>
         /// 发送验证码模板id

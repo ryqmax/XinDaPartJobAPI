@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Web.Http;
 using FrameWork.Common;
 using FrameWork.Common.Const;
 using FrameWork.Common.Models;
+using FrameWork.Common.SmsHelper.Sms;
 using FrameWork.Entity.Entity;
 using FrameWork.Entity.ViewModel;
 using FrameWork.Entity.ViewModel.Account;
@@ -14,6 +16,14 @@ namespace XinDaPartJobAPI.Controllers
 {
     public class AccountController : AdminControllerBase
     {
+        /// <summary>
+        /// 腾讯云发送短信帮助类
+        /// </summary>
+        private static readonly SmsSingleSender _smsSingleSender = new SmsSingleSender();
+
+        /// <summary>
+        /// 普通用户授权接口
+        /// </summary>
         [HttpPost]
         [Route("api/Account/GetUserInfo")]
         public object GetUserInfo(GetUserInfoRequest request)
@@ -79,5 +89,43 @@ namespace XinDaPartJobAPI.Controllers
 
             return token;
         }
+
+        /// <summary>
+        /// 获取手机号验证码
+        /// </summary>
+        [HttpPost]
+        [Route("api/Account/GetPhoneCode")]
+        public object GetPhoneCode(GetPhoneCodeRequest request)
+        {
+            var code = RedisInfoHelper.RedisManager.Getstring(request.Phone);//缓存中是否已经存在该手机号的验证码
+            if (string.IsNullOrEmpty(code))
+            {
+                var random = new Random();
+                code = random.Next(1000, 9999).ToString();
+            }
+            RedisInfoHelper.RedisManager.Set(request.Phone, code,DateTime.Now.AddMinutes(3));//再次存储验证码到缓存中，防止上次验证码过期，过期时间默认3分钟
+            var r = _smsSingleSender.SendWithParam("86", request.Phone, CommonData.TemplateId, new List<string> { code }, "", "", "");
+            var result = new BaseViewModel
+            {
+                Info = r.errmsg,
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
+            };
+
+            if (r.result != 0)
+            {
+                result = new BaseViewModel
+                {
+                    Info = CommonData.SendFailStr,
+                    Message = CommonData.SendFailStr,
+                    Msg = false,
+                    ResultCode = CommonData.FailCode
+                };
+            }
+
+            return result.ToJson();
+        }
+
     }
 }

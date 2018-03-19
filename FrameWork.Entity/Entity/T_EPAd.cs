@@ -36,12 +36,12 @@ namespace FrameWork.Entity.Entity
         /// <summary>
         /// 是否启用 
         /// </summary>
-        public Boolean IsUsed {get;set;}
+        public bool IsUsed {get;set;}
 
         /// <summary>
         /// 是否删除 
         /// </summary>
-        public Boolean IsDel {get;set;}
+        public bool IsDel {get;set;}
 
         /// <summary>
         /// 编辑人id 

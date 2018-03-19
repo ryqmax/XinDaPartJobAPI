@@ -31,7 +31,7 @@ namespace FrameWork.Entity.Entity
         /// <summary>
         /// 支付金额 
         /// </summary>
-        public Decimal Price {get;set;}
+        public decimal Price {get;set;}
 
         /// <summary>
         /// 购买商品数量 
@@ -41,7 +41,7 @@ namespace FrameWork.Entity.Entity
         /// <summary>
         /// 购买的商品类型：0.会员，1.简历，2.广告位 
         /// </summary>
-        public Byte Type {get;set;}
+        public byte Type {get;set;}
 
         /// <summary>
         /// 购买的商品的id：0.会员id，1.简历id 
@@ -51,7 +51,7 @@ namespace FrameWork.Entity.Entity
         /// <summary>
         /// 支付状态：0.未支付，1.支付中，2.支付成功，3.支付失败 
         /// </summary>
-        public Byte Status {get;set;}
+        public byte Status {get;set;}
 
         /// <summary>
         /// 支付备注 
@@ -61,7 +61,7 @@ namespace FrameWork.Entity.Entity
         /// <summary>
         /// 是否删除 
         /// </summary>
-        public Boolean IsDel {get;set;}
+        public bool IsDel {get;set;}
 
         /// <summary>
         /// 编辑人id 

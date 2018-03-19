@@ -26,7 +26,7 @@ namespace FrameWork.Entity.Entity
         /// <summary>
         /// 是否删除 
         /// </summary>
-        public Boolean IsDel {get;set;}
+        public bool IsDel {get;set;}
 
         /// <summary>
         /// 创建人id 

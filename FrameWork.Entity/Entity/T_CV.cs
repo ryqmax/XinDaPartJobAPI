@@ -21,12 +21,12 @@ namespace FrameWork.Entity.Entity
         /// <summary>
         /// 简历类别：0.兼职，1.全职 
         /// </summary>
-        public Byte Type {get;set;}
+        public byte Type {get;set;}
 
         /// <summary>
         /// 是否是实习 
         /// </summary>
-        public Boolean IsPractice {get;set;}
+        public bool IsPractice {get;set;}
 
         /// <summary>
         /// 期望薪资id 
@@ -91,12 +91,12 @@ namespace FrameWork.Entity.Entity
         /// <summary>
         /// 上架状态：0.未发布，1.展示中 
         /// </summary>
-        public Byte Status {get;set;}
+        public byte Status {get;set;}
 
         /// <summary>
         /// 是否删除 
         /// </summary>
-        public Boolean IsDel {get;set;}
+        public bool IsDel {get;set;}
 
         /// <summary>
         /// 编辑人id 

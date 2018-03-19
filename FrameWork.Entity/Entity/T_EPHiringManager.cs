@@ -36,12 +36,12 @@ namespace FrameWork.Entity.Entity
         /// <summary>
         /// 认证状态：0.未认证，1.认证成功 
         /// </summary>
-        public Byte AuthStatus {get;set;}
+        public byte AuthStatus {get;set;}
 
         /// <summary>
         /// 是否删除 
         /// </summary>
-        public Boolean IsDel {get;set;}
+        public bool IsDel {get;set;}
 
         /// <summary>
         /// 编辑人id 

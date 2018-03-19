@@ -127,5 +127,28 @@ namespace XinDaPartJobAPI.Controllers
             return result.ToJson();
         }
 
+        /// <summary>
+        /// 企业登录
+        /// </summary>
+        [HttpPost]
+        [Route("api/Account/EPLogin")]
+        public object EPLogin(EPLoginRequest request)
+        {
+            var result = new BaseViewModel
+            {
+                Info = CommonData.FailStr,
+                Message = CommonData.FailStr,
+                Msg = false,
+                ResultCode = CommonData.FailCode
+            };
+            /**
+             1.判断手机号是否已经绑定到某个企业。
+             2.如果未绑定某个企业，则创建一个企业，并把该手机号绑定未该企业的主账号。
+             3.如果绑定了某个企业，获取该账号的类型，是否为主账号。                
+             */
+
+
+            return result.ToJson();
+        }
     }
 }

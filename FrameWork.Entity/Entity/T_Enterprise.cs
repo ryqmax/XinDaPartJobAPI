@@ -71,7 +71,7 @@ namespace FrameWork.Entity.Entity
         /// <summary>
         /// 审核状态：0.未提交审核（保存信息），1.审核中，2.审核未通过，3.审核通过 
         /// </summary>
-        public Byte CheckStatus {get;set;}
+        public byte CheckStatus {get;set;}
 
         /// <summary>
         /// 审核备注或者审核不通过原因 
@@ -86,17 +86,22 @@ namespace FrameWork.Entity.Entity
         /// <summary>
         /// 等级信息：0.未认证，1.普通，2.一级雇主，3.二级，4.三级，5.四级，6.五级 
         /// </summary>
-        public Byte Level {get;set;}
+        public byte Level {get;set;}
 
         /// <summary>
-        /// 是否启用 
+        /// 账号状态：0.禁用，1.启用，2.违规禁用
         /// </summary>
-        public Boolean IsUsed {get;set;}
+        public byte Status { get; set; }
+
+        /// <summary>
+        /// 备注：禁用理由或其他
+        /// </summary>
+        public string Note { set; get; }
 
         /// <summary>
         /// 是否删除 
         /// </summary>
-        public Boolean IsDel {get;set;}
+        public bool IsDel {get;set;}
 
         /// <summary>
         /// 编辑人id 

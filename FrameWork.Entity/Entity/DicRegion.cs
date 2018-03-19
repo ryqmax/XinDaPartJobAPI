@@ -16,7 +16,7 @@ namespace FrameWork.Entity.Entity
         /// <summary>
         /// - 
         /// </summary>
-        public Byte Grade {get;set;}
+        public byte Grade {get;set;}
 
         /// <summary>
         /// - 

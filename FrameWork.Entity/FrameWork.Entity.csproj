@@ -102,6 +102,8 @@
     <Compile Include="Entity\T_UserViewEPLog.cs" />
     <Compile Include="Entity\T_UserViewJobLog.cs" />
     <Compile Include="Entity\T_VIPInfo.cs" />
+    <Compile Include="Model\Account\EPLoginModel.cs" />
+    <Compile Include="ViewModel\Account\EPLoginViewModel.cs" />
     <Compile Include="ViewModel\Account\GetPhoneCodeViewModel.cs" />
     <Compile Include="ViewModel\Account\GetUserInfoViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -123,9 +125,7 @@
       <Name>FrameWork.DbUtility</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\Account\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

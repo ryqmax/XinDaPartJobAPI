@@ -21,7 +21,7 @@ namespace FrameWork.Entity.Entity
         /// <summary>
         /// 简历类别：0.兼职，1.全职 
         /// </summary>
-        public Byte Type {get;set;}
+        public byte Type {get;set;}
 
         /// <summary>
         /// 全职岗位名称 
@@ -56,7 +56,7 @@ namespace FrameWork.Entity.Entity
         /// <summary>
         /// 是否是实习 
         /// </summary>
-        public Boolean IsPractice {get;set;}
+        public bool IsPractice {get;set;}
 
         /// <summary>
         /// 工作时间：单双休 
@@ -91,7 +91,7 @@ namespace FrameWork.Entity.Entity
         /// <summary>
         /// 刷新方式：0.智能刷新，1.预约刷新 
         /// </summary>
-        public Byte RefreshWay {get;set;}
+        public byte RefreshWay {get;set;}
 
         /// <summary>
         /// 刷新时间 
@@ -101,7 +101,7 @@ namespace FrameWork.Entity.Entity
         /// <summary>
         /// 职位状态：0.未发布，1.展示中，2.系统退回,请修改，3.已下架 
         /// </summary>
-        public Byte Status {get;set;}
+        public byte Status {get;set;}
 
         /// <summary>
         /// 浏览量 
@@ -111,12 +111,12 @@ namespace FrameWork.Entity.Entity
         /// <summary>
         /// 是否被推荐 
         /// </summary>
-        public Boolean IsRecommand {get;set;}
+        public bool IsRecommand {get;set;}
 
         /// <summary>
         /// 是否删除 
         /// </summary>
-        public Boolean IsDel {get;set;}
+        public bool IsDel {get;set;}
 
         /// <summary>
         /// 编辑人id 

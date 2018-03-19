@@ -51,12 +51,12 @@ namespace FrameWork.Entity.Entity
         /// <summary>
         /// 地址所属类别：0.全部，1.兼职，2.全职 
         /// </summary>
-        public Byte Type {get;set;}
+        public byte Type {get;set;}
 
         /// <summary>
         /// 是否删除 
         /// </summary>
-        public Boolean IsDel {get;set;}
+        public bool IsDel {get;set;}
 
         /// <summary>
         /// 编辑人id 

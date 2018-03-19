@@ -84,10 +84,11 @@ namespace XinDaPartJobAPI.Controllers
                 DicRegionId = dicRegion.Id,
                 EPId = 0,
                 Mark = TokenMarkEnum.User,
-                OpenId = model.WxAccount,
+                OpenId = model.WxAccount ?? string.Empty,
                 Token = token,
                 UserId = model.Id,
-                WxName = model.WxName
+                WxName = model.WxName ?? string.Empty,
+                Phone = model.Phone ?? string.Empty
             };
             RedisInfoHelper.RedisManager.Set("uid" + model.Id, token, DateTime.Now.AddDays(1));
             RedisInfoHelper.RedisManager.Set(token, rdModel.ToJsonStr(), DateTime.Now.AddDays(1));
@@ -251,7 +252,8 @@ namespace XinDaPartJobAPI.Controllers
                 OpenId = request.OpenId,
                 Token = token,
                 UserId = model.EPAId,
-                WxName = string.Empty
+                WxName = string.Empty,
+                Phone = request.Phone
             };
 
             RedisInfoHelper.RedisManager.Set("epid" + model.EPId, token, DateTime.Now.AddDays(1));
@@ -260,5 +262,156 @@ namespace XinDaPartJobAPI.Controllers
             return token;
         }
 
+        /// <summary>
+        /// 退出企业登录
+        /// </summary>
+        [HttpPost]
+        [Route("api/Account/EPLogout")]
+        public object EPLogout(EPLogoutRequest request)
+        {
+            var result = new BaseViewModel
+            {
+                Info = CommonData.FailStr,
+                Message = CommonData.FailStr,
+                Msg = false,
+                ResultCode = CommonData.FailCode
+            };
+            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
+            if (redisModel.Mark == TokenMarkEnum.CacheInvalid)
+                return result;
+            RedisInfoHelper.RedisManager.Set(request.Token, "", DateTime.Now);
+            var model = AccountService.GetUserByOpenId(redisModel.OpenId);
+            var viewModel = new EPLogoutViewModel
+            {
+                OpenId = redisModel.OpenId,
+                Token = GetUserToken(model, redisModel.DicRegionId),
+                UserId = model.Id
+            };
+            result = new BaseViewModel
+            {
+                Info = viewModel,
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
+            };
+            return result;
+        }
+
+        /// <summary>
+        /// 退出企业登录时获取用户的token值
+        /// </summary>
+        private string GetUserToken(T_User model, string regionId)
+        {
+            var token = GuidHelper.GetPrimarykey();
+            var oldToken = RedisInfoHelper.RedisManager.Getstring("uid" + model.Id);
+            if (!string.IsNullOrEmpty(oldToken))//如果是重新登录，移除原来的token对应的值
+            {
+                oldToken = oldToken.Replace("\"", "");
+                RedisInfoHelper.RedisManager.Remove(oldToken);
+            }
+
+            var rdModel = new RedisModel
+            {
+                DicRegionId = regionId,
+                EPId = 0,
+                Mark = TokenMarkEnum.User,
+                OpenId = model.WxAccount ?? string.Empty,
+                Token = token,
+                UserId = model.Id,
+                WxName = model.WxName ?? string.Empty,
+                Phone = model.Phone ?? string.Empty
+            };
+            RedisInfoHelper.RedisManager.Set("uid" + model.Id, token, DateTime.Now.AddDays(1));
+            RedisInfoHelper.RedisManager.Set(token, rdModel.ToJsonStr(), DateTime.Now.AddDays(1));
+
+            return token;
+        }
+
+        /// <summary>
+        /// 企业默认登录接口
+        /// </summary>
+        [HttpPost]
+        [Route("api/Account/EPDefaultLogin")]
+        public object EPDefaultLogin(EPLogoutRequest request)
+        {
+            var result = new BaseViewModel
+            {
+                Info = CommonData.FailStr,
+                Message = CommonData.FailStr,
+                Msg = false,
+                ResultCode = CommonData.FailCode
+            };
+            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
+            if (redisModel.Mark == TokenMarkEnum.CacheInvalid)
+                return result;
+            var viewModel = new EPDefaultLoginViewModel();
+            var userModel = AccountService.EpLogin(new EPLoginRequest { Phone = redisModel.Phone });
+            if (userModel == null) return result;
+
+            if (userModel.EPStatus == (byte)AccountStatus.IllegalNotUsed)
+            {
+                result.Info = CommonData.AccountException;
+                result.Message = CommonData.AccountException;
+            }
+            if (userModel.EPAStatus == (byte)AccountStatus.IllegalNotUsed)
+            {
+                result.Info = CommonData.AccountException;
+                result.Message = CommonData.AccountException;
+            }
+            if (userModel.EPStatus == (byte)AccountStatus.NotUsed)
+            {
+                result.Info = CommonData.AccountPassdate;
+                result.Message = CommonData.AccountPassdate;
+            }
+            if (userModel.EPAStatus == (byte)AccountStatus.NotUsed)
+            {
+                result.Info = CommonData.AccountPassdate;
+                result.Message = CommonData.AccountPassdate;
+            }
+            if (userModel.EPAStatus == (byte)AccountStatus.Using && userModel.EPStatus == (byte)AccountStatus.Using)
+            {
+                viewModel.IsMainAccount = userModel.Type == (byte)AccountType.Main;
+                viewModel.Token = GetEPDefaultToken(userModel, redisModel);
+                result = new BaseViewModel
+                {
+                    Info = viewModel,
+                    Message = CommonData.SuccessStr,
+                    Msg = true,
+                    ResultCode = CommonData.SuccessCode
+                };
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 默认登录接口的token值
+        /// </summary>
+        private string GetEPDefaultToken(EPLoginModel model, RedisModel redisModel)
+        {
+            var token = GuidHelper.GetPrimarykey();
+            var oldToken = RedisInfoHelper.RedisManager.Getstring("epid" + model.EPId);
+            if (!string.IsNullOrEmpty(oldToken))//如果是重新登录，移除原来的token对应的值
+            {
+                oldToken = oldToken.Replace("\"", "");
+                RedisInfoHelper.RedisManager.Remove(oldToken);
+            }
+
+            var rdModel = new RedisModel
+            {
+                DicRegionId = redisModel.DicRegionId,
+                EPId = model.EPId,
+                Mark = TokenMarkEnum.Enterprise,
+                OpenId = redisModel.OpenId,
+                Token = token,
+                UserId = model.EPAId,
+                WxName = string.Empty,
+                Phone = request.Phone
+            };
+
+            RedisInfoHelper.RedisManager.Set("epid" + model.EPId, token, DateTime.Now.AddDays(1));
+            RedisInfoHelper.RedisManager.Set(token, rdModel.ToJsonStr(), DateTime.Now.AddDays(1));
+
+            return token;
+        }
     }
 }

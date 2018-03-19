@@ -20,5 +20,10 @@ namespace FrameWork.Interface
         /// 把未与机构绑定的手机号插入到数据库
         /// </summary>
         void EPLoginForInsert(EPLoginRequest request);
+
+        /// <summary>
+        /// 根据openid获取对应用户的信息
+        /// </summary>
+        T_User GetUserByOpenId(string openId);
     }
 }

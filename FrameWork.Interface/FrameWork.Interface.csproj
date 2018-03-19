@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IDicRegionService.cs" />
+    <Compile Include="IJobService.cs" />
     <Compile Include="ISignInService.cs" />
     <Compile Include="IBaseService.cs" />
     <Compile Include="ILogService.cs" />

@@ -82,6 +82,7 @@
     <Compile Include="CookieHelper.cs" />
     <Compile Include="DotNETCache\LocalCacheProvider.cs" />
     <Compile Include="Email.cs" />
+    <Compile Include="Enum\AccountEnum.cs" />
     <Compile Include="Enum\CommonEnum.cs" />
     <Compile Include="Json.cs" />
     <Compile Include="Models\CacheConfig.cs" />

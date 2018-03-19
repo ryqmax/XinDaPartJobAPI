@@ -26,17 +26,17 @@ namespace FrameWork.Entity.Entity
         /// <summary>
         /// 序号 
         /// </summary>
-        public Double Seq {get;set;}
+        public double Seq {get;set;}
 
         /// <summary>
         /// 原价 
         /// </summary>
-        public Decimal OldPrice {get;set;}
+        public decimal OldPrice {get;set;}
 
         /// <summary>
         /// 现价 
         /// </summary>
-        public Decimal NewPrice {get;set;}
+        public decimal NewPrice {get;set;}
 
         /// <summary>
         /// 子账号数量上限 
@@ -61,7 +61,7 @@ namespace FrameWork.Entity.Entity
         /// <summary>
         /// 是否删除 
         /// </summary>
-        public Boolean IsDel {get;set;}
+        public bool IsDel {get;set;}
 
         /// <summary>
         /// 编辑人id 

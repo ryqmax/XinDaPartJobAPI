@@ -49,6 +49,16 @@ namespace FrameWork.Common.Const
         public static string CodeNotCorrect = "验证码不正确";
 
         /// <summary>
+        /// 验证码不能为空
+        /// </summary>
+        public static string CodeNotNULL = "验证码不能为空";
+
+        /// <summary>
+        /// 验证码已经过期，请重新获取
+        /// </summary>
+        public static string CodePassdate = "验证码已经过期，请重新获取";
+
+        /// <summary>
         /// Token验证错误
         /// </summary>
         public static string TokenError = "Token验证错误";
@@ -57,6 +67,21 @@ namespace FrameWork.Common.Const
         /// 方法名不存在
         /// </summary>
         public static string ActionNameError = "方法名不存在";
+
+
+        #region 企业登录
+
+        /// <summary>
+        /// 账号异常不能登录
+        /// </summary>
+        public static string AccountException = "账号异常不能登录";
+
+        /// <summary>
+        /// 会员到期不能登录
+        /// </summary>
+        public static string AccountPassdate = "会员到期不能登录";
+
+        #endregion
 
         /// <summary>
         /// 发送验证码模板id
@@ -75,6 +100,11 @@ namespace FrameWork.Common.Const
         public static string SignInSuccess = "签到成功";
 
         #endregion
+        
+        /// <summary>
+        /// 缓存所有的城市列表key
+        /// </summary>
+        public static string RegionRedisCache = "allRegions";
 
     }
 }

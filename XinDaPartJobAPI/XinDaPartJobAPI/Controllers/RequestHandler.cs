@@ -9,6 +9,7 @@ using FrameWork.Common.Enum;
 using FrameWork.Entity.ViewModel;
 using Newtonsoft.Json;
 using System.Linq;
+using FrameWork.Common.Models;
 
 namespace XinDaPartJobAPI.Controllers
 {
@@ -136,7 +137,7 @@ namespace XinDaPartJobAPI.Controllers
             if (!string.IsNullOrEmpty(token))
             {
                 var model = RedisInfoHelper.GetRedisModel(token);
-                mark = model.Mark > 0;
+                mark = model.Mark != TokenMarkEnum.CacheInvalid;
             }
             return mark;
         }

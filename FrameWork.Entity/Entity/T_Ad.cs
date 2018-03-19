@@ -16,7 +16,7 @@ namespace FrameWork.Entity.Entity
         /// <summary>
         /// 广告区类型： 
         /// </summary>
-        public Byte Type {get;set;}
+        public byte Type {get;set;}
 
         /// <summary>
         /// 广告描述 
@@ -41,17 +41,17 @@ namespace FrameWork.Entity.Entity
         /// <summary>
         /// 单价，1200元 
         /// </summary>
-        public Decimal Price {get;set;}
+        public decimal Price {get;set;}
 
         /// <summary>
         /// 是否启用 
         /// </summary>
-        public Boolean IsUsed {get;set;}
+        public bool IsUsed {get;set;}
 
         /// <summary>
         /// 是否删除 
         /// </summary>
-        public Boolean IsDel {get;set;}
+        public bool IsDel {get;set;}
 
         /// <summary>
         /// 编辑人id 

@@ -41,7 +41,7 @@ namespace FrameWork.Entity.Entity
         /// <summary>
         /// 性别：1.男，2.女 
         /// </summary>
-        public Byte Sex {get;set;}
+        public byte Sex {get;set;}
 
         /// <summary>
         /// 出生日期：1992-06 
@@ -71,7 +71,7 @@ namespace FrameWork.Entity.Entity
         /// <summary>
         /// 是否删除 
         /// </summary>
-        public Boolean IsDel {get;set;}
+        public bool IsDel {get;set;}
 
         /// <summary>
         /// 编辑人id 

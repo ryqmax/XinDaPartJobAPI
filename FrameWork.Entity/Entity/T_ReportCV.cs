@@ -16,7 +16,7 @@ namespace FrameWork.Entity.Entity
         /// <summary>
         /// 用户类型：1.普通用户，1.企业 
         /// </summary>
-        public Byte UserType {get;set;}
+        public byte UserType {get;set;}
 
         /// <summary>
         /// 举报者id 
@@ -66,7 +66,7 @@ namespace FrameWork.Entity.Entity
         /// <summary>
         /// 被举报用户类型：1.普通用户，1.企业 
         /// </summary>
-        public Byte ExposedUserType {get;set;}
+        public byte ExposedUserType {get;set;}
 
         /// <summary>
         /// 被举报用户id或者被举报企业id 
@@ -91,12 +91,12 @@ namespace FrameWork.Entity.Entity
         /// <summary>
         /// 处理状态：0.未处理，1.已证实，2.举报内容不实 
         /// </summary>
-        public Byte Status {get;set;}
+        public byte Status {get;set;}
 
         /// <summary>
         /// 是否删除 
         /// </summary>
-        public Boolean IsDel {get;set;}
+        public bool IsDel {get;set;}
 
         /// <summary>
         /// 编辑人id 

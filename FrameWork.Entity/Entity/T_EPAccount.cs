@@ -29,19 +29,24 @@ namespace FrameWork.Entity.Entity
         public string PermissionIds {get;set;}
 
         /// <summary>
-        /// 账号类型，0：主账号，1.子账号 
+        /// 账号类型，1：主账号，2.子账号
         /// </summary>
-        public Byte Type {get;set;}
+        public byte Type {get;set;}
 
         /// <summary>
-        /// 是否启用 
+        /// 账号状态：0.会员到期禁用，1.启用，2.违规禁用
         /// </summary>
-        public Boolean IsUsed {get;set;}
+        public byte Status { get;set;}
+
+        /// <summary>
+        /// 备注：禁用理由或其他
+        /// </summary>
+        public string Note { set; get; }
 
         /// <summary>
         /// 是否删除 
         /// </summary>
-        public Boolean IsDel {get;set;}
+        public bool IsDel {get;set;}
 
         /// <summary>
         /// 编辑人id 

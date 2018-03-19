@@ -36,5 +36,10 @@ namespace FrameWork.Web
         /// </summary>
         protected ISignInService SignInService => ServiceHelper.CreateService<ISignInService>();
 
+        /// <summary>
+        /// 实例化IDicRegionService
+        /// </summary>
+        protected IDicRegionService DicRegionService => ServiceHelper.CreateService<IDicRegionService>();
+
     }
 }

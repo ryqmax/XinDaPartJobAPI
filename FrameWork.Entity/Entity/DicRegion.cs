@@ -63,5 +63,20 @@ namespace FrameWork.Entity.Entity
         /// </summary>
         public string Abbr {get;set;}
 
+        /// <summary>
+        /// 区号
+        /// </summary>
+        public string AreaCode { get;set;}
+
+        /// <summary>
+        /// 是否启用
+        /// </summary>
+        public bool IsUsed { set; get; }
+
+        /// <summary>
+        /// 是否删除
+        /// </summary>
+        public bool IsDel { set; get; }
+
     }
 }

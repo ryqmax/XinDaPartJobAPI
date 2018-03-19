@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Web.Http;
 using FrameWork.Common;
 using FrameWork.Common.Const;
@@ -76,9 +77,11 @@ namespace XinDaPartJobAPI.Controllers
                 oldToken = oldToken.Replace("\"", "");
                 RedisInfoHelper.RedisManager.Remove(oldToken);
             }
+            var dicRegion = CacheContext.DicRegions.FirstOrDefault(d => d.AreaCode == request.City) ?? new DicRegion();
+
             var rdModel = new RedisModel
             {
-                DicRegionId = request.City,
+                DicRegionId = dicRegion.Id,
                 EPId = 0,
                 Mark = TokenMarkEnum.User,
                 OpenId = model.WxAccount,
@@ -180,7 +183,7 @@ namespace XinDaPartJobAPI.Controllers
                 {
                     Info = viewModel,
                     Message = CommonData.SuccessStr,
-                    Msg = false,
+                    Msg = true,
                     ResultCode = CommonData.SuccessCode
                 };
             }
@@ -237,9 +240,12 @@ namespace XinDaPartJobAPI.Controllers
                 oldToken = oldToken.Replace("\"", "");
                 RedisInfoHelper.RedisManager.Remove(oldToken);
             }
+
+            var dicRegion = CacheContext.DicRegions.FirstOrDefault(d => d.AreaCode == request.City) ?? new DicRegion();
+
             var rdModel = new RedisModel
             {
-                DicRegionId = request.City,
+                DicRegionId = dicRegion.Id,
                 EPId = model.EPId,
                 Mark = TokenMarkEnum.Enterprise,
                 OpenId = request.OpenId,

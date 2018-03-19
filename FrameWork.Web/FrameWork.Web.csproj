@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="AdminControllerBase.cs" />
     <Compile Include="AssemblyHelper.cs" />
+    <Compile Include="CacheContext.cs" />
     <Compile Include="Handle\ErrorHandleAttribute.cs" />
     <Compile Include="Html\HtmlHelperExtend.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

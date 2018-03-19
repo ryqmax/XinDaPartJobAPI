@@ -100,6 +100,11 @@ namespace FrameWork.Common.Const
         public static string SignInSuccess = "签到成功";
 
         #endregion
+        
+        /// <summary>
+        /// 缓存所有的城市列表key
+        /// </summary>
+        public static string RegionRedisCache = "allRegions";
 
     }
 }

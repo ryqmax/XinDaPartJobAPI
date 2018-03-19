@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IDicRegion.cs" />
+    <Compile Include="IDicRegionService.cs" />
     <Compile Include="ISignInService.cs" />
     <Compile Include="IBaseService.cs" />
     <Compile Include="ILogService.cs" />

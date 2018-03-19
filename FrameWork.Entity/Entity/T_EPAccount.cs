@@ -34,7 +34,7 @@ namespace FrameWork.Entity.Entity
         public byte Type {get;set;}
 
         /// <summary>
-        /// 账号状态：0.禁用，1.启用，2.违规禁用
+        /// 账号状态：0.会员到期禁用，1.启用，2.违规禁用
         /// </summary>
         public byte Status { get;set;}
 

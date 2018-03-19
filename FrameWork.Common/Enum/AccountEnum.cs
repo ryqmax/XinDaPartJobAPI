@@ -1,49 +1,60 @@
 ﻿/************************************************************************************
  *      Copyright (C) 2015 yuwei,All Rights Reserved
  *      File:
- *                EPLoginModel.cs
+ *                AccountEnum.cs
  *      Description:
- *            EPLoginModel
+ *            AccountEnum
  *      Author:
  *                yxw
  *                
  *                
  *      Finish DateTime:
- *                2018/3/19 12:18:35
+ *                2018/3/19 12:54:11
  *      History:
  ***********************************************************************************/
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace FrameWork.Entity.Model.Account
+namespace FrameWork.Common.Enum
 {
     /// <summary>
-    /// EPLoginModel
+    /// AccountStatus
     /// </summary>
-    public class EPLoginModel
+    public enum AccountStatus
     {
         /// <summary>
-        /// 账号类型，1：主账号，2.子账号
+        /// 禁用
         /// </summary>
-        public byte Type { set; get; }
+        NotUsed = 0,
 
         /// <summary>
-        /// 企业状态:0.禁用，1.启用，2.违规禁用
+        /// 启用
         /// </summary>
-        public byte EPStatus { set; get; }
+        Using = 1,
 
         /// <summary>
-        /// 企业账号状态:0.禁用，1.启用，2.违规禁用
+        /// 违规禁用
         /// </summary>
-        public byte EPAStatus { set; get; }
+        IllegalNotUsed = 2
+    }
+
+    /// <summary>
+    /// 企业账号类型
+    /// </summary>
+    public enum AccountType
+    {
+        /// <summary>
+        /// 主账号
+        /// </summary>
+        Main = 1,
 
         /// <summary>
-        /// 企业id
+        /// 子账号
         /// </summary>
-        public int EPId { set; get; }
-
-        /// <summary>
-        /// 企业用户id
-        /// </summary>
-        public int EPAId { set; get; }
+        Sub = 2
     }
 }

@@ -48,7 +48,14 @@ namespace FrameWork.Entity.ViewModel.Account
     /// </summary>
     public class EPLoginViewModel
     {
+        /// <summary>
+        /// 企业登录令牌
+        /// </summary>
+        public string Token { set; get; }
+
+        /// <summary>
+        /// 是否是主账号
+        /// </summary>
+        public bool IsMainAccount { set; get; }
     }
-
-
 }

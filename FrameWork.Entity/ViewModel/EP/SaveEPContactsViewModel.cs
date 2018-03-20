@@ -1,25 +1,30 @@
 ﻿/************************************************************************************
  *      Copyright (C) 2015 yuwei,All Rights Reserved
  *      File:
- *                DelEPContactsViewModel.cs
+ *                SaveEPContactsViewModel.cs
  *      Description:
- *            DelEPContactsViewModel
+ *            SaveEPContactsViewModel
  *      Author:
  *                yxw
  *                
  *                
  *      Finish DateTime:
- *                2018/3/20 20:04:41
+ *                2018/3/20 22:13:36
  *      History:
  ***********************************************************************************/
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace FrameWork.Entity.ViewModel.EP
 {
     /// <summary>
-    /// DelEPContactsViewModel
+    /// SaveEPContactsViewModel
     /// </summary>
-    public class DelEPContactsRequest
+    public class SaveEPContactsRequest
     {
         /// <summary>
         /// 令牌
@@ -27,9 +32,18 @@ namespace FrameWork.Entity.ViewModel.EP
         public string Token { set; get; }
 
         /// <summary>
-        /// 联系人id
+        /// 联系人名字
         /// </summary>
-        public int EPContactsId { set; get; }
+        public string ContactsName { set; get; }
 
+        /// <summary>
+        /// 头像地址,相对地址
+        /// </summary>
+        public string HeadImg { set; get; }
+
+        /// <summary>
+        /// 手机号
+        /// </summary>
+        public string Phone { set; get; }
     }
 }

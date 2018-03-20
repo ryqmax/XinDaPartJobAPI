@@ -39,7 +39,7 @@ namespace XinDaPartJobAPI.Controllers
             //var openidModel = "wx123456789";
             var result = new BaseViewModel
             {
-                Info = CommonData.FailStr,
+                Info = rs,
                 Message = CommonData.FailStr,
                 Msg = false,
                 ResultCode = CommonData.FailCode

@@ -1,35 +1,44 @@
 ﻿/************************************************************************************
  *      Copyright (C) 2015 yuwei,All Rights Reserved
  *      File:
- *                DelEPContactsViewModel.cs
+ *                CheckPhoneCode.cs
  *      Description:
- *            DelEPContactsViewModel
+ *            CheckPhoneCode
  *      Author:
  *                yxw
  *                
  *                
  *      Finish DateTime:
- *                2018/3/20 20:04:41
+ *                2018/3/20 21:39:01
  *      History:
  ***********************************************************************************/
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace FrameWork.Entity.ViewModel.EP
 {
     /// <summary>
-    /// DelEPContactsViewModel
+    /// CheckPhoneCode
     /// </summary>
-    public class DelEPContactsViewModel
+    public class CheckPhoneCodeViewModel
     {
         /// <summary>
-        /// 令牌
+        /// 企业令牌
         /// </summary>
         public string Token { set; get; }
 
         /// <summary>
-        /// 联系人id
+        /// 手机验证码
         /// </summary>
-        public int EPContactsId { set; get; }
+        public string VerifyCode { set; get; }
 
+        /// <summary>
+        /// 手机号 
+        /// </summary>
+        public string Phone { get; set; }
     }
 }

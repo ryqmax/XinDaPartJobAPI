@@ -68,15 +68,43 @@ namespace XinDaPartJobAPI.Controllers
         }
 
         /// <summary>
-        /// 保存招聘联系人手机号
-        /// 1.如果数据库已经存在
+        /// 校验手机号验证码
         /// </summary>
         [HttpPost]
-        [Route("api/EP/SaveEPContactsPhone")]
-        public object SaveEPContactsPhone(DelEPContactsViewModel request)
+        [Route("api/EP/CheckPhoneCode")]
+        public object CheckPhoneCode(CheckPhoneCodeViewModel request)
         {
-            EPService.DelEPContacts(request.EPContactsId);
             var result = new BaseViewModel
+            {
+                Info = CommonData.FailStr,
+                Message = CommonData.FailStr,
+                Msg = false,
+                ResultCode = CommonData.FailCode
+            };
+            if (string.IsNullOrEmpty(request.VerifyCode))//验证码不能为空
+            {
+                result.Info = CommonData.CodeNotNULL;
+                result.Message = CommonData.CodeNotNULL;
+                return result;
+            }
+            var oldCode = RedisInfoHelper.RedisManager.Getstring(request.Phone);
+            if (!string.IsNullOrEmpty(oldCode))//缓存未过期
+            {
+                oldCode = oldCode.Replace("\"", "");
+                if (!oldCode.Equals(request.VerifyCode))//验证码不正确
+                {
+                    result.Info = CommonData.CodeNotCorrect;
+                    result.Message = CommonData.CodeNotCorrect;
+                    return result;
+                }
+            }
+            else   //缓存过期
+            {
+                result.Info = CommonData.CodePassdate;
+                result.Message = CommonData.CodePassdate;
+                return result;
+            }
+            result = new BaseViewModel  //验证码正确
             {
                 Info = CommonData.SuccessStr,
                 Message = CommonData.SuccessStr,

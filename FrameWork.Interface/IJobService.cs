@@ -10,6 +10,6 @@ namespace FrameWork.Interface
         /// <summary>
         /// 获取岗位列表
         /// </summary>
-        List<JobInfo> GetJobList(GetJobListReq getJobListReq);
+        List<JobInfo> GetJobList(GetJobListReq getJobListReq, string cityId);
     }
 }

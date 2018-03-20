@@ -28,12 +28,30 @@ namespace FrameWork.ServiceImp
     /// </summary>
     public class JobService : BaseService<T_Job>, IJobService
     {
-        public List<JobInfo> GetJobList(GetJobListReq getJobListReq)
+        public List<JobInfo> GetJobList(GetJobListReq getJobListReq, string cityId)
         {
             int startPage = (getJobListReq.PageSize) * (getJobListReq.Page - 1) + 1;
             int endPage = getJobListReq.Page * getJobListReq.PageSize;
-            var date = DateTime.Now.AddDays(-12).Date;
-            var sql = @"SELECT  DISTINCT
+
+
+            var where = string.Empty;
+            var jobAddressWhere = string.Empty;
+            if (getJobListReq.RegionId != 0)
+            {
+                where += " AND epaddress.AreaId = @areaid";
+                jobAddressWhere += " AND epaddress.AreaId = @areaid";
+            }
+            if (getJobListReq.EmployerRankId > 0)
+            {
+                where += " AND ep.Level = @level";
+            }
+            if (getJobListReq.JobTypeId > 0)
+            {
+                where += " AND job.JobCategoryId = @jobcaid";
+            }
+
+
+            var sql = $@"SELECT  DISTINCT
                                 job.Id JobId ,
                                 job.RefreshTime
                         INTO    #JobIdTemp
@@ -47,14 +65,11 @@ namespace FrameWork.ServiceImp
                                 AND ep.IsDel = 0        
                                 AND jobaddress.IsDel = 0
                                 AND epaddress.IsDel = 0
-                                AND dicregion.IsDel = 0
-                                AND dicregion.IsUsed = 1
+                                AND dicregion.IsDel = 0                                
                                 AND payway.IsDel = 0
-                                AND epaddress.AreaId = 1
-                                AND ep.Level = 1
-                                AND job.JobCategoryId = 1
-		                        AND job.Type=1
-		                        AND job.CityId=1;
+                                {where}
+		                        AND job.Type=@type
+		                        AND job.CityId=@cityId;
 
                         SELECT  *
                         INTO    #JobIdPageTemp
@@ -63,7 +78,7 @@ namespace FrameWork.ServiceImp
                                             ROW_NUMBER() OVER ( ORDER BY RefreshTime DESC ) Num
                                   FROM      #JobIdTemp
                                 ) temp
-                        WHERE   temp.Num BETWEEN 1 AND 20;
+                        WHERE   temp.Num BETWEEN @startPage AND @endPage;
 
                         SELECT  job.Id JobId ,
                                 ep.Id JobEmployerId ,
@@ -82,9 +97,8 @@ namespace FrameWork.ServiceImp
                                                         AND jobaddress.IsDel = 0
                                                         AND epaddress.IsDel = 0
                                                         AND dicregion.IsDel = 0
-                                                        AND dicregion.IsUsed = 1
                                                         AND job.Id = jobaddress.JobId
-                                                        AND epaddress.AreaId = 1
+                                                        {jobAddressWhere}
                                             )
                                   END ) JobAddress ,
                                 job.WorkTime JobTime ,
@@ -97,7 +111,7 @@ namespace FrameWork.ServiceImp
                                             AND epvip.IsDel = 0
                                   ORDER BY  vipinfo.OldPrice DESC
                                 ) JobMember ,
-                                ( CASE WHEN 1 = ep.Id THEN 1
+                                ( CASE WHEN ep.Id = 1 THEN 1
                                        ELSE 0
                                   END ) IsSelf ,
                                 job.IsPractice IsPractice ,        
@@ -109,7 +123,7 @@ namespace FrameWork.ServiceImp
 
                         DROP TABLE #JobIdTemp;
                         DROP TABLE #JobIdPageTemp;";
-            return DbPartJob.Fetch<JobInfo>(sql, new {date, getJobListReq});
+            return DbPartJob.Fetch<JobInfo>(sql, new { type = getJobListReq.Type, areaid = getJobListReq.RegionId, jobcaid = getJobListReq.JobTypeId, level = getJobListReq.EmployerRankId, cityId, startPage,endPage });
         }
     }
 }

@@ -4,7 +4,7 @@ using FrameWork.Common.Enum;
 namespace FrameWork.Entity.ViewModel.Job
 {
     /// <summary>
-    /// 最近签到信息
+    /// 岗位信息
     /// </summary>
     public class JobInfo
     {

@@ -215,7 +215,6 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\EPController.cs" />
     <Compile Include="Controllers\RegionController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Controllers\SignInController.cs" />
     <Compile Include="Controllers\RequestHandler.cs" />

@@ -26,6 +26,6 @@ namespace FrameWork.Interface
         /// <summary>
         /// 获取招聘联系人列表
         /// </summary>
-        List<GetEPContactsModel> GetEpContacts(GetEPContactsRequest request);
+        List<T_EPHiringManager> GetEpContacts(int epId);
     }
 }

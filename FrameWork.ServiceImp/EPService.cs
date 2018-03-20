@@ -30,10 +30,10 @@ namespace FrameWork.ServiceImp
         /// <summary>
         /// 获取招聘联系人列表
         /// </summary>
-        public List<GetEPContactsModel> GetEpContacts(GetEPContactsRequest request)
+        public List<T_EPHiringManager> GetEpContacts(int epId)
         {
-            var sql = @"";
-            return DbPartJob.Fetch<GetEPContactsModel>(sql);
+            var sql = @";SELECT * FROM dbo.T_EPHiringManager WHERE EnterpriseId = @epId AND IsDel = 0";
+            return DbPartJob.Fetch<T_EPHiringManager>(sql,new { epId });
         }
     }
 }

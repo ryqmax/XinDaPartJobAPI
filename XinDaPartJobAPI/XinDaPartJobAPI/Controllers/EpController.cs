@@ -16,6 +16,7 @@
 
 
 using System.Web.Http;
+using FrameWork.Common;
 using FrameWork.Common.Const;
 using FrameWork.Entity.ViewModel;
 using FrameWork.Entity.ViewModel.EP;
@@ -35,14 +36,16 @@ namespace XinDaPartJobAPI.Controllers
         [Route("api/EP/GetEPContacts")]
         public object GetEPContacts(GetEPContactsRequest request)
         {
+            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
+            var models = EPService.GetEpContacts(redisModel.EPId);
+            var viewModels = new GetEPContactsViewModel().GetvViewModels(models);
             var result = new BaseViewModel
             {
-                Info = CommonData.FailStr,
-                Message = CommonData.FailStr,
-                Msg = false,
-                ResultCode = CommonData.FailCode
+                Info = viewModels,
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
             };
-
             return result;
         }
     }

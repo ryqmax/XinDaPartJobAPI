@@ -42,6 +42,11 @@ namespace FrameWork.Web
         protected IDicRegionService DicRegionService => ServiceHelper.CreateService<IDicRegionService>();
 
         /// <summary>
+        /// 实例化IEPService
+        /// </summary>
+        protected IEPService EPService => ServiceHelper.CreateService<IEPService>();
+
+        /// <summary>
         /// 实例化IJobService
         /// </summary>
         protected IJobService JobService => ServiceHelper.CreateService<IJobService>();

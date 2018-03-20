@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DicRegionService.cs" />
+    <Compile Include="EPService.cs" />
     <Compile Include="JobService.cs" />
     <Compile Include="SignInService.cs" />
     <Compile Include="AccountService.cs" />

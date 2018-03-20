@@ -196,5 +196,20 @@ VALUES  ( N'' , -- Name - nvarchar(100)
 	UPDATE dbo.T_Enterprise SET CreateUserId = @@epaid,ModifyUserId = @@epaid WHERE Id = @@epid";
             DbPartJob.Execute(sql, new { request.Phone });
         }
+
+        /// <summary>
+        /// 根据openid获取对应用户的信息
+        /// </summary>
+        public T_User GetUserByOpenId(string openId)
+        {
+            var sql = @";
+                SELECT
+	                *
+                FROM
+	                dbo.T_User
+                WHERE
+	                IsDel = 0 AND WxAccount = @openId";
+            return DbPartJob.FirstOrDefault<T_User>(sql, new {openId});
+        }
     }
 }

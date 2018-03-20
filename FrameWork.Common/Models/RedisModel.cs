@@ -47,6 +47,11 @@ namespace FrameWork.Common.Models
         public string WxName { get; set; }
 
         /// <summary>
+        /// 手机号
+        /// </summary>
+        public string Phone { set; get; }
+
+        /// <summary>
         /// 当前所在地区id
         /// </summary>
         public string DicRegionId { get; set; }

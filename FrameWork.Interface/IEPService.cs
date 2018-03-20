@@ -33,5 +33,10 @@ namespace FrameWork.Interface
         /// </summary>
         /// <param name="epContactsId">招聘联系人id</param>
         void DelEPContacts(int epContactsId);
+
+        /// <summary>
+        /// 保存企业招聘联系人
+        /// </summary>
+        void SaveEPContacts(SaveEPContactsRequest request, int epId);
     }
 }

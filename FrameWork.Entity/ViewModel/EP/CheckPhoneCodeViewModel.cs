@@ -24,7 +24,7 @@ namespace FrameWork.Entity.ViewModel.EP
     /// <summary>
     /// CheckPhoneCode
     /// </summary>
-    public class CheckPhoneCodeViewModel
+    public class CheckPhoneCodeRequest
     {
         /// <summary>
         /// 企业令牌

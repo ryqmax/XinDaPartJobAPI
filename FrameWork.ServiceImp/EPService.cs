@@ -33,7 +33,18 @@ namespace FrameWork.ServiceImp
         public List<T_EPHiringManager> GetEpContacts(int epId)
         {
             var sql = @";SELECT * FROM dbo.T_EPHiringManager WHERE EnterpriseId = @epId AND IsDel = 0";
-            return DbPartJob.Fetch<T_EPHiringManager>(sql,new { epId });
+            return DbPartJob.Fetch<T_EPHiringManager>(sql, new { epId });
+        }
+
+        /// <summary>
+        /// 删除机构下的招聘联系人
+        /// </summary>
+        /// <param name="epContactsId">招聘联系人id</param>
+        public void DelEPContacts(int epContactsId)
+        {
+            var sql = @";UPDATE dbo.T_EPAccount SET IsDel = 1 WHERE Id = @epContactsId";
+
+            DbPartJob.Execute(sql, new { epContactsId });
         }
     }
 }

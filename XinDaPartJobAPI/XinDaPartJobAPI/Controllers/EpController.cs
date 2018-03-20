@@ -48,5 +48,23 @@ namespace XinDaPartJobAPI.Controllers
             };
             return result;
         }
+
+        /// <summary>
+        /// 删除招聘联系人
+        /// </summary>
+        [HttpPost]
+        [Route("api/EP/DelEPContacts")]
+        public object DelEPContacts(DelEPContactsViewModel request)
+        {
+            EPService.DelEPContacts(request.EPContactsId);
+            var result = new BaseViewModel
+            {
+                Info = CommonData.SuccessStr,
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
+            };
+            return result;
+        }
     }
 }

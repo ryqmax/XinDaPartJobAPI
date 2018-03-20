@@ -27,5 +27,11 @@ namespace FrameWork.Interface
         /// 获取招聘联系人列表
         /// </summary>
         List<T_EPHiringManager> GetEpContacts(int epId);
+
+        /// <summary>
+        /// 删除机构下的招聘联系人
+        /// </summary>
+        /// <param name="epContactsId">招聘联系人id</param>
+        void DelEPContacts(int epContactsId);
     }
 }

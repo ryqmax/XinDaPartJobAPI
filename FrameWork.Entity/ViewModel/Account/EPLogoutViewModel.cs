@@ -28,19 +28,9 @@ namespace FrameWork.Entity.ViewModel.Account
     public class EPLogoutRequest
     {
         /// <summary>
-        /// 手机号
+        /// 企业登录令牌
         /// </summary>
-        public string Phone { set; get; }
-
-        /// <summary>
-        /// 微信标识符
-        /// </summary>
-        public string OpenId { set; get; }
-
-        /// <summary>
-        /// 城市编码
-        /// </summary>
-        public string City { set; get; }
+        public string Token { set; get; }
 
     }
 

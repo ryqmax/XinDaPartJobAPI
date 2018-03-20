@@ -332,7 +332,7 @@ namespace XinDaPartJobAPI.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/Account/EPDefaultLogin")]
-        public object EPDefaultLogin(EPLogoutRequest request)
+        public object EPDefaultLogin(EPDefaultLogoutRequest request)
         {
             var result = new BaseViewModel
             {
@@ -383,7 +383,7 @@ namespace XinDaPartJobAPI.Controllers
         /// <summary>
         /// 默认登录接口的token值
         /// </summary>
-        private string GetEPDefaultToken(EPLoginModel model, EPLogoutRequest request)
+        private string GetEPDefaultToken(EPLoginModel model, EPDefaultLogoutRequest request)
         {
             var token = GuidHelper.GetPrimarykey();
             var oldToken = RedisInfoHelper.RedisManager.Getstring("epid" + model.EPId);

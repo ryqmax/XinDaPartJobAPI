@@ -27,10 +27,22 @@ namespace FrameWork.Entity.ViewModel.Account
     /// </summary>
     public class EPDefaultLogoutRequest
     {
+
         /// <summary>
-        /// 企业登录令牌
+        /// 手机号
         /// </summary>
-        public string Token { set; get; }
+        public string Phone { set; get; }
+
+        /// <summary>
+        /// 微信标识符
+        /// </summary>
+        public string OpenId { set; get; }
+
+        /// <summary>
+        /// 城市编码
+        /// </summary>
+        public string City { set; get; }
+
 
     }
 

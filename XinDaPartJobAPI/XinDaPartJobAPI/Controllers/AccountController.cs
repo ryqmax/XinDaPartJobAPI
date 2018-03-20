@@ -341,11 +341,8 @@ namespace XinDaPartJobAPI.Controllers
                 Msg = false,
                 ResultCode = CommonData.FailCode
             };
-            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
-            if (redisModel.Mark == TokenMarkEnum.CacheInvalid)
-                return result;
             var viewModel = new EPDefaultLoginViewModel();
-            var userModel = AccountService.EpLogin(new EPLoginRequest { Phone = redisModel.Phone });
+            var userModel = AccountService.EpLogin(new EPLoginRequest { Phone = request.Phone });
             if (userModel == null) return result;
 
             if (userModel.EPStatus == (byte)AccountStatus.IllegalNotUsed)
@@ -371,7 +368,7 @@ namespace XinDaPartJobAPI.Controllers
             if (userModel.EPAStatus == (byte)AccountStatus.Using && userModel.EPStatus == (byte)AccountStatus.Using)
             {
                 viewModel.IsMainAccount = userModel.Type == (byte)AccountType.Main;
-                viewModel.Token = GetEPDefaultToken(userModel, redisModel);
+                viewModel.Token = GetEPDefaultToken(userModel, request);
                 result = new BaseViewModel
                 {
                     Info = viewModel,
@@ -386,7 +383,7 @@ namespace XinDaPartJobAPI.Controllers
         /// <summary>
         /// 默认登录接口的token值
         /// </summary>
-        private string GetEPDefaultToken(EPLoginModel model, RedisModel redisModel)
+        private string GetEPDefaultToken(EPLoginModel model, EPLogoutRequest request)
         {
             var token = GuidHelper.GetPrimarykey();
             var oldToken = RedisInfoHelper.RedisManager.Getstring("epid" + model.EPId);
@@ -395,17 +392,18 @@ namespace XinDaPartJobAPI.Controllers
                 oldToken = oldToken.Replace("\"", "");
                 RedisInfoHelper.RedisManager.Remove(oldToken);
             }
+            var dicRegion = CacheContext.DicRegions.FirstOrDefault(d => d.AreaCode == request.City) ?? new DicRegion();
 
             var rdModel = new RedisModel
             {
-                DicRegionId = redisModel.DicRegionId,
+                DicRegionId = dicRegion.Id,
                 EPId = model.EPId,
                 Mark = TokenMarkEnum.Enterprise,
-                OpenId = redisModel.OpenId,
+                OpenId = request.OpenId,
                 Token = token,
                 UserId = model.EPAId,
                 WxName = string.Empty,
-                Phone = redisModel.Phone
+                Phone = request.Phone
             };
 
             RedisInfoHelper.RedisManager.Set("epid" + model.EPId, token, DateTime.Now.AddDays(1));

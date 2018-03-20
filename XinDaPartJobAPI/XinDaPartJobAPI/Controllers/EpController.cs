@@ -66,5 +66,25 @@ namespace XinDaPartJobAPI.Controllers
             };
             return result;
         }
+
+        /// <summary>
+        /// 保存招聘联系人手机号
+        /// 1.如果数据库已经存在
+        /// </summary>
+        [HttpPost]
+        [Route("api/EP/SaveEPContactsPhone")]
+        public object SaveEPContactsPhone(DelEPContactsViewModel request)
+        {
+            EPService.DelEPContacts(request.EPContactsId);
+            var result = new BaseViewModel
+            {
+                Info = CommonData.SuccessStr,
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
+            };
+            return result;
+        }
+
     }
 }

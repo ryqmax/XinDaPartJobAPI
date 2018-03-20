@@ -103,6 +103,7 @@
     <Compile Include="Entity\T_UserViewJobLog.cs" />
     <Compile Include="Entity\T_VIPInfo.cs" />
     <Compile Include="Model\Account\EPLoginModel.cs" />
+    <Compile Include="Model\EP\GetEPContactsModel.cs" />
     <Compile Include="ViewModel\Account\EPLoginViewModel.cs" />
     <Compile Include="ViewModel\Account\EPDefaultLoginViewModel.cs" />
     <Compile Include="ViewModel\Account\EPLogoutViewModel.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\Account\UserViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\EP\GetEPContactsViewModel.cs" />
     <Compile Include="ViewModel\Region\GetCityListViewModel.cs" />
     <Compile Include="ViewModel\SignIn\SignInReq.cs" />
     <Compile Include="ViewModel\SignIn\GetSignInInfoResp.cs" />

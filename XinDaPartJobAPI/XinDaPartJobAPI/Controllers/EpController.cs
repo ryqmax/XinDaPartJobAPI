@@ -1,9 +1,10 @@
 ﻿/************************************************************************************
- *      Copyright (C) 2017 yangxianwen,All Rights Reserved
+ *      Copyright (C) 2017 liwei,All Rights Reserved
  *      File:
- *                RegionController.cs
+ *                EPController.cs
  *      Description:
- *            RegionController
+ *            EPController
+ *            企业相关操作
  *      Author:
  *                yxw
  *                
@@ -13,30 +14,26 @@
  *      History:
  ***********************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+
 using System.Web.Http;
 using FrameWork.Common.Const;
 using FrameWork.Entity.ViewModel;
-using FrameWork.Entity.ViewModel.Account;
-using FrameWork.Entity.ViewModel.Region;
+using FrameWork.Entity.ViewModel.EP;
 using FrameWork.Web;
 
 namespace XinDaPartJobAPI.Controllers
 {
     /// <summary>
-    /// RegionController
+    /// 企业相关
     /// </summary>
-    public class RegionController:AdminControllerBase
+    public class EPController : AdminControllerBase
     {
         /// <summary>
-        /// 获取城市列表
+        /// 获取招聘联系人列表
         /// </summary>
         [HttpPost]
-        [Route("api/Region/GetCityList")]
-        public object GetCityList(GetCityListRequest request)
+        [Route("api/EP/GetEPContacts")]
+        public object GetEPContacts(GetEPContactsRequest request)
         {
             var result = new BaseViewModel
             {
@@ -48,6 +45,5 @@ namespace XinDaPartJobAPI.Controllers
 
             return result;
         }
-
     }
 }

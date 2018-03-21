@@ -43,5 +43,10 @@ namespace FrameWork.Interface
         /// 获取联系人详情
         /// </summary>
         T_EPHiringManager GetEPContactsDetails(int epContactsId);
+
+        /// <summary>
+        /// 获取子账号列表
+        /// </summary>
+        List<GetAccountListModel> GetAccountList(int epId, string cityId);
     }
 }

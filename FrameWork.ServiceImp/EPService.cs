@@ -101,7 +101,30 @@ ELSE
         public T_EPHiringManager GetEPContactsDetails(int epContactsId)
         {
             var sql = @";SELECT * FROM dbo.T_EPHiringManager WHERE Id = @epContactsId AND IsDel = 0";
-            return DbPartJob.FirstOrDefault<T_EPHiringManager>(sql, new {epContactsId});
+            return DbPartJob.FirstOrDefault<T_EPHiringManager>(sql, new { epContactsId });
+        }
+
+        /// <summary>
+        /// 获取子账号列表
+        /// </summary>
+        public List<GetAccountListModel> GetAccountList(int epId, string cityId)
+        {
+            var sql = @";
+SELECT
+	ep.Logo,
+	epa.Id AS AccountId,
+	epa.Phone,
+	epa.Type AS AccountType,
+	(SELECT TOP 1 v.Name FROM dbo.T_EPVIP ev LEFT JOIN dbo.T_VIPInfo v ON ev.VIPInfoId = v.Id WHERE ev.IsDel = 0 AND v.IsDel = 0 AND ev.EnterpriseId = ep.Id AND ev.CityId = @cityId)VipType,
+	(SELECT COUNT(1) FROM dbo.T_EPVIP ev LEFT JOIN dbo.T_VIPInfo v ON ev.VIPInfoId = v.Id WHERE ev.IsDel = 0 AND v.IsDel = 0 AND ev.EnterpriseId = @epId )VipCount
+FROM
+	dbo.T_Enterprise ep 
+	LEFT JOIN dbo.T_EPAccount epa ON ep.Id = epa.EnterpriseId
+WHERE
+	ep.IsDel = 0 AND epa.IsDel = 0
+	AND ep.Id = @epId
+";
+            return DbPartJob.Fetch<GetAccountListModel>(sql, new { epId, cityId });
         }
     }
 }

@@ -87,8 +87,7 @@ namespace XinDaPartJobAPI.Controllers
             };
             return result;
         }
-
-
+        
         /// <summary>
         /// 删除招聘联系人
         /// </summary>
@@ -187,5 +186,27 @@ namespace XinDaPartJobAPI.Controllers
             result.Info = new UploadImgViewModel { ShowUrl = PictureHelper.ConcatPicUrl(newFilePath), SaveUrl = newFilePath };
             return result.ToJson();
         }
+
+        /// <summary>
+        /// 获取子账号列表
+        /// </summary>
+        [HttpPost]
+        [Route("api/EP/GetAccountList")]
+        public object GetAccountList(GetAccountListRequest request)
+        {
+            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
+            var models = EPService.GetAccountList(redisModel.EPId, redisModel.CityId);
+            var viewModel = new GetAccountListViewModel().GetViewModels(models);
+            var result = new BaseViewModel
+            {
+                Info = viewModel,
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
+            };
+            return result;
+        }
+
+
     }
 }

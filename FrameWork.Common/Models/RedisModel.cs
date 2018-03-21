@@ -52,9 +52,9 @@ namespace FrameWork.Common.Models
         public string Phone { set; get; }
 
         /// <summary>
-        /// 当前所在地区id
+        /// 当前所在城市id
         /// </summary>
-        public string DicRegionId { get; set; }
+        public string CityId { get; set; }
 
         /// <summary>
         /// 身份标志，0.缓存失效，1.求职者，2.企业

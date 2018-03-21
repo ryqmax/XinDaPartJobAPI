@@ -81,7 +81,7 @@ namespace XinDaPartJobAPI.Controllers
 
             var rdModel = new RedisModel
             {
-                DicRegionId = dicRegion.Id,
+                CityId = dicRegion.Id,
                 EPId = 0,
                 Mark = TokenMarkEnum.User,
                 OpenId = model.WxAccount ?? string.Empty,
@@ -246,7 +246,7 @@ namespace XinDaPartJobAPI.Controllers
 
             var rdModel = new RedisModel
             {
-                DicRegionId = dicRegion.Id,
+                CityId = dicRegion.Id,
                 EPId = model.EPId,
                 Mark = TokenMarkEnum.Enterprise,
                 OpenId = request.OpenId,
@@ -284,7 +284,7 @@ namespace XinDaPartJobAPI.Controllers
             var viewModel = new EPLogoutViewModel
             {
                 OpenId = redisModel.OpenId,
-                Token = GetUserToken(model, redisModel.DicRegionId),
+                Token = GetUserToken(model, redisModel.CityId),
                 UserId = model.Id
             };
             result = new BaseViewModel
@@ -312,7 +312,7 @@ namespace XinDaPartJobAPI.Controllers
 
             var rdModel = new RedisModel
             {
-                DicRegionId = regionId,
+                CityId = regionId,
                 EPId = 0,
                 Mark = TokenMarkEnum.User,
                 OpenId = model.WxAccount ?? string.Empty,
@@ -396,7 +396,7 @@ namespace XinDaPartJobAPI.Controllers
 
             var rdModel = new RedisModel
             {
-                DicRegionId = dicRegion.Id,
+                CityId = dicRegion.Id,
                 EPId = model.EPId,
                 Mark = TokenMarkEnum.Enterprise,
                 OpenId = request.OpenId,

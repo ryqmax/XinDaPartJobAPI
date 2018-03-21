@@ -320,5 +320,56 @@ namespace XinDaPartJobAPI.Controllers
             };
             return result;
         }
+
+        /// <summary>
+        /// 保存子账号权限
+        /// </summary>
+        [HttpPost]
+        [Route("api/EP/SaveAccountPermission")]
+        public object SaveAccountPermission(SaveAccountPermissionRequest request)
+        {
+            var result = new BaseViewModel
+            {
+                Info = CommonData.FailStr,
+                Message = CommonData.FailStr,
+                Msg = false,
+                ResultCode = CommonData.FailCode
+            };
+            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
+            if (!redisModel.IsMainAccount)//如果不是主账号，没有权限修改
+            {
+                result.Info = CommonData.NoAuth;
+                result.Message = CommonData.NoAuth;
+                return result;
+            }
+            var model = EPService.GetAccount(request.SubAccoundId);
+            if (model != null)
+            {
+                model.PermissionIds = model.PermissionIds ?? "/";
+                if (request.IsUsed)//启用该权限
+                {
+                    if (!model.PermissionIds.Contains(request.MenuId + ""))//不包含该权限
+                    {
+                        model.PermissionIds = $"{model.PermissionIds }{ request.MenuId  }/";
+                    }
+                }
+                else  //禁用该权限
+                {
+                    if (model.PermissionIds.Contains(request.MenuId + ""))//包含该权限
+                    {
+                        model.PermissionIds = model.PermissionIds.Replace(request.MenuId + "/", "");
+                    }
+                }
+                EPService.UpdateAccountPer(model.Id,model.PermissionIds);
+            }
+            result = new BaseViewModel
+            {
+                Info = CommonData.SuccessStr,
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
+            };
+            return result;
+        }
     }
 }

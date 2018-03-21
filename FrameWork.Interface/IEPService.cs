@@ -72,5 +72,10 @@ namespace FrameWork.Interface
         /// 获取所有的权限
         /// </summary>
         List<T_AccountPermission> GetAllPermissions();
+
+        /// <summary>
+        /// 更新账号的权限
+        /// </summary>
+        int UpdateAccountPer(int accountId, string pIds);
     }
 }

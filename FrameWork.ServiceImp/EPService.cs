@@ -184,7 +184,7 @@ ELSE
         {
             var sql = @";UPDATE dbo.T_EPAccount SET IsDel = 1 WHERE Id = @subAccoundId AND IsDel = 0 AND Type = 2";
 
-            return DbPartJob.Execute(sql, new {subAccoundId});
+            return DbPartJob.Execute(sql, new { subAccoundId });
         }
 
         /// <summary>
@@ -194,7 +194,7 @@ ELSE
         public T_EPAccount GetAccount(int accountId)
         {
             var sql = @"SELECT * FROM dbo.T_EPAccount WHERE Id = @accountId";
-            return DbPartJob.FirstOrDefault<T_EPAccount>(sql,new { accountId });
+            return DbPartJob.FirstOrDefault<T_EPAccount>(sql, new { accountId });
         }
 
         /// <summary>
@@ -205,5 +205,15 @@ ELSE
             var sql = @"where isdel = 0  AND IsUsed = 1";
             return DbPartJob.Fetch<T_AccountPermission>(sql);
         }
+
+        /// <summary>
+        /// 更新账号的权限
+        /// </summary>
+        public int UpdateAccountPer(int accountId, string pIds)
+        {
+            var sql = @";UPDATE dbo.T_EPAccount SET PermissionIds = @pIds WHERE Id = @accountId";
+            return DbPartJob.Execute(sql, new { accountId, pIds });
+        }
+
     }
 }

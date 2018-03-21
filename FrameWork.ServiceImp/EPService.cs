@@ -163,7 +163,7 @@ ELSE
                 )
         VALUES  ( @epId , -- EnterpriseId - int
                   @phone , -- Phone - nvarchar(15)
-                  N'' , -- PermissionIds - nvarchar(200)
+                  N'/1/2/3/4/5/6/7/8/9/' , -- PermissionIds - nvarchar(200)
                   2 , -- Type - tinyint
                   1 , -- Status - tinyint
                   N'' , -- Note - nvarchar(500)

@@ -38,5 +38,10 @@ namespace FrameWork.Interface
         /// 保存企业招聘联系人
         /// </summary>
         void SaveEPContacts(SaveEPContactsRequest request, int epId);
+
+        /// <summary>
+        /// 获取联系人详情
+        /// </summary>
+        T_EPHiringManager GetEPContactsDetails(int epContactsId);
     }
 }

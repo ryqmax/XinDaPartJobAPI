@@ -94,5 +94,14 @@ ELSE
 
             DbPartJob.Execute(sql, new { request.Phone, request.ContactsName, request.HeadImg, epId });
         }
+
+        /// <summary>
+        /// 获取联系人详情
+        /// </summary>
+        public T_EPHiringManager GetEPContactsDetails(int epContactsId)
+        {
+            var sql = @";SELECT * FROM dbo.T_EPHiringManager WHERE Id = @epContactsId AND IsDel = 0";
+            return DbPartJob.FirstOrDefault<T_EPHiringManager>(sql, new {epContactsId});
+        }
     }
 }

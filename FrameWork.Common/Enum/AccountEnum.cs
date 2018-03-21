@@ -57,4 +57,20 @@ namespace FrameWork.Common.Enum
         /// </summary>
         Sub = 2
     }
+
+    /// <summary>
+    /// 认证状态
+    /// </summary>
+    public enum AuthStatus
+    {
+        /// <summary>
+        /// 未认证
+        /// </summary>
+        NoAuth=0,
+
+        /// <summary>
+        /// 已认证
+        /// </summary>
+        Auth = 1
+    }
 }

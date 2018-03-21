@@ -70,6 +70,26 @@ namespace XinDaPartJobAPI.Controllers
         }
 
         /// <summary>
+        /// 获取联系人详情
+        /// </summary>
+        [HttpPost]
+        [Route("api/EP/GetEPContactsDetails")]
+        public object GetEPContactsDetails(GetEPContactsDetailsRequest request)
+        {
+            var model = EPService.GetEPContactsDetails(request.EPContactsId);
+            var viewModel = new GetEPContactsDetailsViewModel().GetViewModel(model);
+            var result = new BaseViewModel
+            {
+                Info = viewModel,
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
+            };
+            return result;
+        }
+
+
+        /// <summary>
         /// 删除招聘联系人
         /// </summary>
         [HttpPost]

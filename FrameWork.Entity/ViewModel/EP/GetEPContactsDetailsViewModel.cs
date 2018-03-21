@@ -1,23 +1,20 @@
 ﻿/************************************************************************************
  *      Copyright (C) 2015 yuwei,All Rights Reserved
  *      File:
- *                GetEPContactsViewModel.cs
+ *                GetEPContactsDetailsViewModel.cs
  *      Description:
- *            GetEPContactsViewModel
+ *            GetEPContactsDetailsViewModel
  *      Author:
  *                yxw
  *                
  *                
  *      Finish DateTime:
- *                2018/3/20 08:21:05
+ *                2018/3/20 20:04:41
  *      History:
  ***********************************************************************************/
 
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FrameWork.Common;
 using FrameWork.Common.Enum;
 using FrameWork.Entity.Entity;
@@ -25,20 +22,23 @@ using FrameWork.Entity.Entity;
 namespace FrameWork.Entity.ViewModel.EP
 {
     /// <summary>
-    /// 获取联系人接口请求参数
+    /// GetEPContactsDetailsViewModel
     /// </summary>
-    public class GetEPContactsRequest
+    public class GetEPContactsDetailsRequest
     {
         /// <summary>
         /// 令牌
         /// </summary>
         public string Token { set; get; }
+
+        /// <summary>
+        /// 联系人id
+        /// </summary>
+        public int EPContactsId { set; get; }
+
     }
 
-    /// <summary>
-    /// GetEPContactsViewModel
-    /// </summary>
-    public class GetEPContactsViewModel
+    public class GetEPContactsDetailsViewModel
     {
         /// <summary>
         /// 联系人id
@@ -56,9 +56,14 @@ namespace FrameWork.Entity.ViewModel.EP
         public string Phone { get; set; }
 
         /// <summary>
-        /// 头像地址 
+        /// 小程序图片展示地址，这个地址只用于展示
         /// </summary>
-        public string HeadPicUrl { get; set; }
+        public string ShowUrl { set; get; }
+
+        /// <summary>
+        /// 保存到数据库的图片地址，接口提交时传递这个值
+        /// </summary>
+        public string SaveUrl { set; get; }
 
         /// <summary>
         /// 是否认证
@@ -66,25 +71,20 @@ namespace FrameWork.Entity.ViewModel.EP
         public bool IsAuth { get; set; }
 
         /// <summary>
-        /// 数据库实体模型转化为视图模型
+        /// 数据模型转化
         /// </summary>
-        public List<GetEPContactsViewModel> GetvViewModels(List<T_EPHiringManager> models)
+        public GetEPContactsDetailsViewModel GetViewModel(T_EPHiringManager model)
         {
-            var viewModels = new List<GetEPContactsViewModel>();
-            foreach (var model in models)
+            var viewModel = new GetEPContactsDetailsViewModel
             {
-                var viewModel = new GetEPContactsViewModel
-                {
-                    EPContactsId = model.Id,
-                    EPContactsName = StringHelper.NullOrEmpty(model.Name),
-                    HeadPicUrl = PictureHelper.ConcatPicUrl(model.HeadPicUrl),
-                    IsAuth = model.AuthStatus == (byte)AuthStatus.Auth,
-                    Phone = StringHelper.NullOrEmpty(model.Phone)
-                };
-                viewModels.Add(viewModel);
-            }
-
-            return viewModels;
+                EPContactsId = model.Id,
+                EPContactsName = StringHelper.NullOrEmpty(model.Name),
+                IsAuth = model.AuthStatus == (byte)AuthStatus.Auth,
+                Phone = StringHelper.NullOrEmpty(Phone),
+                SaveUrl = model.HeadPicUrl ?? string.Empty,
+                ShowUrl = PictureHelper.ConcatPicUrl(model.HeadPicUrl)
+            };
+            return viewModel;
         }
     }
 }

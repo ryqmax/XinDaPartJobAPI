@@ -36,7 +36,7 @@ namespace XinDaPartJobAPI.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/Region/GetCityList")]
-        public object GetCityList(GetCityListRequest request)
+        public object GetCityList()
         {
             var result = new BaseViewModel
             {
@@ -46,6 +46,12 @@ namespace XinDaPartJobAPI.Controllers
                 ResultCode = CommonData.FailCode
             };
 
+            var cityList = CacheContext.DicRegions.Select(r => new GetCityListViewModel {CityId = r.Id, CityName = r.Description});
+
+            result.Info = cityList;
+            result.Message = CommonData.SuccessStr;
+            result.ResultCode = CommonData.SuccessCode;
+            result.Msg = true;
             return result;
         }
 

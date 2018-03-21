@@ -35,5 +35,14 @@ namespace FrameWork.Entity.ViewModel.Region
     /// </summary>
     public class GetCityListViewModel
     {
+        /// <summary>
+        /// 城市Id
+        /// </summary>
+        public string CityId { get; set; }
+
+        /// <summary>
+        /// 城市名称
+        /// </summary>
+        public string CityName { get; set; }
     }
 }

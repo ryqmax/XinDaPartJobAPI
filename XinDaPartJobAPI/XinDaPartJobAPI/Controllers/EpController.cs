@@ -87,7 +87,7 @@ namespace XinDaPartJobAPI.Controllers
             };
             return result;
         }
-        
+
         /// <summary>
         /// 删除招聘联系人
         /// </summary>
@@ -294,6 +294,26 @@ namespace XinDaPartJobAPI.Controllers
             result = new BaseViewModel
             {
                 Info = CommonData.SuccessStr,
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
+            };
+            return result;
+        }
+
+        /// <summary>
+        /// 获取子账号权限
+        /// </summary>
+        [HttpPost]
+        [Route("api/EP/GetAccountPermission")]
+        public object GetAccountPermission(GetAccountPermissionRequest request)
+        {
+            var model = EPService.GetAccount(request.SubAccoundId);
+            var allPermissins = EPService.GetAllPermissions();
+            var viewModels = new GetAccountPermissionViewModel().GetViewModel(allPermissins, model);
+            var result = new BaseViewModel
+            {
+                Info = viewModels,
                 Message = CommonData.SuccessStr,
                 Msg = true,
                 ResultCode = CommonData.SuccessCode

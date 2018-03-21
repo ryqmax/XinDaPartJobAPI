@@ -186,5 +186,24 @@ ELSE
 
             return DbPartJob.Execute(sql, new {subAccoundId});
         }
+
+        /// <summary>
+        /// 获取账号实体
+        /// </summary>
+        /// <param name="accountId">账号id</param>
+        public T_EPAccount GetAccount(int accountId)
+        {
+            var sql = @"SELECT * FROM dbo.T_EPAccount WHERE Id = @accountId";
+            return DbPartJob.FirstOrDefault<T_EPAccount>(sql,new { accountId });
+        }
+
+        /// <summary>
+        /// 获取所有的权限
+        /// </summary>
+        public List<T_AccountPermission> GetAllPermissions()
+        {
+            var sql = @"where isdel = 0  AND IsUsed = 1";
+            return DbPartJob.Fetch<T_AccountPermission>(sql);
+        }
     }
 }

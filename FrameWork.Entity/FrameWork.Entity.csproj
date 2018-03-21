@@ -116,6 +116,7 @@
     <Compile Include="ViewModel\EP\AddOrEditAccountViewModel.cs" />
     <Compile Include="ViewModel\EP\DelAccountViewModel.cs" />
     <Compile Include="ViewModel\EP\GetAccountListViewModel.cs" />
+    <Compile Include="ViewModel\EP\GetAccountPermissionViewModel.cs" />
     <Compile Include="ViewModel\EP\GetEPContactsDetailsViewModel.cs" />
     <Compile Include="ViewModel\EP\DelEPContactsViewModel.cs" />
     <Compile Include="ViewModel\EP\GetEPContactsViewModel.cs" />

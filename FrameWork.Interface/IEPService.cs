@@ -61,5 +61,16 @@ namespace FrameWork.Interface
         /// 删除子账号
         /// </summary>
         int DelAccount(int subAccoundId);
+
+        /// <summary>
+        /// 获取账号实体
+        /// </summary>
+        /// <param name="accountId">账号id</param>
+        T_EPAccount GetAccount(int accountId);
+
+        /// <summary>
+        /// 获取所有的权限
+        /// </summary>
+        List<T_AccountPermission> GetAllPermissions();
     }
 }

@@ -48,5 +48,13 @@ namespace FrameWork.Interface
         /// 获取子账号列表
         /// </summary>
         List<GetAccountListModel> GetAccountList(int epId, string cityId);
+
+        /// <summary>
+        /// 更新或新增该企业子账号，或者修改主账号手机号
+        /// </summary>
+        /// <param name="phone">手机号</param>
+        /// <param name="epId">企业id</param>
+        /// <param name="subAccoundId">账号id</param>
+        int AddOrEditAccount(string phone, int epId,int subAccoundId);
     }
 }

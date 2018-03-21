@@ -126,5 +126,55 @@ WHERE
 ";
             return DbPartJob.Fetch<GetAccountListModel>(sql, new { epId, cityId });
         }
+
+        /// <summary>
+        /// 更新或新增该企业子账号，或者修改主账号手机号
+        /// </summary>
+        /// <param name="phone">手机号</param>
+        /// <param name="epId">企业id</param>
+        /// <param name="subAccoundId">账号id</param>
+        public int AddOrEditAccount(string phone, int epId, int subAccoundId)
+        {
+            var checkSql = @";SELECT count(1) FROM dbo.T_EPAccount WHERE Phone = @phone AND IsDel = 0 AND id != @subAccoundId";
+            var count = DbPartJob.ExecuteScalar<int>(checkSql, new { phone, subAccoundId });
+            if (count > 0)
+                return -1;
+            var sql = @";
+IF EXISTS (SELECT 1 FROM dbo.T_EPAccount WHERE id = @subAccoundId AND IsDel = 0)
+	BEGIN
+	    UPDATE dbo.T_EPAccount SET Phone = @phone ,ModifyTime = GETDATE() WHERE id = @subAccoundId AND IsDel = 0
+	END
+ELSE
+	BEGIN
+	    INSERT
+        INTO
+        dbo.T_EPAccount
+                ( EnterpriseId ,
+                  Phone ,
+                  PermissionIds ,
+                  Type ,
+                  Status ,
+                  Note ,
+                  IsDel ,
+                  ModifyUserId ,
+                  ModifyTime ,
+                  CreateUserId ,
+                  CreateTime
+                )
+        VALUES  ( @epId , -- EnterpriseId - int
+                  @phone , -- Phone - nvarchar(15)
+                  N'' , -- PermissionIds - nvarchar(200)
+                  2 , -- Type - tinyint
+                  1 , -- Status - tinyint
+                  N'' , -- Note - nvarchar(500)
+                  0 , -- IsDel - bit
+                  0 , -- ModifyUserId - int
+                  GETDATE() , -- ModifyTime - datetime
+                  0 , -- CreateUserId - int
+                  GETDATE()  -- CreateTime - datetime
+                )
+	END";
+            return DbPartJob.Execute(sql, new { epId, phone, subAccoundId });
+        }
     }
 }

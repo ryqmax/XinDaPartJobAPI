@@ -207,6 +207,66 @@ namespace XinDaPartJobAPI.Controllers
             return result;
         }
 
+        /// <summary>
+        /// 新增或修改子账号，修改主账号
+        /// </summary>
+        [HttpPost]
+        [Route("api/EP/AddOrEditAccount")]
+        public object AddOrEditAccount(AddOrEditAccountViewModel request)
+        {
+            var result = new BaseViewModel
+            {
+                Info = CommonData.FailStr,
+                Message = CommonData.FailStr,
+                Msg = false,
+                ResultCode = CommonData.FailCode
+            };
+            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
+            if (!redisModel.IsMainAccount)//如果不是主账号，没有权限修改
+            {
+                result.Info = CommonData.NoAuth;
+                result.Message = CommonData.NoAuth;
+                return result;
+            }
+            if (string.IsNullOrEmpty(request.VerifyCode))//验证码不能为空
+            {
+                result.Info = CommonData.CodeNotNULL;
+                result.Message = CommonData.CodeNotNULL;
+                return result;
+            }
+            var oldCode = RedisInfoHelper.RedisManager.Getstring(request.Phone);
+            if (!string.IsNullOrEmpty(oldCode))//缓存未过期
+            {
+                oldCode = oldCode.Replace("\"", "");
+                if (!oldCode.Equals(request.VerifyCode))//验证码不正确
+                {
+                    result.Info = CommonData.CodeNotCorrect;
+                    result.Message = CommonData.CodeNotCorrect;
+                    return result;
+                }
+            }
+            else   //缓存过期
+            {
+                result.Info = CommonData.CodePassdate;
+                result.Message = CommonData.CodePassdate;
+                return result;
+            }
 
+            var res = EPService.AddOrEditAccount(request.Phone, redisModel.EPId, request.SubAccoundId);
+            if (res < 0)
+            {
+                result.Info = CommonData.PhoneHasBind;
+                result.Message = CommonData.PhoneHasBind;
+                return result;
+            }
+            result = new BaseViewModel
+            {
+                Info = CommonData.SuccessStr,
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
+            };
+            return result;
+        }
     }
 }

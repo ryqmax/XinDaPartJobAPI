@@ -60,5 +60,10 @@ namespace FrameWork.Common.Models
         /// 身份标志，0.缓存失效，1.求职者，2.企业
         /// </summary>
         public TokenMarkEnum Mark { set; get; }
+
+        /// <summary>
+        /// 是否是主账号
+        /// </summary>
+        public bool IsMainAccount { set; get; }
     }
 }

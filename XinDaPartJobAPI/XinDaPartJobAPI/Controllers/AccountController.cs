@@ -179,7 +179,7 @@ namespace XinDaPartJobAPI.Controllers
                 AccountService.EPLoginForInsert(request);
                 userModel = AccountService.EpLogin(request);
                 viewModel.IsMainAccount = true;
-                viewModel.Token = GetEPToken(userModel, request);
+                viewModel.Token = GetEPToken(userModel, request, true);
                 result = new BaseViewModel
                 {
                     Info = viewModel,
@@ -213,7 +213,7 @@ namespace XinDaPartJobAPI.Controllers
                 if (userModel.EPAStatus == (byte)AccountStatus.Using && userModel.EPStatus == (byte)AccountStatus.Using)
                 {
                     viewModel.IsMainAccount = userModel.Type == (byte)AccountType.Main;
-                    viewModel.Token = GetEPToken(userModel, request);
+                    viewModel.Token = GetEPToken(userModel, request, viewModel.IsMainAccount);
                     result = new BaseViewModel
                     {
                         Info = viewModel,
@@ -232,7 +232,7 @@ namespace XinDaPartJobAPI.Controllers
         /// </summary>
         /// <param name="model">企业信息实体</param>
         /// <param name="request">接口参数</param>
-        private string GetEPToken(EPLoginModel model, EPLoginRequest request)
+        private string GetEPToken(EPLoginModel model, EPLoginRequest request, bool isMainAccount = false)
         {
             var token = GuidHelper.GetPrimarykey();
             var oldToken = RedisInfoHelper.RedisManager.Getstring("epid" + model.EPId);
@@ -253,7 +253,8 @@ namespace XinDaPartJobAPI.Controllers
                 Token = token,
                 UserId = model.EPAId,
                 WxName = string.Empty,
-                Phone = request.Phone
+                Phone = request.Phone,
+                IsMainAccount = isMainAccount
             };
 
             RedisInfoHelper.RedisManager.Set("epid" + model.EPId, token, DateTime.Now.AddDays(1));

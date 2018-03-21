@@ -68,6 +68,16 @@ namespace FrameWork.Common.Const
         /// </summary>
         public static string ActionNameError = "方法名不存在";
 
+        /// <summary>
+        /// 没有权限调用使用该功能
+        /// </summary>
+        public static string NoAuth = "没有权限调用使用该功能";
+
+        /// <summary>
+        /// 手机号已被绑定，请更换其他手机号
+        /// </summary>
+        public static string PhoneHasBind = "手机号已被绑定，请更换其他手机号";
+
 
         #region 企业登录
 

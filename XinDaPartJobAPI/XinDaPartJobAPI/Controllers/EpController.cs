@@ -212,7 +212,7 @@ namespace XinDaPartJobAPI.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/EP/AddOrEditAccount")]
-        public object AddOrEditAccount(AddOrEditAccountViewModel request)
+        public object AddOrEditAccount(AddOrEditAccountRequest request)
         {
             var result = new BaseViewModel
             {
@@ -259,6 +259,38 @@ namespace XinDaPartJobAPI.Controllers
                 result.Message = CommonData.PhoneHasBind;
                 return result;
             }
+            result = new BaseViewModel
+            {
+                Info = CommonData.SuccessStr,
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
+            };
+            return result;
+        }
+
+        /// <summary>
+        /// 注销子账号
+        /// </summary>
+        [HttpPost]
+        [Route("api/EP/DelAccount")]
+        public object DelAccount(DelAccountRequest request)
+        {
+            var result = new BaseViewModel
+            {
+                Info = CommonData.FailStr,
+                Message = CommonData.FailStr,
+                Msg = false,
+                ResultCode = CommonData.FailCode
+            };
+            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
+            if (!redisModel.IsMainAccount)//如果不是主账号，没有权限修改
+            {
+                result.Info = CommonData.NoAuth;
+                result.Message = CommonData.NoAuth;
+                return result;
+            }
+            EPService.DelAccount(request.SubAccoundId);
             result = new BaseViewModel
             {
                 Info = CommonData.SuccessStr,

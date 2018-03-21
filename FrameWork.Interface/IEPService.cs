@@ -56,5 +56,10 @@ namespace FrameWork.Interface
         /// <param name="epId">企业id</param>
         /// <param name="subAccoundId">账号id</param>
         int AddOrEditAccount(string phone, int epId,int subAccoundId);
+
+        /// <summary>
+        /// 删除子账号
+        /// </summary>
+        int DelAccount(int subAccoundId);
     }
 }

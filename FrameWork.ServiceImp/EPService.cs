@@ -176,5 +176,15 @@ ELSE
 	END";
             return DbPartJob.Execute(sql, new { epId, phone, subAccoundId });
         }
+
+        /// <summary>
+        /// 删除子账号
+        /// </summary>
+        public int DelAccount(int subAccoundId)
+        {
+            var sql = @";UPDATE dbo.T_EPAccount SET IsDel = 1 WHERE Id = @subAccoundId AND IsDel = 0 AND Type = 2";
+
+            return DbPartJob.Execute(sql, new {subAccoundId});
+        }
     }
 }

@@ -106,5 +106,15 @@ namespace FrameWork.Common.Const
         /// </summary>
         public static string RegionRedisCache = "allRegions";
 
+        /// <summary>
+        /// 保存路径
+        /// </summary>
+        public static string TPImageSavePath = ConfigurationManager.AppSettings["TPImageSavePath"];
+
+        /// <summary>
+        /// 上传路径
+        /// </summary>
+        public static string TPImageUpPath = ConfigurationManager.AppSettings["TPImageUpPath"];
+
     }
 }

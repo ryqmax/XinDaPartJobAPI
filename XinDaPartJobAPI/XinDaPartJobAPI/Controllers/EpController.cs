@@ -15,6 +15,8 @@
  ***********************************************************************************/
 
 
+using System;
+using System.IO;
 using System.Web.Http;
 using FrameWork.Common;
 using FrameWork.Common.Const;
@@ -132,6 +134,38 @@ namespace XinDaPartJobAPI.Controllers
             return result;
         }
 
+        /// <summary>
+        /// 上传图片接口
+        /// </summary>
+        [HttpPost]
+        [Route("api/EP/UploadImg")]
+        public object UploadImg(UploadImgRequest img)
+        {
+            var result = new BaseViewModel
+            {
+                Info = CommonData.SuccessStr,
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
+            };
+            var uppath = CommonData.TPImageUpPath; //获取图片上传路径
+            var savepath = CommonData.TPImageSavePath; //获取图片保存数据库中的路径
 
+            var name = DateTime.Now.ToString("yyyyMMddHHmmssffff") + ".png";  //图片命名
+            var newFilePath = string.Format(savepath, "userphoto");
+            newFilePath += name;
+            var filepath = string.Format(uppath, "userphoto");
+            if (!Directory.Exists(filepath))
+            {
+                Directory.CreateDirectory(filepath);
+            }
+            filepath += name;
+            var msContent = Convert.FromBase64String(img.Content);
+            var fs = new FileStream(filepath, FileMode.Create);
+            fs.Write(msContent, 0, (int)msContent.Length);
+            fs.Close();
+            result.Info = new UploadImgViewModel { ShowUrl = PictureHelper.ConcatPicUrl(newFilePath), SaveUrl = newFilePath };
+            return result.ToJson();
+        }
     }
 }

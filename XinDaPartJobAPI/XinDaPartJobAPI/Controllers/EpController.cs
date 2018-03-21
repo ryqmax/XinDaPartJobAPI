@@ -208,7 +208,7 @@ namespace XinDaPartJobAPI.Controllers
         }
 
         /// <summary>
-        /// 新增或修改子账号，修改主账号
+        /// 新增或修改子账号，修改主账号手机号
         /// </summary>
         [HttpPost]
         [Route("api/EP/AddOrEditAccount")]

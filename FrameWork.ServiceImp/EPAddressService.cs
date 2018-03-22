@@ -34,5 +34,15 @@ namespace FrameWork.ServiceImp
             var sql = @";SELECT * FROM dbo.T_EPAddress WHERE EnterpriseId = @epId AND IsDel = 0";
             return DbPartJob.Fetch<T_EPAddress>(sql, new { epId });
         }
+
+        /// <summary>
+        /// 删除地址
+        /// </summary>
+        /// <param name="addressId">地址id</param>
+        public int DelEPAddress(int addressId)
+        {
+            var sql = @";UPDATE dbo.T_EPAddress SET IsDel = 1 WHERE Id = @addressId";
+            return DbPartJob.Execute(sql, new { addressId });
+        }
     }
 }

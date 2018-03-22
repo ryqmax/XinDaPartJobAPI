@@ -114,6 +114,7 @@
     <Compile Include="ViewModel\Account\UserViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\EPAddress\AddEPAddressViewModel.cs" />
+    <Compile Include="ViewModel\EPAddress\DelEPAddressViewModel.cs" />
     <Compile Include="ViewModel\EPAddress\GetAddressListViewModel.cs" />
     <Compile Include="ViewModel\EP\AddOrEditAccountViewModel.cs" />
     <Compile Include="ViewModel\EP\DelAccountViewModel.cs" />

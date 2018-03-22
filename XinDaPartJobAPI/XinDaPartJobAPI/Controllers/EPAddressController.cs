@@ -87,5 +87,25 @@ namespace XinDaPartJobAPI.Controllers
             };
             return result;
         }
+
+        /// <summary>
+        /// 删除地址
+        /// </summary>
+        [HttpPost]
+        [Route("api/EPAddress/DelEPAddress")]
+        public object DelEPAddress(DelEPAddressRequest request)
+        {
+            EPAddressService.DelEPAddress(request.AddressId);
+            var result = new BaseViewModel
+            {
+                Info = CommonData.SuccessStr,
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
+            };
+            return result;
+        }
+
+
     }
 }

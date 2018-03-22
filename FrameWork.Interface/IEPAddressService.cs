@@ -12,5 +12,11 @@ namespace FrameWork.Interface
         /// </summary>
         /// <param name="epId">企业id</param>
         List<T_EPAddress> GetAddresseList(int epId);
+
+        /// <summary>
+        /// 删除地址
+        /// </summary>
+        /// <param name="addressId">地址id</param>
+        int DelEPAddress(int addressId);
     }
 }

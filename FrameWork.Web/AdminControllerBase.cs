@@ -56,5 +56,10 @@ namespace FrameWork.Web
         /// </summary>
         protected IEPAddressService EPAddressService => ServiceHelper.CreateService<IEPAddressService>();
 
+        /// <summary>
+        /// 实例化IVIPInfoService
+        /// </summary>
+        protected IVIPInfoService VIPInfoService => ServiceHelper.CreateService<IVIPInfoService>();
+
     }
 }

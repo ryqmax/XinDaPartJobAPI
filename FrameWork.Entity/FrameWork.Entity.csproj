@@ -136,6 +136,7 @@
     <Compile Include="ViewModel\SignIn\RecentSignInInfo.cs" />
     <Compile Include="ViewModel\SignIn\GetSignInInfoReq.cs" />
     <Compile Include="ViewModel\UserForToken.cs" />
+    <Compile Include="ViewModel\Vip\GetVipListViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FrameWork.Common\FrameWork.Common.csproj">

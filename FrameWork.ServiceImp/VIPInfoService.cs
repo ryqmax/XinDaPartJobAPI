@@ -36,5 +36,14 @@ namespace FrameWork.ServiceImp
             var sql = @"SELECT * FROM dbo.T_VIPInfo WHERE IsDel = 0 ORDER BY Seq ";
             return DbPartJob.Fetch<T_VIPInfo>(sql);
         }
+
+        /// <summary>
+        /// 获取vip信息详情
+        /// </summary>
+        public T_VIPInfo GetVipInfo(int vipInfoId)
+        {
+            var sql = @"SELECT * FROM dbo.T_VIPInfo WHERE IsDel = 0 AND id = @vipInfoId";
+            return DbPartJob.FirstOrDefault<T_VIPInfo>(sql, new {vipInfoId});
+        }
     }
 }

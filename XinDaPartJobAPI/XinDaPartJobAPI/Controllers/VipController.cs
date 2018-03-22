@@ -25,7 +25,7 @@ namespace XinDaPartJobAPI.Controllers
     /// <summary>
     /// VipController
     /// </summary>
-    public class VipController:AdminControllerBase
+    public class VipController : AdminControllerBase
     {
         /// <summary>
         /// 获取会员列表
@@ -45,7 +45,24 @@ namespace XinDaPartJobAPI.Controllers
             };
             return result;
         }
+
+        /// <summary>
+        /// 获取会员详情
+        /// </summary>
+        [HttpPost]
+        [Route("api/Vip/GetVipInfo")]
+        public object GetVipInfo(GetVipInfoRequest request)
+        {
+            var model = VIPInfoService.GetVipInfo(request.VipInfoId);
+            var viewModel = new GetVipInfoViewModel().GetViewModel(model);
+            var result = new BaseViewModel
+            {
+                Info = viewModel,
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
+            };
+            return result;
+        }
     }
-
-
 }

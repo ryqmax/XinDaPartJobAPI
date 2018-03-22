@@ -105,7 +105,6 @@ namespace XinDaPartJobAPI.Controllers
             };
             return result;
         }
-
-
+        
     }
 }

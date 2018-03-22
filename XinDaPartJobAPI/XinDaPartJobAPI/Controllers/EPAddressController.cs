@@ -13,9 +13,12 @@
  *      History:
  ***********************************************************************************/
 
+using System;
+using System.Linq;
 using System.Web.Http;
 using FrameWork.Common;
 using FrameWork.Common.Const;
+using FrameWork.Entity.Entity;
 using FrameWork.Entity.ViewModel;
 using FrameWork.Entity.ViewModel.EPAddress;
 using FrameWork.Web;
@@ -48,6 +51,41 @@ namespace XinDaPartJobAPI.Controllers
             return result;
         }
 
-
+        /// <summary>
+        /// 新增地址，根据类型区分兼职、全职、全部
+        /// </summary>
+        [HttpPost]
+        [Route("api/EPAddress/AddEPAddress")]
+        public object AddEPAddress(AddEPAddressRequest request)
+        {
+            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
+            var regions = CacheContext.DicRegions;
+            var model = new T_EPAddress
+            {
+                Id = 0,
+                Address = request.Address,
+                ProvinceId = regions.FirstOrDefault(r => r.Description.Contains(request.Province) && r.ParentId == null)?.Id,
+                Type = (byte)request.Type,
+                CreateTime = DateTime.Now,
+                CreateUserId = redisModel.UserId,
+                EnterpriseId = redisModel.EPId,
+                IsDel = false,
+                Lat = request.Lat,
+                Lng = request.Lng,
+                ModifyTime = DateTime.Now,
+                ModifyUserId = redisModel.UserId
+            };
+            model.CityId = regions.FirstOrDefault(r => r.Description.Contains(request.City) && r.ParentId == model.ProvinceId)?.Id;
+            model.AreaId = regions.FirstOrDefault(r => r.Description.Contains(request.Area) && r.ParentId == model.CityId)?.Id;
+            EPAddressService.Add(model);
+            var result = new BaseViewModel
+            {
+                Info = CommonData.SuccessStr,
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
+            };
+            return result;
+        }
     }
 }

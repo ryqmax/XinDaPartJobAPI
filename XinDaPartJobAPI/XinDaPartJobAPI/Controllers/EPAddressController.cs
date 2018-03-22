@@ -34,9 +34,9 @@ namespace XinDaPartJobAPI.Controllers
         [Route("api/EPAddress/GetAddressList")]
         public object GetAddressList(GetAddressListRequest request)
         {
-            //var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
+            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
             var regions = CacheContext.DicRegions;
-            var models = EPAddressService.GetAddresseList(1);
+            var models = EPAddressService.GetAddresseList(redisModel.EPId);
             var viewModels = new GetAddressListViewModel().GetViewModels(models, regions);
             var result = new BaseViewModel
             {
@@ -47,5 +47,7 @@ namespace XinDaPartJobAPI.Controllers
             };
             return result;
         }
+
+
     }
 }

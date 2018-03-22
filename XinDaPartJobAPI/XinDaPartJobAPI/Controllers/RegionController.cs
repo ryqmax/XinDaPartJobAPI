@@ -13,14 +13,10 @@
  *      History:
  ***********************************************************************************/
 
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Http;
 using FrameWork.Common.Const;
 using FrameWork.Entity.ViewModel;
-using FrameWork.Entity.ViewModel.Account;
 using FrameWork.Entity.ViewModel.Region;
 using FrameWork.Web;
 

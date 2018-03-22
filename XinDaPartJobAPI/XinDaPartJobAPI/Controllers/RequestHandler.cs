@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using FrameWork.Common;
 using FrameWork.Common.Const;
-using FrameWork.Common.Enum;
 using FrameWork.Entity.ViewModel;
 using Newtonsoft.Json;
 using System.Linq;

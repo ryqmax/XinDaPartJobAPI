@@ -51,5 +51,10 @@ namespace FrameWork.Web
         /// </summary>
         protected IJobService JobService => ServiceHelper.CreateService<IJobService>();
 
+        /// <summary>
+        /// 实例化IEPAddressService
+        /// </summary>
+        protected IEPAddressService EPAddressService => ServiceHelper.CreateService<IEPAddressService>();
+
     }
 }

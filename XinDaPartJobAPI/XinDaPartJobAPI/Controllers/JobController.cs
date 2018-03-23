@@ -75,6 +75,7 @@ namespace XinDaPartJobAPI.Controllers
                 userId = 0;
             var model = JobService.GetPartJob(request.JobId, userId);
             var jobAddr = JobService.GetJobAdderssList(request.JobId);
+            //TODO:广告列表没有返回
             var viewModel = new GetPartJobViewModel().GetViewModel(model, jobAddr, CacheContext.DicRegions);
             var result = new BaseViewModel
             {

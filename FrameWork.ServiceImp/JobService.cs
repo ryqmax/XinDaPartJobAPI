@@ -144,7 +144,7 @@ namespace FrameWork.ServiceImp
 	                (SELECT COUNT(1) FROM dbo.T_CVDelivery cd WHERE cd.IsDel = 0 AND cd.JobId = j.Id)ApplyCount,
 	                j.ViewCount,
 	                ep.Logo AS EPLogo,
-	                ep.Name AS EPName,
+	                ep.ShortName AS EPName,
 	                j.EnterpriseId,
 	                ep.Level AS EPLevel,
 	                j.WorkTime,

@@ -3,6 +3,7 @@ using System.Web.Http;
 using FrameWork.Common;
 using FrameWork.Common.Const;
 using FrameWork.Common.Enum;
+using FrameWork.Common.Models;
 using FrameWork.Entity.ViewModel;
 using FrameWork.Entity.ViewModel.Job;
 using FrameWork.Entity.ViewModel.SignIn;
@@ -69,7 +70,10 @@ namespace XinDaPartJobAPI.Controllers
         public object GetPartJob(GetPartJobRequest request)
         {
             var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
-            var model = JobService.GetPartJob(request.JobId, redisModel.UserId);
+            var userId = redisModel.UserId;
+            if (redisModel.Mark == TokenMarkEnum.Enterprise)
+                userId = 0;
+            var model = JobService.GetPartJob(request.JobId, userId);
             var jobAddr = JobService.GetJobAdderssList(request.JobId);
             var viewModel = new GetPartJobViewModel().GetViewModel(model, jobAddr, CacheContext.DicRegions);
             var result = new BaseViewModel

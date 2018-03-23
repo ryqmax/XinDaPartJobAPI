@@ -88,6 +88,33 @@ namespace XinDaPartJobAPI.Controllers
         }
 
         /// <summary>
+        /// 获取全职岗位详情
+        /// </summary>
+        [HttpPost]
+        [Route("api/Job/GetFullJob")]
+        public object GetFullJob(GetPartJobRequest request)
+        {
+            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
+            var userId = redisModel.UserId;
+            if (redisModel.Mark == TokenMarkEnum.Enterprise)
+                userId = 0;
+            var model = JobService.GetFullJob(request.JobId, userId);
+            var jobAddr = JobService.GetJobAdderssList(request.JobId);
+            var welfares = JobService.GetJobWelfareList(request.JobId);
+
+            //TODO:广告列表没有返回
+            var viewModel = new GetFullJobViewModel().GetViewModel(model, jobAddr, CacheContext.DicRegions, welfares);
+            var result = new BaseViewModel
+            {
+                Info = viewModel,
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
+            };
+            return result;
+        }
+
+        /// <summary>
         /// 获取用户要投递的兼职简历列表
         /// </summary>
         [HttpPost]

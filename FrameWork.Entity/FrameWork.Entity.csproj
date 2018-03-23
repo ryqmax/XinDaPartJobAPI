@@ -105,6 +105,7 @@
     <Compile Include="Model\Account\EPLoginModel.cs" />
     <Compile Include="Model\EP\GetAccountListModel.cs" />
     <Compile Include="Model\EP\GetEPContactsModel.cs" />
+    <Compile Include="Model\Job\GetFullJobModel.cs" />
     <Compile Include="Model\Job\GetPartJobModel.cs" />
     <Compile Include="Model\Job\GetUserPostPartCVListModel.cs" />
     <Compile Include="ViewModel\Account\EPLoginViewModel.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="ViewModel\EP\SaveAccountPermissionViewModel.cs" />
     <Compile Include="ViewModel\EP\SaveEPContactsViewModel.cs" />
     <Compile Include="ViewModel\EP\UploadImgViewModel.cs" />
+    <Compile Include="ViewModel\Job\GetFullJobViewModel.cs" />
     <Compile Include="ViewModel\Job\GetPartJobViewModel.cs" />
     <Compile Include="ViewModel\Job\GetUserPostPartCVListViewModel.cs" />
     <Compile Include="ViewModel\Job\UserPostCVViewModel.cs" />

@@ -246,5 +246,61 @@ IF NOT EXISTS (SELECT 1 FROM dbo.T_CVDelivery cd WHERE cd.IsDel = 0 AND cd.UserI
 ";
             return DbPartJob.Execute(sql, new { userId, cvId, jobId });
         }
+
+        /// <summary>
+        /// 获取全职岗位详情
+        /// </summary>
+        public GetFullJobModel GetFullJob(int jobId, int userId)
+        {
+            var sql = @";
+                SELECT
+	                j.Id AS JobId,
+	                j.Name AS JobName,
+	                j.SalaryLower,
+	                j.SalaryUpper,
+	                ca.Name AS JobCategoryName,
+	                (SELECT COUNT(1) FROM dbo.T_CVDelivery cd WHERE cd.IsDel = 0 AND cd.JobId = j.Id)ApplyCount,
+	                j.ViewCount,
+	                ep.Logo AS EPLogo,
+	                ep.ShortName AS EPName,
+	                j.EnterpriseId,
+	                ep.Level AS EPLevel,
+	                j.WorkTime,
+	                j.OfficeRequire,
+	                j.WorkContent,	
+	                hm.Name AS EPHiringManagerName,
+	                hm.HeadPicUrl AS EPHiringHeadImg,
+	                hm.Phone AS EPHiringPhone,
+                    ISNULL((SELECT TOP 1 cv.Id FROM dbo.T_CV cv WHERE cv.IsDel = 0 AND cv.Type = j.Type AND cv.Completion >= 80  AND cv.UserId = @userId),0) CVId
+                FROM
+	                dbo.T_Job j	                
+	                LEFT JOIN dbo.T_JobCategory ca ON j.JobCategoryId = ca.Id
+	                LEFT JOIN dbo.T_Enterprise ep ON j.EnterpriseId = ep.Id
+	                LEFT JOIN dbo.T_EPHiringManager hm ON j.EPHiringManagerId = hm.Id
+                WHERE
+	                j.IsDel = 0 
+	                AND ca.IsDel = 0 AND ep.IsDel = 0 
+	                AND hm.IsDel = 0 AND j.Id = @jobId";
+
+            return DbPartJob.FirstOrDefault<GetFullJobModel>(sql, new { jobId, userId });
+        }
+
+        /// <summary>
+        /// 获取该工作的福利待遇
+        /// </summary>
+        public List<T_EPWelfare> GetJobWelfareList(int jobId)
+        {
+            var sql = @";
+            SELECT
+	            w.*
+            FROM
+	            dbo.T_JobWelfare jw 
+	            LEFT JOIN dbo.T_EPWelfare w ON jw.EPWelfareId = w.Id
+            WHERE
+	            jw.IsDel = 0 AND w.IsDel = 0 
+	            AND jw.JobId = @jobId";
+
+            return DbPartJob.Fetch<T_EPWelfare>(sql, new {jobId});
+        }
     }
 }

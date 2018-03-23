@@ -35,5 +35,15 @@ namespace FrameWork.Interface
         /// <param name="cvId">简历id</param>
         /// <param name="jobId">岗位id</param>
         int UserPostCV(int userId, int cvId, int jobId);
+
+        /// <summary>
+        /// 获取全职岗位详情
+        /// </summary>
+        GetFullJobModel GetFullJob(int jobId, int userId);
+
+        /// <summary>
+        /// 获取该工作的福利待遇
+        /// </summary>
+        List<T_EPWelfare> GetJobWelfareList(int jobId);
     }
 }

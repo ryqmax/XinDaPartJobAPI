@@ -192,7 +192,7 @@ WHERE
         public List<GetUserPostPartCVListModel> GetUserPostPartCVList(int userId)
         {
             var sql = @";
-                SELECT
+                SELECT  TOP 5
 	                cv.Id AS CVId,
 	                cv.SkillSummary,
 	                u.HeadImg

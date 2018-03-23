@@ -47,7 +47,7 @@ namespace XinDaPartJobAPI.Controllers
                     IsSelf = jobInfo.IsSelf,
                     IsAdvert = false,
                     IsPractice = jobInfo.IsPractice,
-                    IsEnd = PageHelper.JudgeNextPage(jobInfo.TotalNum,request.Page,request.PageSize)
+                    IsEnd = PageHelper.JudgeNextPage(jobInfo.TotalNum, request.Page, request.PageSize)
                 };
                 getJobListRespInfoList.Add(getJobListRespInfo);
             }
@@ -69,19 +69,12 @@ namespace XinDaPartJobAPI.Controllers
         public object GetPartJob(GetPartJobRequest request)
         {
             var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
-            /**
-             SELECT
-	j.Id AS JobId,
-	j.Name AS JobName,
-	j.SalaryLower,
-	j.SalaryUpper
-FROM
-	dbo.T_Job j
-	LEFT JOIN dbo.T_PayWay pw ON j.PayWayId = pw.Id
-             */
+            var model = JobService.GetPartJob(request.JobId, redisModel.UserId);
+            var jobAddr = JobService.GetJobAdderssList(request.JobId);
+            var viewModel = new GetPartJobViewModel().GetViewModel(model, jobAddr, CacheContext.DicRegions);
             var result = new BaseViewModel
             {
-                Info = CommonData.SuccessStr,
+                Info = viewModel,
                 Message = CommonData.SuccessStr,
                 Msg = true,
                 ResultCode = CommonData.SuccessCode

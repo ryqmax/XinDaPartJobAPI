@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using FrameWork.Common;
 using FrameWork.Entity.Entity;
+using FrameWork.Entity.Model.Job;
 using FrameWork.Entity.ViewModel.Job;
 using FrameWork.Entity.ViewModel.SignIn;
 using FrameWork.Interface;
@@ -123,7 +124,66 @@ namespace FrameWork.ServiceImp
 
                         DROP TABLE #JobIdTemp;
                         DROP TABLE #JobIdPageTemp;";
-            return DbPartJob.Fetch<JobInfo>(sql, new { type = getJobListReq.Type, areaid = getJobListReq.RegionId, jobcaid = getJobListReq.JobTypeId, level = getJobListReq.EmployerRankId, cityId, startPage,endPage });
+            return DbPartJob.Fetch<JobInfo>(sql, new { type = getJobListReq.Type, areaid = getJobListReq.RegionId, jobcaid = getJobListReq.JobTypeId, level = getJobListReq.EmployerRankId, cityId, startPage, endPage });
+        }
+
+        /// <summary>
+        /// 获取兼职岗位详情
+        /// </summary>
+        public GetPartJobModel GetPartJob(int jobId, int userId)
+        {
+            var sql = @";
+                SELECT
+	                j.Id AS JobId,
+	                j.Name AS JobName,
+	                j.SalaryLower,
+	                j.SalaryUpper,
+	                ca.Name AS JobCategoryName,
+	                pw.Unit AS PayUnit,
+	                pw.Name AS PayWay,
+	                (SELECT COUNT(1) FROM dbo.T_CVDelivery cd WHERE cd.IsDel = 0 AND cd.JobId = j.Id)ApplyCount,
+	                j.ViewCount,
+	                ep.Logo AS EPLogo,
+	                ep.Name AS EPName,
+	                j.EnterpriseId,
+	                ep.Level AS EPLevel,
+	                j.WorkTime,
+	                j.OfficeRequire,
+	                j.WorkContent,	
+	                hm.Name AS EPHiringManagerName,
+	                hm.HeadPicUrl AS EPHiringHeadImg,
+	                hm.Phone AS EPHiringPhone,
+                    (SELECT COUNT(1) FROM dbo.T_CV cv WHERE cv.IsDel = 0 AND cv.Type = j.Type AND cv.Completion >= 80  AND cv.UserId = @userId)CVCount
+                FROM
+	                dbo.T_Job j
+	                LEFT JOIN dbo.T_PayWay pw ON j.PayWayId = pw.Id
+	                LEFT JOIN dbo.T_JobCategory ca ON j.JobCategoryId = ca.Id
+	                LEFT JOIN dbo.T_Enterprise ep ON j.EnterpriseId = ep.Id
+	                LEFT JOIN dbo.T_EPHiringManager hm ON j.EPHiringManagerId = hm.Id
+                WHERE
+	                j.IsDel = 0 AND pw.IsDel = 0
+	                AND ca.IsDel = 0 AND ep.IsDel = 0 
+	                AND hm.IsDel = 0 AND j.Id = @jobId";
+
+            return DbPartJob.FirstOrDefault<GetPartJobModel>(sql, new { jobId, userId });
+        }
+
+        /// <summary>
+        /// 获取该岗位的工作地点列表
+        /// </summary>
+        public List<T_EPAddress> GetJobAdderssList(int jobId)
+        {
+            var sql = @";
+SELECT 
+	ea.*
+FROM
+	dbo.T_JobAddress ja 
+	LEFT JOIN dbo.T_EPAddress ea ON ja.EPAddressId = ea.Id
+WHERE
+	ja.IsDel = 0 AND ea.IsDel = 0 
+	AND ja.JobId = @jobId";
+
+            return DbPartJob.Fetch<T_EPAddress>(sql, new { jobId });
         }
     }
 }

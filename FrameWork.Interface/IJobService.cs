@@ -27,5 +27,13 @@ namespace FrameWork.Interface
         /// 获取该用户可以投递的兼职简历列表
         /// </summary>
         List<GetUserPostPartCVListModel> GetUserPostPartCVList(int userId);
+
+        /// <summary>
+        /// 用户投递简历到某个岗位
+        /// </summary>
+        /// <param name="userId">用户id</param>
+        /// <param name="cvId">简历id</param>
+        /// <param name="jobId">岗位id</param>
+        int UserPostCV(int userId, int cvId, int jobId);
     }
 }

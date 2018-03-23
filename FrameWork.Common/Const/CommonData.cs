@@ -78,6 +78,11 @@ namespace FrameWork.Common.Const
         /// </summary>
         public static string PhoneHasBind = "手机号已被绑定，请更换其他手机号";
 
+        /// <summary>
+        /// 企业不能投递简历
+        /// </summary>
+        public static string EPNotPostCV = "企业不能投递简历";
+
 
         #region 企业登录
 

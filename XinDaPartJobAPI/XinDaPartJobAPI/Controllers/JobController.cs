@@ -109,5 +109,35 @@ namespace XinDaPartJobAPI.Controllers
             };
             return result;
         }
+
+        /// <summary>
+        /// 用户投递简历到某个岗位
+        /// </summary>
+        [HttpPost]
+        [Route("api/Job/UserPostCV")]
+        public object UserPostCV(UserPostCVRequest request)
+        {
+            var result = new BaseViewModel
+            {
+                Info = CommonData.SuccessStr,
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
+            };
+            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
+            var userId = redisModel.UserId;
+            if (redisModel.Mark == TokenMarkEnum.Enterprise)
+            {
+                result = new BaseViewModel
+                {
+                    Info = CommonData.EPNotPostCV,
+                    Message = CommonData.EPNotPostCV,
+                    Msg = false,
+                    ResultCode = CommonData.FailCode
+                };
+            }
+            JobService.UserPostCV(userId, request.CVId, request.JobId);
+            return result;
+        }
     }
 }

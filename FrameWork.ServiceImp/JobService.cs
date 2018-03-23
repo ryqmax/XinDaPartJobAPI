@@ -205,5 +205,46 @@ WHERE
                 ";
             return DbPartJob.Fetch<GetUserPostPartCVListModel>(sql, new { userId });
         }
+
+        /// <summary>
+        /// 用户投递简历到某个岗位
+        /// </summary>
+        /// <param name="userId">用户id</param>
+        /// <param name="cvId">简历id</param>
+        /// <param name="jobId">岗位id</param>
+        public int UserPostCV(int userId, int cvId, int jobId)
+        {
+            var sql = @";
+IF NOT EXISTS (SELECT 1 FROM dbo.T_CVDelivery cd WHERE cd.IsDel = 0 AND cd.UserId = @userId  AND cd.CvId = @cvId AND cd.JobId = @jobId)
+	BEGIN
+	    INSERT
+        INTO
+        dbo.T_CVDelivery
+                ( UserId ,
+                  CvId ,
+                  JobId ,
+                  EnterpriseId ,
+                  IsDel ,
+                  EPIsDel ,
+                  ModifyUserId ,
+                  ModifyTime ,
+                  CreateUserId ,
+                  CreateTime
+                )
+        VALUES  ( @userId , -- UserId - int
+                  @cvId , -- CvId - int
+                  @jobId , -- JobId - int
+                  (SELECT j.EnterpriseId FROM dbo.T_Job j WHERE j.IsDel = 0 AND j.Id = @jobId) , -- EnterpriseId - int
+                  0 , -- IsDel - bit
+                  0 , -- EPIsDel - bit
+                  0 , -- ModifyUserId - int
+                  GETDATE() , -- ModifyTime - datetime
+                  0 , -- CreateUserId - int
+                  GETDATE()  -- CreateTime - datetime
+                )
+	END
+";
+            return DbPartJob.Execute(sql, new { userId, cvId, jobId });
+        }
     }
 }

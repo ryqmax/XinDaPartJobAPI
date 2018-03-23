@@ -70,12 +70,7 @@ namespace FrameWork.Entity.ViewModel.Job
         /// 结算单位
         /// </summary>
         public string PayUnit { set; get; }
-
-        /// <summary>
-        /// 结算方式
-        /// </summary>
-        public string PayWay { set; get; }
-
+        
         /// <summary>
         /// 申请数量
         /// </summary>

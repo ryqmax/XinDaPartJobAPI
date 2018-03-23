@@ -127,6 +127,7 @@
     <Compile Include="ViewModel\EP\SaveAccountPermissionViewModel.cs" />
     <Compile Include="ViewModel\EP\SaveEPContactsViewModel.cs" />
     <Compile Include="ViewModel\EP\UploadImgViewModel.cs" />
+    <Compile Include="ViewModel\Job\GetPartJobViewModel.cs" />
     <Compile Include="ViewModel\Region\GetCityListViewModel.cs" />
     <Compile Include="ViewModel\Job\GetJobListReq.cs" />
     <Compile Include="ViewModel\Job\GetJobListRespInfo.cs" />

@@ -16,13 +16,17 @@
 
 
 using System;
+using System.Drawing;
 using System.IO;
+using System.Web;
+using System.Web.Configuration;
 using System.Web.Http;
 using FrameWork.Common;
 using FrameWork.Common.Const;
 using FrameWork.Entity.ViewModel;
 using FrameWork.Entity.ViewModel.EP;
 using FrameWork.Web;
+using Microsoft.AspNet.Identity;
 
 namespace XinDaPartJobAPI.Controllers
 {
@@ -158,7 +162,7 @@ namespace XinDaPartJobAPI.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/EP/UploadImg")]
-        public object UploadImg(UploadImgRequest img)
+        public object UploadImg()
         {
             var result = new BaseViewModel
             {
@@ -167,6 +171,18 @@ namespace XinDaPartJobAPI.Controllers
                 Msg = true,
                 ResultCode = CommonData.SuccessCode
             };
+            
+            var runTime = (HttpRuntimeSection)WebConfigurationManager.GetSection("system.web/httpRuntime");
+            var maxRequestLength = (runTime.MaxRequestLength) * 1024;
+            if (HttpContext.Current.Request.ContentLength > maxRequestLength)
+            {
+                throw new Exception();
+            }
+            var file = HttpContext.Current.Request.Files[0];
+            if (file == null)
+            {
+                throw new Exception();
+            }
             var uppath = CommonData.TPImageUpPath; //获取图片上传路径
             var savepath = CommonData.TPImageSavePath; //获取图片保存数据库中的路径
 
@@ -174,15 +190,28 @@ namespace XinDaPartJobAPI.Controllers
             var newFilePath = string.Format(savepath, "userphoto");
             newFilePath += name;
             var filepath = string.Format(uppath, "userphoto");
-            if (!Directory.Exists(filepath))
             {
-                Directory.CreateDirectory(filepath);
+                #region 保存图片
+                if (!Directory.Exists(filepath))
+                {
+                    Directory.CreateDirectory(filepath);
+                }
+                filepath += name;
+                var bmp = new Bitmap(file.InputStream);
+                var newbmp = new Bitmap(bmp);
+                newbmp.Save(filepath, System.Drawing.Imaging.ImageFormat.Jpeg);
+                #endregion
             }
-            filepath += name;
-            var msContent = Convert.FromBase64String(img.Content);
-            var fs = new FileStream(filepath, FileMode.Create);
-            fs.Write(msContent, 0, (int)msContent.Length);
-            fs.Close();
+            //var filepath = string.Format(uppath, "userphoto");
+            //if (!Directory.Exists(filepath))
+            //{
+            //    Directory.CreateDirectory(filepath);
+            //}
+            //filepath += name;
+            //var msContent = Convert.FromBase64String(img.Content);
+            //var fs = new FileStream(filepath, FileMode.Create);
+            //fs.Write(msContent, 0, (int)msContent.Length);
+            //fs.Close();
             result.Info = new UploadImgViewModel { ShowUrl = PictureHelper.ConcatPicUrl(newFilePath), SaveUrl = newFilePath };
             return result.ToJson();
         }

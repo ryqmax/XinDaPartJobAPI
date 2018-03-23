@@ -60,5 +60,33 @@ namespace XinDaPartJobAPI.Controllers
             return result.ToJson();
 
         }
+
+        /// <summary>
+        /// 获取兼职岗位详情
+        /// </summary>
+        [HttpPost]
+        [Route("api/Job/GetPartJob")]
+        public object GetPartJob(GetPartJobRequest request)
+        {
+            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
+            /**
+             SELECT
+	j.Id AS JobId,
+	j.Name AS JobName,
+	j.SalaryLower,
+	j.SalaryUpper
+FROM
+	dbo.T_Job j
+	LEFT JOIN dbo.T_PayWay pw ON j.PayWayId = pw.Id
+             */
+            var result = new BaseViewModel
+            {
+                Info = CommonData.SuccessStr,
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
+            };
+            return result;
+        }
     }
 }

@@ -86,5 +86,28 @@ namespace XinDaPartJobAPI.Controllers
             };
             return result;
         }
+
+        /// <summary>
+        /// 获取用户要投递的兼职简历列表
+        /// </summary>
+        [HttpPost]
+        [Route("api/Job/GetUserPostPartCVList")]
+        public object GetUserPostPartCVList(GetUserPostPartCVListRequest request)
+        {
+            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
+            var userId = 0;
+            if (redisModel.Mark == TokenMarkEnum.Enterprise)
+                userId = 0;
+            var models = JobService.GetUserPostPartCVList(userId);
+            var viewModels = new GetUserPostPartCVListViewModel().GetViewModel(models,request.JobCategoryName);
+            var result = new BaseViewModel
+            {
+                Info = viewModels,
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
+            };
+            return result;
+        }
     }
 }

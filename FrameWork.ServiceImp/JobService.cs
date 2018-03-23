@@ -185,5 +185,25 @@ WHERE
 
             return DbPartJob.Fetch<T_EPAddress>(sql, new { jobId });
         }
+
+        /// <summary>
+        /// 获取该用户可以投递的兼职简历列表
+        /// </summary>
+        public List<GetUserPostPartCVListModel> GetUserPostPartCVList(int userId)
+        {
+            var sql = @";
+                SELECT
+	                cv.Id AS CVId,
+	                cv.SkillSummary,
+	                u.HeadImg
+                FROM
+	                dbo.T_CV cv
+	                LEFT JOIN dbo.T_User u ON cv.UserId = u.Id
+                WHERE
+	                cv.IsDel = 0 AND u.IsDel = 0 AND cv.Type = 0
+	                AND cv.UserId = @userId AND cv.Completion >= 80
+                ";
+            return DbPartJob.Fetch<GetUserPostPartCVListModel>(sql, new { userId });
+        }
     }
 }

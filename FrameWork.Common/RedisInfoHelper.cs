@@ -89,12 +89,16 @@ namespace FrameWork.Common
         /// </summary>
         public static RedisModel GetRedisModel(string token)
         {
-            var rdStr = RedisManager.Getstring(token);
-
             var model = new RedisModel { Mark = TokenMarkEnum.CacheInvalid };
-            if (!string.IsNullOrEmpty(rdStr))
+
+            if (!string.IsNullOrEmpty(token))
             {
-                model = rdStr.ToTheObject<RedisModel>();
+                var rdStr = RedisManager.Getstring(token);
+
+                if (!string.IsNullOrEmpty(rdStr))
+                {
+                    model = rdStr.ToTheObject<RedisModel>();
+                }
             }
             return model;
         }

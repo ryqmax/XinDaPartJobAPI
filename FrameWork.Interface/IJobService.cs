@@ -22,5 +22,10 @@ namespace FrameWork.Interface
         /// 获取该岗位的工作地点列表
         /// </summary>
         List<T_EPAddress> GetJobAdderssList(int jobId);
+
+        /// <summary>
+        /// 获取该用户可以投递的兼职简历列表
+        /// </summary>
+        List<GetUserPostPartCVListModel> GetUserPostPartCVList(int userId);
     }
 }

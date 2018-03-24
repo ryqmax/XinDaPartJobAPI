@@ -47,7 +47,7 @@ namespace FrameWork.ServiceImp
 		                          DicRegionId ,
 		                          OriginalProvinceId ,
 		                          OriginalCityId ,
-                                  HeadImg,
+                                  WxHeadImg,
 		                          IsDel ,
 		                          ModifyUserId ,
 		                          ModifyTime ,

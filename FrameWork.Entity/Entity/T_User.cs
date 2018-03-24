@@ -29,6 +29,11 @@ namespace FrameWork.Entity.Entity
         public string Phone {get;set;}
 
         /// <summary>
+        /// 微信头像
+        /// </summary>
+        public string WxHeadImg { get;set;}
+
+        /// <summary>
         /// 总积分 
         /// </summary>
         public int TotalIntegral {get;set;}

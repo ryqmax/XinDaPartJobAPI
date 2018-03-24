@@ -15,6 +15,7 @@
 
 
 using System.Web.Http;
+using FrameWork.Common;
 using FrameWork.Common.Const;
 using FrameWork.Entity.ViewModel;
 using FrameWork.Entity.ViewModel.Report;
@@ -34,7 +35,7 @@ namespace XinDaPartJobAPI.Controllers
         [Route("api/Report/ReportCV")]
         public object ReportCV(ReportCVRequest request)
         {
-            
+            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
             var result = new BaseViewModel
             {
                 Info = "",

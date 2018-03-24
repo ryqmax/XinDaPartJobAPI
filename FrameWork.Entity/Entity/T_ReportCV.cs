@@ -36,7 +36,7 @@ namespace FrameWork.Entity.Entity
         /// <summary>
         /// 简历id 
         /// </summary>
-        public int CVMainId {get;set;}
+        public int CVId {get;set;}
 
         /// <summary>
         /// 技能描述 

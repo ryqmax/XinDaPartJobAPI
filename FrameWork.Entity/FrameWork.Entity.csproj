@@ -139,6 +139,7 @@
     <Compile Include="ViewModel\Job\GetJobListReq.cs" />
     <Compile Include="ViewModel\Job\GetJobListRespInfo.cs" />
     <Compile Include="ViewModel\Job\JobInfo.cs" />
+    <Compile Include="ViewModel\Report\ReportCVViewModel.cs" />
     <Compile Include="ViewModel\SignIn\SignInReq.cs" />
     <Compile Include="ViewModel\SignIn\GetSignInInfoResp.cs" />
     <Compile Include="ViewModel\SignIn\RecentSignInInfo.cs" />

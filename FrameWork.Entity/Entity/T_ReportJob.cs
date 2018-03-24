@@ -24,12 +24,12 @@ namespace FrameWork.Entity.Entity
         public int UserId {get;set;}
 
         /// <summary>
-        /// 企业id 
+        /// 企业id，如果举报者是不是企业用户，企业id为0
         /// </summary>
         public int EnterpriseId {get;set;}
 
         /// <summary>
-        /// 用户名字或企业名字 
+        /// 用户名字
         /// </summary>
         public string UserName {get;set;}
 
@@ -69,17 +69,12 @@ namespace FrameWork.Entity.Entity
         public string Note {get;set;}
 
         /// <summary>
-        /// 被举报用户类型：1.普通用户，1.企业 
-        /// </summary>
-        public byte ExposedUserType {get;set;}
-
-        /// <summary>
-        /// 被举报用户id或者被举报企业id 
+        /// 被举报企业用户id
         /// </summary>
         public int ExposedUserId {get;set;}
 
         /// <summary>
-        /// 被举报的用户名字或企业名字 
+        /// 被举报的企业用户名字
         /// </summary>
         public string ExposedUserName {get;set;}
 

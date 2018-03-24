@@ -92,6 +92,7 @@
     <Compile Include="Entity\T_ReportCVImg.cs" />
     <Compile Include="Entity\T_ReportJob.cs" />
     <Compile Include="Entity\T_ReportJobImg.cs" />
+    <Compile Include="Entity\T_ReportReason.cs" />
     <Compile Include="Entity\T_User.cs" />
     <Compile Include="Entity\T_UserContractEPLog.cs" />
     <Compile Include="Entity\T_UserIntegralLog.cs" />

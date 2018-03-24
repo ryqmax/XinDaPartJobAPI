@@ -56,7 +56,12 @@ namespace FrameWork.Entity.Entity
         /// <summary>
         /// 举报内容，存储方式：/虚假/广告/ 
         /// </summary>
-        public string ExposeContent {get;set;}
+        public string ReportReason { get;set;}
+
+        /// <summary>
+        /// 举报原因id，存储方式：/1/2/
+        /// </summary>
+        public string ReportReasonId { get;set;}
 
         /// <summary>
         /// 备注说明 

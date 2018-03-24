@@ -53,7 +53,7 @@ namespace FrameWork.ServiceImp
         public void SaveEPContacts(SaveEPContactsRequest request, int epId)
         {
             var sql = @";
-IF EXISTS (SELECT * FROM dbo.T_EPAccount WHERE Phone = @Phone AND IsDel = 0)
+IF EXISTS (SELECT * FROM dbo.T_EPHiringManager WHERE Phone = @Phone AND IsDel = 0)
 	BEGIN
 	    UPDATE
 		dbo.T_EPHiringManager

@@ -76,7 +76,7 @@ namespace FrameWork.Entity.ViewModel.Job
                 viewModels.Add(new GetUserPostPartCVListViewModel
                 {
                     CVId = model.CVId,
-                    HeadImg = model.HeadImg,
+                    HeadImg = PictureHelper.ConcatPicUrl(model.HeadImg),
                     SkillSummary = StringHelper.NullOrEmpty(model.SkillSummary),
                     JobCategoryName = jcName
                 });

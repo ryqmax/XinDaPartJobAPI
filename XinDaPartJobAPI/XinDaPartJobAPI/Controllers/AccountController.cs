@@ -71,7 +71,7 @@ namespace XinDaPartJobAPI.Controllers
         private string GetToken(T_User model, GetUserInfoRequest request)
         {
             var token = GuidHelper.GetPrimarykey();
-            var oldToken = RedisInfoHelper.RedisManager.Getstring("uid" + model.Id);
+            var oldToken = RedisInfoHelper.GetToken("uid" + model.Id);
             if (!string.IsNullOrEmpty(oldToken))//如果是重新登录，移除原来的token对应的值
             {
                 oldToken = oldToken.Replace("\"", "");
@@ -90,8 +90,8 @@ namespace XinDaPartJobAPI.Controllers
                 WxName = model.WxName ?? string.Empty,
                 Phone = model.Phone ?? string.Empty
             };
-            RedisInfoHelper.RedisManager.Set("uid" + model.Id, token, DateTime.Now.AddDays(1));
-            RedisInfoHelper.RedisManager.Set(token, rdModel.ToJsonStr(), DateTime.Now.AddDays(1));
+            RedisInfoHelper.SetCache("uid" + model.Id, token, DateTime.Now.AddDays(1));
+            RedisInfoHelper.SetCache(token, rdModel, DateTime.Now.AddDays(1));
 
             return token;
         }
@@ -232,14 +232,15 @@ namespace XinDaPartJobAPI.Controllers
         /// </summary>
         /// <param name="model">企业信息实体</param>
         /// <param name="request">接口参数</param>
+        /// <param name="isMainAccount">是否是主账号</param>
         private string GetEPToken(EPLoginModel model, EPLoginRequest request, bool isMainAccount = false)
         {
             var token = GuidHelper.GetPrimarykey();
-            var oldToken = RedisInfoHelper.RedisManager.Getstring("epid" + model.EPId);
+            var oldToken = RedisInfoHelper.GetToken("epid" + model.EPId);
             if (!string.IsNullOrEmpty(oldToken))//如果是重新登录，移除原来的token对应的值
             {
                 oldToken = oldToken.Replace("\"", "");
-                RedisInfoHelper.RedisManager.Remove(oldToken);
+                RedisInfoHelper.Remove(oldToken);
             }
 
             var dicRegion = CacheContext.DicRegions.FirstOrDefault(d => d.AreaCode == request.City) ?? new DicRegion();
@@ -257,8 +258,8 @@ namespace XinDaPartJobAPI.Controllers
                 IsMainAccount = isMainAccount
             };
 
-            RedisInfoHelper.RedisManager.Set("epid" + model.EPId, token, DateTime.Now.AddDays(1));
-            RedisInfoHelper.RedisManager.Set(token, rdModel.ToJsonStr(), DateTime.Now.AddDays(1));
+            RedisInfoHelper.SetCache("epid" + model.EPId, token, DateTime.Now.AddDays(1));
+            RedisInfoHelper.SetCache(token, rdModel, DateTime.Now.AddDays(1));
 
             return token;
         }
@@ -304,11 +305,11 @@ namespace XinDaPartJobAPI.Controllers
         private string GetUserToken(T_User model, string regionId)
         {
             var token = GuidHelper.GetPrimarykey();
-            var oldToken = RedisInfoHelper.RedisManager.Getstring("uid" + model.Id);
+            var oldToken = RedisInfoHelper.GetToken("uid" + model.Id);
             if (!string.IsNullOrEmpty(oldToken))//如果是重新登录，移除原来的token对应的值
             {
                 oldToken = oldToken.Replace("\"", "");
-                RedisInfoHelper.RedisManager.Remove(oldToken);
+                RedisInfoHelper.Remove(oldToken);
             }
 
             var rdModel = new RedisModel
@@ -322,8 +323,8 @@ namespace XinDaPartJobAPI.Controllers
                 WxName = model.WxName ?? string.Empty,
                 Phone = model.Phone ?? string.Empty
             };
-            RedisInfoHelper.RedisManager.Set("uid" + model.Id, token, DateTime.Now.AddDays(1));
-            RedisInfoHelper.RedisManager.Set(token, rdModel.ToJsonStr(), DateTime.Now.AddDays(1));
+            RedisInfoHelper.SetCache("uid" + model.Id, token, DateTime.Now.AddDays(1));
+            RedisInfoHelper.SetCache(token, rdModel, DateTime.Now.AddDays(1));
 
             return token;
         }
@@ -387,11 +388,11 @@ namespace XinDaPartJobAPI.Controllers
         private string GetEPDefaultToken(EPLoginModel model, EPDefaultLogoutRequest request)
         {
             var token = GuidHelper.GetPrimarykey();
-            var oldToken = RedisInfoHelper.RedisManager.Getstring("epid" + model.EPId);
+            var oldToken = RedisInfoHelper.GetToken("epid" + model.EPId);
             if (!string.IsNullOrEmpty(oldToken))//如果是重新登录，移除原来的token对应的值
             {
                 oldToken = oldToken.Replace("\"", "");
-                RedisInfoHelper.RedisManager.Remove(oldToken);
+                RedisInfoHelper.Remove(oldToken);
             }
             var dicRegion = CacheContext.DicRegions.FirstOrDefault(d => d.AreaCode == request.City) ?? new DicRegion();
 
@@ -407,8 +408,8 @@ namespace XinDaPartJobAPI.Controllers
                 Phone = request.Phone
             };
 
-            RedisInfoHelper.RedisManager.Set("epid" + model.EPId, token, DateTime.Now.AddDays(1));
-            RedisInfoHelper.RedisManager.Set(token, rdModel.ToJsonStr(), DateTime.Now.AddDays(1));
+            RedisInfoHelper.SetCache("epid" + model.EPId, token, DateTime.Now.AddDays(1));
+            RedisInfoHelper.SetCache(token, rdModel, DateTime.Now.AddDays(1));
 
             return token;
         }

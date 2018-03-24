@@ -15,11 +15,11 @@ namespace FrameWork.Common.DotNETCache
             return cacheConfig.CacheProvider.Get(key);
         }
 
-        public static void Set(string key, object value)
+        public static void Set(string key, object value,int minutes = 300)
         {
             var cacheConfig = CacheConfigContext.GetCurrentWrapCacheConfigItem(key);
 
-            cacheConfig.CacheProvider.Set(key, value, cacheConfig.CacheConfigItem.Minitus, cacheConfig.CacheConfigItem.IsAbsoluteExpiration, null);
+            cacheConfig.CacheProvider.Set(key, value, minutes, cacheConfig.CacheConfigItem.IsAbsoluteExpiration, null);
         }
 
         public static void Remove(string key)

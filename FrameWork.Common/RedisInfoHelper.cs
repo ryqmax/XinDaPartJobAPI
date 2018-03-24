@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using FrameWork.Common.DotNETCache;
 using FrameWork.Common.Models;
 using FrameWork.Common.ReadSql;
 using Newtonsoft.Json;
@@ -93,14 +94,47 @@ namespace FrameWork.Common
 
             if (!string.IsNullOrEmpty(token))
             {
-                var rdStr = RedisManager.Getstring(token);
+                //var rdStr = RedisManager.Getstring(token);
+                var obj = CacheHelper.Get(token);
+                //if (!string.IsNullOrEmpty(rdStr))
+                //{
+                //    model = rdStr.ToTheObject<RedisModel>();
+                //}
 
-                if (!string.IsNullOrEmpty(rdStr))
+                if (obj != null)
                 {
-                    model = rdStr.ToTheObject<RedisModel>();
+                    model = (RedisModel)obj;
                 }
             }
             return model;
+        }
+
+        /// <summary>
+        /// 设置缓存
+        /// </summary>
+        public static void SetCache(string key, object value, DateTime? passDateTime = null)
+        {
+            if (!passDateTime.HasValue)
+                passDateTime = DateTime.Now.AddDays(7);
+            var minutes = (int)(passDateTime.Value - DateTime.Now).TotalMinutes;
+            CacheHelper.Set(key, value, minutes);
+        }
+
+        /// <summary>
+        /// 获取token值
+        /// </summary>
+        public static string GetToken(string key)
+        {
+            var obj = CacheHelper.Get(key);
+            return obj?.ToString();
+        }
+
+        /// <summary>
+        /// 移除缓存
+        /// </summary>
+        public static void Remove(string key)
+        {
+            CacheHelper.Remove(key);
         }
     }
 }

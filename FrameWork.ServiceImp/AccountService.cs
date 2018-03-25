@@ -92,7 +92,7 @@ namespace FrameWork.ServiceImp
         {
             var sql = @";
                 SELECT
-	                epa.Type,
+	                epa.Type,ep.Id AS EPId,epa.Id AS EPAId,
 	                ep.Status  AS EPStatus,
 	                epa.Status AS EPAStatus
                 FROM

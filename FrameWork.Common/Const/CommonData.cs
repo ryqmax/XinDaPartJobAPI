@@ -122,6 +122,11 @@ namespace FrameWork.Common.Const
         public static string RegionRedisCache = "allRegions";
 
         /// <summary>
+        /// ReportReasons
+        /// </summary>
+        public static string ReportReasonsRedisCache = "allReportReasons";
+
+        /// <summary>
         /// 保存路径
         /// </summary>
         public static string TPImageSavePath = ConfigurationManager.AppSettings["TPImageSavePath"];

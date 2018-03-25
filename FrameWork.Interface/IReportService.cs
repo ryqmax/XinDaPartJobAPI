@@ -38,5 +38,10 @@ namespace FrameWork.Interface
         /// 举报岗位接口
         /// </summary>
         int ReportJob(ReportJobRequest request, RedisModel redisModel);
+
+        /// <summary>
+        /// 获取所有的举报原因列表
+        /// </summary>
+        List<T_ReportReason> GetReasonList();
     }
 }

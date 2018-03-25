@@ -222,5 +222,14 @@ VALUES  ( @userType , -- UserType - tinyint
             }
             return id;
         }
+
+        /// <summary>
+        /// 获取所有的举报原因列表
+        /// </summary>
+        public List<T_ReportReason> GetReasonList()
+        {
+            var sql = @";SELECT * FROM dbo.T_ReportReason";
+            return DbPartJob.Fetch<T_ReportReason>(sql);
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 using FrameWork.Common;
 using FrameWork.Common.Const;
@@ -235,11 +236,12 @@ namespace XinDaPartJobAPI.Controllers
         public object SubmitPartJob(SubmitPartJobViewModel request)
         {
             var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
-
-
+            //var redisModel = new RedisModel {EPId = 1,UserId = 1,CityId = "3202"};
+            var provinceId = CacheContext.DicRegions.FirstOrDefault(r => r.Id == redisModel.CityId)?.ParentId ?? string.Empty;
+            JobService.SubmitPartJob(request, redisModel, provinceId);
             var result = new BaseViewModel
             {
-                Info = 1,
+                Info = CommonData.SuccessStr,
                 Message = CommonData.SuccessStr,
                 Msg = true,
                 ResultCode = CommonData.SuccessCode

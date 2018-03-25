@@ -32,6 +32,11 @@ namespace FrameWork.Entity.ViewModel.Job
         public string Token { set; get; }
 
         /// <summary>
+        /// 岗位id
+        /// </summary>
+        public int JobId { set; get; }
+
+        /// <summary>
         /// 岗位名称
         /// </summary>
         public string Name { set; get; }
@@ -71,7 +76,9 @@ namespace FrameWork.Entity.ViewModel.Job
         /// </summary>
         public string OfficeRequire { get; set; }
 
-
+        /// <summary>
+        /// 地址id列表
+        /// </summary>
         public List<int> AddressList { set; get; }
 
         /// <summary>
@@ -80,8 +87,13 @@ namespace FrameWork.Entity.ViewModel.Job
         public int EPHiringManagerId { get; set; }
 
         /// <summary>
-        /// 刷新方式：0.智能刷新，1.预约刷新 
+        /// 刷新方式：0.不刷新，1.智能刷新，2.预约刷新
         /// </summary>
-        public byte RefreshWay { get; set; }
+        public int RefreshWay { get; set; }
+
+        /// <summary>
+        /// 预约刷新id
+        /// </summary>
+        public int RefreshId { get; set; }
     }
 }

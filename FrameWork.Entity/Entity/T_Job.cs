@@ -89,7 +89,7 @@ namespace FrameWork.Entity.Entity
         public int EPHiringManagerId {get;set;}
 
         /// <summary>
-        /// 刷新方式：0.智能刷新，1.预约刷新 
+        /// 刷新方式：0.不刷新，1.智能刷新，2.预约刷新
         /// </summary>
         public byte RefreshWay {get;set;}
 

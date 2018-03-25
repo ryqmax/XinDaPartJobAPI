@@ -29,7 +29,7 @@ namespace XinDaPartJobAPI.Controllers
 
             var userInfo = RedisInfoHelper.GetRedisModel(request.Token);
 
-            var jobInfoList = JobService.GetJobList(request, userInfo.CityId);
+            var jobInfoList = JobService.GetJobList(request, userInfo.CityId, userInfo.EPId);
 
             //todo:获取广告信息
 

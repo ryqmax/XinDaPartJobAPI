@@ -29,7 +29,7 @@ namespace FrameWork.ServiceImp
     /// </summary>
     public class JobService : BaseService<T_Job>, IJobService
     {
-        public List<JobInfo> GetJobList(GetJobListReq getJobListReq, string cityId)
+        public List<JobInfo> GetJobList(GetJobListReq getJobListReq, string cityId, int ePId)
         {
             int startPage = (getJobListReq.PageSize) * (getJobListReq.Page - 1) + 1;
             int endPage = getJobListReq.Page * getJobListReq.PageSize;
@@ -112,7 +112,7 @@ namespace FrameWork.ServiceImp
                                             AND epvip.IsDel = 0
                                   ORDER BY  vipinfo.OldPrice DESC
                                 ) JobMember ,
-                                ( CASE WHEN ep.Id = 1 THEN 1
+                                ( CASE WHEN ep.Id = @ePId THEN 1
                                        ELSE 0
                                   END ) IsSelf ,
                                 job.IsPractice IsPractice ,        
@@ -124,7 +124,7 @@ namespace FrameWork.ServiceImp
 
                         DROP TABLE #JobIdTemp;
                         DROP TABLE #JobIdPageTemp;";
-            return DbPartJob.Fetch<JobInfo>(sql, new { type = getJobListReq.Type, areaid = getJobListReq.RegionId, jobcaid = getJobListReq.JobTypeId, level = getJobListReq.EmployerRankId, cityId, startPage, endPage });
+            return DbPartJob.Fetch<JobInfo>(sql, new { type = getJobListReq.Type, areaid = getJobListReq.RegionId, jobcaid = getJobListReq.JobTypeId, level = getJobListReq.EmployerRankId, cityId, startPage, endPage, ePId });
         }
 
         /// <summary>

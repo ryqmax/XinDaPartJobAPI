@@ -11,7 +11,7 @@ namespace FrameWork.Interface
         /// <summary>
         /// 获取岗位列表
         /// </summary>
-        List<JobInfo> GetJobList(GetJobListReq getJobListReq, string cityId);
+        List<JobInfo> GetJobList(GetJobListReq getJobListReq, string cityId, int ePId);
 
         /// <summary>
         /// 获取兼职岗位详情

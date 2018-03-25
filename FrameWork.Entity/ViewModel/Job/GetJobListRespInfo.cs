@@ -9,6 +9,16 @@ namespace FrameWork.Entity.ViewModel.Job
     /// </summary>
     public class GetJobListRespInfo
     {
+        public List<JobInfoList> JobInfoList { get; set; }=new List<JobInfoList>();
+
+        /// <summary>
+        /// 是否结束 
+        /// </summary>
+        public bool IsEnd { get; set; }
+    }
+
+    public class JobInfoList
+    {
         /// <summary>
         /// 岗位id
         /// </summary>
@@ -65,17 +75,12 @@ namespace FrameWork.Entity.ViewModel.Job
         /// </summary>
         public bool IsAdvert { get; set; }
 
-        public List<AdListItem> AdList { get; set; }=new List<AdListItem>();
+        public List<AdListItem> AdList { get; set; } = new List<AdListItem>();
 
         /// <summary>
         /// 是否为实习 
         /// </summary>
         public bool IsPractice { get; set; }
-
-        /// <summary>
-        /// 是否结束 
-        /// </summary>
-        public bool IsEnd { get; set; }
     }
 
     public class AdListItem

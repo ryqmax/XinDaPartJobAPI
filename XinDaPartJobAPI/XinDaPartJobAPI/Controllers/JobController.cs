@@ -33,10 +33,17 @@ namespace XinDaPartJobAPI.Controllers
 
             //todo:获取广告信息
 
-            var getJobListRespInfoList = new List<GetJobListRespInfo>();
+            var getJobListRespInfoList = new GetJobListRespInfo();
+
+            var firstOrDefualtJobInfo = jobInfoList.FirstOrDefault();
+            if (firstOrDefualtJobInfo != null)
+            {
+                getJobListRespInfoList.IsEnd = !PageHelper.JudgeNextPage(firstOrDefualtJobInfo.TotalNum, request.Page, request.PageSize);
+            }
+
             foreach (var jobInfo in jobInfoList)
             {
-                var getJobListRespInfo = new GetJobListRespInfo
+                var getJobListRespInfo = new JobInfoList
                 {
                     JobId = jobInfo.JobId,
                     JobEmployerId = jobInfo.JobEmployerId,
@@ -50,9 +57,8 @@ namespace XinDaPartJobAPI.Controllers
                     IsSelf = jobInfo.IsSelf,
                     IsAdvert = false,
                     IsPractice = jobInfo.IsPractice,
-                    IsEnd = PageHelper.JudgeNextPage(jobInfo.TotalNum, request.Page, request.PageSize)
                 };
-                getJobListRespInfoList.Add(getJobListRespInfo);
+                getJobListRespInfoList.JobInfoList.Add(getJobListRespInfo);
             }
 
             result.Info = getJobListRespInfoList;

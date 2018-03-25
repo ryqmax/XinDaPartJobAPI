@@ -89,7 +89,16 @@ namespace FrameWork.ServiceImp
                                 job.SalaryLower ,
                                 job.SalaryUpper ,
                                 payway.Unit ,
-                                ( CASE WHEN -1 = -1 THEN '不限地点'
+                                ( CASE WHEN ( SELECT TOP 1
+                                                        epaddress.AreaId
+                                              FROM      dbo.T_JobAddress jobaddress
+                                                        LEFT JOIN dbo.T_EPAddress epaddress ON epaddress.Id = jobaddress.EPAddressId
+                                              WHERE     1 = 1
+                                                        AND jobaddress.IsDel = 0
+                                                        AND epaddress.IsDel = 0
+                                                        AND job.Id = jobaddress.JobId
+                                                        {jobAddressWhere}
+                                            ) = -1 THEN '不限地点'
                                        ELSE ( SELECT TOP 1
                                                         dicregion.Description
                                               FROM      dbo.T_JobAddress jobaddress

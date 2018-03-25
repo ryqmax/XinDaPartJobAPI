@@ -105,6 +105,7 @@
     <Compile Include="Entity\T_UserViewJobLog.cs" />
     <Compile Include="Entity\T_VIPInfo.cs" />
     <Compile Include="Model\Account\EPLoginModel.cs" />
+    <Compile Include="Model\EP\GetEPDetailInfo.cs" />
     <Compile Include="Model\EP\GetAccountListModel.cs" />
     <Compile Include="Model\EP\GetEPContactsModel.cs" />
     <Compile Include="Model\Job\GetFullJobModel.cs" />
@@ -131,8 +132,10 @@
     <Compile Include="ViewModel\EP\DelEPContactsViewModel.cs" />
     <Compile Include="ViewModel\EP\GetEPContactsViewModel.cs" />
     <Compile Include="ViewModel\EP\CheckPhoneCodeViewModel.cs" />
+    <Compile Include="ViewModel\EP\GetEPDetailInfoRespInfo.cs" />
     <Compile Include="ViewModel\EP\SaveAccountPermissionViewModel.cs" />
     <Compile Include="ViewModel\EP\SaveEPContactsViewModel.cs" />
+    <Compile Include="ViewModel\EP\GetEPDetailInfoReq.cs" />
     <Compile Include="ViewModel\EP\UploadImgViewModel.cs" />
     <Compile Include="ViewModel\Job\GetIndexBaseDataRespInfo.cs" />
     <Compile Include="ViewModel\Job\GetFullJobViewModel.cs" />

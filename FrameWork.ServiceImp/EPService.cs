@@ -215,5 +215,77 @@ ELSE
             return DbPartJob.Execute(sql, new { accountId, pIds });
         }
 
+        public GetEPDetailInfo GetEpDetailInfoById(int ePId)
+        {
+            var sql = @"SELECT  Id CompanyId,
+		                        Level CompanyEmployerId,
+                                ShortName CompanyName,
+                                [Address] CompanyAddress,
+		                        Name CompanyFullName,
+		                        Brief CompanyDesc
+                        FROM    dbo.T_Enterprise
+                        WHERE 1=1
+                        AND Id=@ePId
+                        AND IsDel=0";
+            return DbPartJob.FirstOrDefault<GetEPDetailInfo>(sql, new { ePId });
+        }
+
+        public List<JobListItem> GetEpJobListById(int ePId)
+        {
+            var sql = @"SELECT  job.Id JobId ,
+                                job.Type JobType ,
+                                job.Name JobName ,
+                                job.SalaryLower ,
+                                job.SalaryUpper ,
+                                payway.Unit JobPayUnit,
+                                ( CASE WHEN ( SELECT TOP 1
+                                                        epaddress.AreaId
+                                                FROM      dbo.T_JobAddress jobaddress
+                                                        LEFT JOIN dbo.T_EPAddress epaddress ON epaddress.Id = jobaddress.EPAddressId
+                                                WHERE     1 = 1
+                                                        AND jobaddress.IsDel = 0
+                                                        AND epaddress.IsDel = 0
+                                                        AND job.Id = jobaddress.JobId
+                                            ) = '-1' THEN '不限地点'
+                                        ELSE ( SELECT TOP 1
+                                                        dicregion.Description
+                                                FROM      dbo.T_JobAddress jobaddress
+                                                        LEFT JOIN dbo.T_EPAddress epaddress ON epaddress.Id = jobaddress.EPAddressId
+                                                        LEFT JOIN dbo.DicRegion dicregion ON epaddress.AreaId = dicregion.Id
+                                                WHERE     1 = 1
+                                                        AND jobaddress.IsDel = 0
+                                                        AND epaddress.IsDel = 0
+                                                        AND dicregion.IsDel = 0
+                                                        AND job.Id = jobaddress.JobId
+                                            )
+                                    END ) JobAddress ,
+                                job.WorkTime JobTime ,
+                                ( SELECT TOP 1
+                                            vipinfo.Name
+                                    FROM      dbo.T_VIPInfo vipinfo
+                                            LEFT JOIN dbo.T_EPVIP epvip ON epvip.VIPInfoId = vipinfo.Id
+                                    WHERE     epvip.EnterpriseId = 1
+                                            AND vipinfo.IsDel = 0
+                                            AND epvip.IsDel = 0
+                                    ORDER BY  vipinfo.OldPrice DESC
+                                ) JobMember ,
+                                job.IsPractice IsPractice
+                        FROM    dbo.T_Job job
+                                LEFT JOIN dbo.T_PayWay payway ON payway.Id = job.PayWayId
+                        WHERE   1 = 1
+                                AND job.EnterpriseId = @ePId;";
+            return DbPartJob.Fetch<JobListItem>(sql, new { ePId });
+        }
+
+        public List<CompanyImgListItem> GetEpImgListById(int ePId)
+        {
+            var sql = @"SELECT  Id ,
+                                PicUrl Url
+                        FROM    dbo.T_EPBgImg
+                        WHERE 1=1
+                        AND IsDel=0
+                        AND EnterpriseId=@ePId;";
+            return DbPartJob.Fetch<CompanyImgListItem>(sql, new { ePId });
+        }
     }
 }

@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using FrameWork.Entity.Entity;
 using FrameWork.Entity.Model.EP;
 using FrameWork.Entity.ViewModel.EP;
+using FrameWork.Entity.ViewModel.Job;
 
 namespace FrameWork.Interface
 {
@@ -77,5 +78,23 @@ namespace FrameWork.Interface
         /// 更新账号的权限
         /// </summary>
         int UpdateAccountPer(int accountId, string pIds);
+
+        /// <summary>
+        /// 根据企业Id获取企业详情
+        /// </summary>
+        /// <param name="ePId">企业Id</param>
+        GetEPDetailInfo GetEpDetailInfoById(int ePId);
+
+        /// <summary>
+        /// 根据企业Id获取企业发布的岗位列表
+        /// </summary>
+        /// <param name="ePId">企业Id</param>
+        List<JobListItem> GetEpJobListById(int ePId);
+
+        /// <summary>
+        /// 根据企业Id获取企业的图片信息列表
+        /// </summary>
+        /// <param name="ePId">企业Id</param>
+        List<CompanyImgListItem> GetEpImgListById(int ePId);
     }
 }

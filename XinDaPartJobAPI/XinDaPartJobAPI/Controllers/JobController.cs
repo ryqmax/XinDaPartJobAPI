@@ -167,22 +167,24 @@ namespace XinDaPartJobAPI.Controllers
             return result;
         }
 
+        /// <summary>
+        /// 获取结算方式接口
+        /// </summary>
         [HttpPost]
         [Route("api/Job/GetPayWay")]
         public object GetPayWay(GetPayWayRequest request)
         {
+            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
+            var models = CacheContext.PayWays;
+            var viewModels = new GetPayWayViewModel().GetViewModels(models);
             var result = new BaseViewModel
             {
-                Info = CommonData.SuccessStr,
+                Info = viewModels,
                 Message = CommonData.SuccessStr,
                 Msg = true,
                 ResultCode = CommonData.SuccessCode
             };
-            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
-            var models = CacheContext.PayWays;
-
             return result;
         }
-
     }
 }

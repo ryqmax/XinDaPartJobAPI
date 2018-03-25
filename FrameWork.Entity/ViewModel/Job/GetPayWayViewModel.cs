@@ -52,6 +52,14 @@ namespace FrameWork.Entity.ViewModel.Job
         public List<GetPayWayViewModel> GetViewModels(List<T_PayWay> models)
         {
             var viewModels = new List<GetPayWayViewModel>();
+            foreach (var model in models)
+            {
+                viewModels.Add(new GetPayWayViewModel
+                {
+                    Name = model.Name ?? string.Empty,
+                    Unit = model.Unit ?? string.Empty
+                });
+            }
 
             return viewModels;
         }

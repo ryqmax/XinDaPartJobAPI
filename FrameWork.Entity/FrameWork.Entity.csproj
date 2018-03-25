@@ -134,6 +134,7 @@
     <Compile Include="ViewModel\Job\GetIndexBaseDataRespInfo.cs" />
     <Compile Include="ViewModel\Job\GetFullJobViewModel.cs" />
     <Compile Include="ViewModel\Job\GetPartJobViewModel.cs" />
+    <Compile Include="ViewModel\Job\GetPayWayViewModel.cs" />
     <Compile Include="ViewModel\Job\GetUserPostPartCVListViewModel.cs" />
     <Compile Include="ViewModel\Job\GetIndexBaseDataReq.cs" />
     <Compile Include="ViewModel\Job\UserPostCVViewModel.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="ViewModel\Job\GetJobListReq.cs" />
     <Compile Include="ViewModel\Job\GetJobListRespInfo.cs" />
     <Compile Include="ViewModel\Job\JobInfo.cs" />
+    <Compile Include="ViewModel\Report\GetReportReasonViewModel.cs" />
     <Compile Include="ViewModel\Report\ReportCVViewModel.cs" />
     <Compile Include="ViewModel\Report\ReportJobViewModel.cs" />
     <Compile Include="ViewModel\SignIn\SignInReq.cs" />

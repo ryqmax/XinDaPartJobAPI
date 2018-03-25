@@ -78,7 +78,7 @@ namespace XinDaPartJobAPI.Controllers
             var model = JobService.GetPartJob(request.JobId, userId);
             var jobAddr = JobService.GetJobAdderssList(request.JobId);
             //TODO:广告列表没有返回
-            var viewModel = new GetPartJobViewModel().GetViewModel(model, jobAddr, CacheContext.DicRegions);
+            var viewModel = new GetPartJobViewModel().GetViewModel(model, jobAddr, CacheContext.DicRegions, request);
             var result = new BaseViewModel
             {
                 Info = viewModel,
@@ -94,7 +94,7 @@ namespace XinDaPartJobAPI.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/Job/GetFullJob")]
-        public object GetFullJob(GetPartJobRequest request)
+        public object GetFullJob(GetFullJobRequest request)
         {
             var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
             var userId = redisModel.UserId;
@@ -105,7 +105,7 @@ namespace XinDaPartJobAPI.Controllers
             var welfares = JobService.GetJobWelfareList(request.JobId);
 
             //TODO:广告列表没有返回
-            var viewModel = new GetFullJobViewModel().GetViewModel(model, jobAddr, CacheContext.DicRegions, welfares);
+            var viewModel = new GetFullJobViewModel().GetViewModel(model, jobAddr, CacheContext.DicRegions, welfares, request);
             var result = new BaseViewModel
             {
                 Info = viewModel,
@@ -166,6 +166,26 @@ namespace XinDaPartJobAPI.Controllers
                 };
             }
             JobService.UserPostCV(userId, request.CVId, request.JobId);
+            return result;
+        }
+
+        /// <summary>
+        /// 获取结算方式接口
+        /// </summary>
+        [HttpPost]
+        [Route("api/Job/GetPayWay")]
+        public object GetPayWay(GetPayWayRequest request)
+        {
+            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
+            var models = CacheContext.PayWays;
+            var viewModels = new GetPayWayViewModel().GetViewModels(models);
+            var result = new BaseViewModel
+            {
+                Info = viewModels,
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
+            };
             return result;
         }
 

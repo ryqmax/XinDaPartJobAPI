@@ -46,8 +46,24 @@ namespace FrameWork.Web
         {
             get
             {
-                return DicRegions.ToDictionary(d=>d.Id);
+                return DicRegions.ToDictionary(d => d.Id);
             }
+        }
+
+        /// <summary>
+        /// 举报原因列表
+        /// </summary>
+        public static List<T_ReportReason> ReportReasons
+        {
+            get { return CacheHelper.Get(CommonData.ReportReasonsRedisCache, () => new ReportService().GetReasonList()); }
+        }
+
+        /// <summary>
+        /// 结算方式缓存
+        /// </summary>
+        public static List<T_PayWay> PayWays
+        {
+            get { return CacheHelper.Get(CommonData.PayWaysRedisCache, () => new JobService().GetPayWays()); }
         }
     }
 }

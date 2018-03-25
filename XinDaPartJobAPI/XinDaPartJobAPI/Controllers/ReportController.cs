@@ -14,6 +14,7 @@
  ***********************************************************************************/
 
 
+using System.Linq;
 using System.Web.Http;
 using FrameWork.Common;
 using FrameWork.Common.Const;
@@ -66,5 +67,27 @@ namespace XinDaPartJobAPI.Controllers
             };
             return result;
         }
+
+        /// <summary>
+        /// 获取举报原因列表
+        /// </summary>
+        [HttpPost]
+        [Route("api/Report/GetReportReason")]
+        public object GetReportReason(GetReportReasonRequest request)
+        {
+            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
+            var models = CacheContext.ReportReasons.Where(r => r.Type == request.Type).ToList();
+            var viewModels = new GetReportReasonViewModel().GetViewModels(models);
+            var result = new BaseViewModel
+            {
+                Info = viewModels,
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
+            };
+            return result;
+        }
+
+
     }
 }

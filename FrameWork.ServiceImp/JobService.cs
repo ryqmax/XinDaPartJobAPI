@@ -302,5 +302,15 @@ IF NOT EXISTS (SELECT 1 FROM dbo.T_CVDelivery cd WHERE cd.IsDel = 0 AND cd.UserI
 
             return DbPartJob.Fetch<T_EPWelfare>(sql, new {jobId});
         }
+
+        /// <summary>
+        /// 获取所有的结算方式列表
+        /// </summary>
+        public List<T_PayWay> GetPayWays()
+        {
+            var sql = @";SELECT * FROM dbo.T_PayWay WHERE IsDel = 0";
+
+            return DbPartJob.Fetch<T_PayWay>(sql);
+        }
     }
 }

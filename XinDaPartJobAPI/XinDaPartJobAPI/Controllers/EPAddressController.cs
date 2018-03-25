@@ -60,6 +60,7 @@ namespace XinDaPartJobAPI.Controllers
         {
             var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
             var regions = CacheContext.DicRegions;
+            CheckAddress(request);
             var model = new T_EPAddress
             {
                 Id = 0,
@@ -86,6 +87,38 @@ namespace XinDaPartJobAPI.Controllers
                 ResultCode = CommonData.SuccessCode
             };
             return result;
+        }
+
+        /// <summary>
+        /// 传递过来的是全地址
+        /// </summary>
+        private void CheckAddress(AddEPAddressRequest request)
+        {
+            var addrPros = request.Address.Split('省');
+            if (addrPros.Length > 1)
+            {
+                request.Province = addrPros[0];
+                var addrCitys = addrPros[1].Split('市');
+                if (addrCitys.Length > 1)
+                {
+                    request.City = addrCitys[0];
+                    var addrAreas = addrCitys[1].Split('区');
+                    if (addrAreas.Length > 1)
+                    {
+                        request.Area = addrAreas[0];
+                        request.Address = addrAreas[1];
+                    }
+                    else
+                    {
+                        addrAreas = addrCitys[1].Split('县');
+                        if (addrAreas.Length > 1)
+                        {
+                            request.Area = addrAreas[0];
+                            request.Address = addrAreas[1];
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>

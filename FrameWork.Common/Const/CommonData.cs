@@ -6,7 +6,7 @@ namespace FrameWork.Common.Const
 {
     public class CommonData
     {
-        public static List<int> SignValueArray = new List<int> {5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60};
+        public static List<int> SignValueArray = new List<int> { 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60 };
 
         /// <summary>
         /// 获取成功
@@ -115,11 +115,21 @@ namespace FrameWork.Common.Const
         public static string SignInSuccess = "签到成功";
 
         #endregion
-        
+
         /// <summary>
         /// 缓存所有的城市列表key
         /// </summary>
         public static string RegionRedisCache = "allRegions";
+
+        /// <summary>
+        /// ReportReasons
+        /// </summary>
+        public static string ReportReasonsRedisCache = "allReportReasons";
+
+        /// <summary>
+        /// 结算方式缓存key
+        /// </summary>
+        public static string PayWaysRedisCache = "allPayWays";
 
         /// <summary>
         /// 保存路径

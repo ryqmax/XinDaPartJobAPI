@@ -137,6 +137,7 @@
     <Compile Include="ViewModel\Job\GetPayWayViewModel.cs" />
     <Compile Include="ViewModel\Job\GetRefreshInfoViewModel.cs" />
     <Compile Include="ViewModel\Job\GetUserPostPartCVListViewModel.cs" />
+    <Compile Include="ViewModel\Job\SubmitPartJobViewModel.cs" />
     <Compile Include="ViewModel\Job\SubmitRefreshInfoViewModel.cs" />
     <Compile Include="ViewModel\Job\UserPostCVViewModel.cs" />
     <Compile Include="ViewModel\Region\GetCityListViewModel.cs" />

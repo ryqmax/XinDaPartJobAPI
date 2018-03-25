@@ -227,5 +227,25 @@ namespace XinDaPartJobAPI.Controllers
             return result;
         }
 
+        /// <summary>
+        /// 发布兼职岗位
+        /// </summary>
+        [HttpPost]
+        [Route("api/Job/SubmitPartJob")]
+        public object SubmitPartJob(SubmitPartJobViewModel request)
+        {
+            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
+
+
+            var result = new BaseViewModel
+            {
+                Info = 1,
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
+            };
+            return result;
+        }
+
     }
 }

@@ -134,7 +134,7 @@ namespace XinDaPartJobAPI.Controllers
             if (redisModel.Mark == TokenMarkEnum.Enterprise)
                 userId = 0;
             var models = JobService.GetUserPostPartCVList(userId);
-            var viewModels = new GetUserPostPartCVListViewModel().GetViewModel(models,request.JobCategoryName);
+            var viewModels = new GetUserPostPartCVListViewModel().GetViewModel(models, request.JobCategoryName);
             var result = new BaseViewModel
             {
                 Info = viewModels,
@@ -258,6 +258,67 @@ namespace XinDaPartJobAPI.Controllers
             result.ResultCode = CommonData.SuccessCode;
             result.Msg = true;
 
+            return result;
+        }
+
+        /// <summary>
+        /// 获取岗位预约刷新时间
+        /// </summary>
+        [HttpPost]
+        [Route("api/Job/GetRefreshInfo")]
+        public object GetRefreshInfo(GetRefreshInfoRequest request)
+        {
+            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
+            var model = JobService.GetRefreshInfo(request.JobId, redisModel.EPId, redisModel.CityId);
+            var viewModel = new GetRefreshInfoViewModel().GetViewModel(model);
+            var result = new BaseViewModel
+            {
+                Info = viewModel,
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
+            };
+            return result;
+        }
+
+        /// <summary>
+        /// 提交预约刷新
+        /// </summary>
+        [HttpPost]
+        [Route("api/Job/SubmitRefreshInfo")]
+        public object SubmitRefreshInfo(SubmitRefreshInfoRequest request)
+        {
+            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
+            var id = JobService.SubmitRefreshInfo(request);
+
+            var result = new BaseViewModel
+            {
+                Info = new SubmitRefreshInfoViewModel { RefreshId = id },
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
+            };
+            return result;
+        }
+
+        /// <summary>
+        /// 发布兼职岗位
+        /// </summary>
+        [HttpPost]
+        [Route("api/Job/SubmitPartJob")]
+        public object SubmitPartJob(SubmitPartJobViewModel request)
+        {
+            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
+            //var redisModel = new RedisModel {EPId = 1,UserId = 1,CityId = "3202"};
+            var provinceId = CacheContext.DicRegions.FirstOrDefault(r => r.Id == redisModel.CityId)?.ParentId ?? string.Empty;
+            JobService.SubmitPartJob(request, redisModel, provinceId);
+            var result = new BaseViewModel
+            {
+                Info = CommonData.SuccessStr,
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
+            };
             return result;
         }
 

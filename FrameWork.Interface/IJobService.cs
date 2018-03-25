@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using FrameWork.Common.Models;
 using FrameWork.Entity.Entity;
 using FrameWork.Entity.Model.Job;
 using FrameWork.Entity.ViewModel.Job;
@@ -50,6 +51,21 @@ namespace FrameWork.Interface
         /// 获取所有的结算方式列表
         /// </summary>
         List<T_PayWay> GetPayWays();
+
+        /// <summary>
+        /// 获取岗位的预约刷新信息
+        /// </summary>
+        GetRefreshInfoModel GetRefreshInfo(int jobId, int epId, string cityId);
+
+        /// <summary>
+        /// 提交刷新信息
+        /// </summary>
+        int SubmitRefreshInfo(SubmitRefreshInfoRequest request);
+
+        /// <summary>
+        /// 新增兼职岗位
+        /// </summary>
+        int SubmitPartJob(SubmitPartJobViewModel request, RedisModel redisModel,string provinceId);
 
         /// <summary>
         /// 用户屏蔽岗位

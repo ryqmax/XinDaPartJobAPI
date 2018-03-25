@@ -109,6 +109,7 @@
     <Compile Include="Model\EP\GetEPContactsModel.cs" />
     <Compile Include="Model\Job\GetFullJobModel.cs" />
     <Compile Include="Model\Job\GetPartJobModel.cs" />
+    <Compile Include="Model\Job\GetRefreshInfoModel.cs" />
     <Compile Include="Model\Job\GetUserPostPartCVListModel.cs" />
     <Compile Include="ViewModel\Account\EPLoginViewModel.cs" />
     <Compile Include="ViewModel\Account\EPDefaultLoginViewModel.cs" />
@@ -137,7 +138,10 @@
     <Compile Include="ViewModel\Job\GetFullJobViewModel.cs" />
     <Compile Include="ViewModel\Job\GetPartJobViewModel.cs" />
     <Compile Include="ViewModel\Job\GetPayWayViewModel.cs" />
+    <Compile Include="ViewModel\Job\GetRefreshInfoViewModel.cs" />
     <Compile Include="ViewModel\Job\GetUserPostPartCVListViewModel.cs" />
+    <Compile Include="ViewModel\Job\SubmitPartJobViewModel.cs" />
+    <Compile Include="ViewModel\Job\SubmitRefreshInfoViewModel.cs" />
     <Compile Include="ViewModel\Job\GetIndexBaseDataReq.cs" />
     <Compile Include="ViewModel\Job\ShieldJobReq.cs" />
     <Compile Include="ViewModel\Job\UserPostCVViewModel.cs" />

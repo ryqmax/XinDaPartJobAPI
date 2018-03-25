@@ -166,5 +166,23 @@ namespace XinDaPartJobAPI.Controllers
             JobService.UserPostCV(userId, request.CVId, request.JobId);
             return result;
         }
+
+        [HttpPost]
+        [Route("api/Job/GetPayWay")]
+        public object GetPayWay(GetPayWayRequest request)
+        {
+            var result = new BaseViewModel
+            {
+                Info = CommonData.SuccessStr,
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
+            };
+            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
+            var models = CacheContext.PayWays;
+
+            return result;
+        }
+
     }
 }

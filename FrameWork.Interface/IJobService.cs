@@ -45,5 +45,10 @@ namespace FrameWork.Interface
         /// 获取该工作的福利待遇
         /// </summary>
         List<T_EPWelfare> GetJobWelfareList(int jobId);
+
+        /// <summary>
+        /// 获取所有的结算方式列表
+        /// </summary>
+        List<T_PayWay> GetPayWays();
     }
 }

@@ -133,6 +133,7 @@
     <Compile Include="ViewModel\EP\UploadImgViewModel.cs" />
     <Compile Include="ViewModel\Job\GetFullJobViewModel.cs" />
     <Compile Include="ViewModel\Job\GetPartJobViewModel.cs" />
+    <Compile Include="ViewModel\Job\GetPayWayViewModel.cs" />
     <Compile Include="ViewModel\Job\GetUserPostPartCVListViewModel.cs" />
     <Compile Include="ViewModel\Job\UserPostCVViewModel.cs" />
     <Compile Include="ViewModel\Region\GetCityListViewModel.cs" />

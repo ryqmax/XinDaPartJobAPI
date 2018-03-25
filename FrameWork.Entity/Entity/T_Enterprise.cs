@@ -84,7 +84,7 @@ namespace FrameWork.Entity.Entity
         public int TotalIntegral {get;set;}
 
         /// <summary>
-        /// 等级信息：0.未认证，1.普通，2.一级雇主，3.二级，4.三级，5.四级，6.五级 
+        /// 等级信息：1.未认证，2.普通，3.一级雇主，4.二级，5.三级，6.四级，7.五级
         /// </summary>
         public byte Level {get;set;}
 

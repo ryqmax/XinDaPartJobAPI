@@ -81,6 +81,7 @@
     <Compile Include="Entity\T_EPViewJobLog.cs" />
     <Compile Include="Entity\T_EPVIP.cs" />
     <Compile Include="Entity\T_EPWelfare.cs" />
+    <Compile Include="Entity\T_JobBanner.cs" />
     <Compile Include="Entity\T_Job.cs" />
     <Compile Include="Entity\T_JobAddress.cs" />
     <Compile Include="Entity\T_JobCategory.cs" />

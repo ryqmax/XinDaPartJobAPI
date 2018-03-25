@@ -210,17 +210,12 @@ namespace XinDaPartJobAPI.Controllers
                 ResultCode = CommonData.FailCode
             };
             var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
-            var userId = redisModel.UserId;
             
             var resultInfo=new GetIndexBaseDataRespInfo();
 
             //地区数据
             resultInfo.Region = CacheContext.DicRegions.Where(r => !r.IsDel&&r.ParentId==redisModel.CityId).Select(r=>new RegionListItem{RegionId = r.Id,Name = r.Description}).ToList();
-            //foreach (var jb in JobEmployerLevelEnum)
-            //{
-            //    resultInfo.JobType = CacheContext.DicRegions.Where(r => !r.IsDel&&r.ParentId== redisModel.CityId).Select(r=>new RegionListItem{RegionId = r.Id,Name = r.Description}).ToList();
-            //}
-
+            
             //雇主级别数据
             
             foreach (JobEmployerLevelEnum jobEmployerLevel in Enum.GetValues(typeof(JobEmployerLevelEnum)))
@@ -232,6 +227,36 @@ namespace XinDaPartJobAPI.Controllers
                 };
                 resultInfo.Employer.Add(currentEmployer);
             }
+
+            //岗位类型
+            var jobCategoryList = JobCategoryServicec.GetJobCategorieList();
+            foreach (var jobCategory in jobCategoryList)
+            {
+                var currentjobCategory = new JobTypeListItem()
+                {
+                    JobTypeId = jobCategory.Id.ToString(),
+                    Name = jobCategory.Name
+                };
+                resultInfo.JobType.Add(currentjobCategory);
+            }
+
+            //bannner
+            var jobBannerList = JobBannerServicec.GetJobBannerList();
+            foreach (var jobBanner in jobBannerList)
+            {
+                var currentjobCategory = new BannerListItem()
+                {
+                    BannerId = jobBanner.Id.ToString(),
+                    ImgUrl = PictureHelper.ConcatPicUrl(jobBanner.PicUrl),
+                    BannerUrl = StringHelper.NullOrEmpty(jobBanner.OpenUrl)
+                };
+                resultInfo.BannerList.Add(currentjobCategory);
+            }
+
+            result.Info = resultInfo;
+            result.Message = CommonData.SuccessStr;
+            result.ResultCode = CommonData.SuccessCode;
+            result.Msg = true;
 
             return result;
         }

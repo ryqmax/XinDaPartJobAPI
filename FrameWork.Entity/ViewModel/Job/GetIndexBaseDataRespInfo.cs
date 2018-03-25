@@ -22,11 +22,6 @@ namespace FrameWork.Entity.ViewModel.Job
     /// </summary>
     public class GetIndexBaseDataRespInfo
     {
-        /// <summary>
-        /// 首字母
-        /// </summary>
-        public string FirstLetter { get; set; } = string.Empty;
-
         public List<RegionListItem> Region { get; set; } = new List<RegionListItem>();
         public List<EmployerListItem> Employer { get; set; } = new List<EmployerListItem>();
         public List<JobTypeListItem> JobType { get; set; } = new List<JobTypeListItem>();
@@ -77,7 +72,7 @@ namespace FrameWork.Entity.ViewModel.Job
         /// <summary>
         /// Id
         /// </summary>
-        public string RegionId { get; set; } = string.Empty;
+        public string BannerId { get; set; } = string.Empty;
 
         /// <summary>
         /// 图片路径

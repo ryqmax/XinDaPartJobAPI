@@ -78,5 +78,9 @@ namespace FrameWork.Entity.Entity
         /// </summary>
         public bool IsDel { set; get; }
 
+        /// <summary>
+        /// 首字母
+        /// </summary>
+        public string FirstLetter { get; set; }
     }
 }

@@ -13,6 +13,7 @@
  *      History:
  ***********************************************************************************/
 
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using FrameWork.Common.Const;
@@ -42,9 +43,33 @@ namespace XinDaPartJobAPI.Controllers
                 ResultCode = CommonData.FailCode
             };
 
-            var cityList = CacheContext.DicRegions.Select(r => new GetCityListViewModel {CityId = r.Id, CityName = r.Description});
+            var usedCityList = CacheContext.DicRegions.Where(r => r.IsUsed);
+            var cityListInfo=new List<GetCityListViewModel>();
 
-            result.Info = cityList;
+            foreach (var dicRegion in usedCityList)
+            {
+                var currentGroup = cityListInfo.FirstOrDefault(c => c.FirstLetter.Equals(dicRegion.FirstLetter));
+                var currentCityInfo = new CityListItem
+                {
+                    CityId = dicRegion.Id,
+                    CityName = dicRegion.Description
+                };
+                if (currentGroup!=null)
+                {
+                    currentGroup.CityList.Add(currentCityInfo);
+                }
+                else
+                {
+                    currentGroup = new GetCityListViewModel
+                    {
+                        FirstLetter = dicRegion.FirstLetter,
+                        CityList = new List<CityListItem> {currentCityInfo}
+                    };
+                    cityListInfo.Add(currentGroup);
+                }
+            }
+
+            result.Info = cityListInfo.OrderBy(c=>c.FirstLetter);
             result.Message = CommonData.SuccessStr;
             result.ResultCode = CommonData.SuccessCode;
             result.Msg = true;

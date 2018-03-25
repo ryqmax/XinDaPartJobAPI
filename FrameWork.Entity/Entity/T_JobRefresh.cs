@@ -34,6 +34,11 @@ namespace FrameWork.Entity.Entity
         public int RefreshDay {get;set;}
 
         /// <summary>
+        /// 预定的每天刷新次数
+        /// </summary>
+        public int RefreshCount { get;set;}
+
+        /// <summary>
         /// 预约的截止刷新时间， 
         /// </summary>
         public DateTime EndTime {get;set;}

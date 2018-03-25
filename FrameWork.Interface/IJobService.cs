@@ -50,5 +50,10 @@ namespace FrameWork.Interface
         /// 获取所有的结算方式列表
         /// </summary>
         List<T_PayWay> GetPayWays();
+
+        /// <summary>
+        /// 获取岗位的预约刷新信息
+        /// </summary>
+        GetRefreshInfoModel GetRefreshInfo(int jobId, int epId, string cityId);
     }
 }

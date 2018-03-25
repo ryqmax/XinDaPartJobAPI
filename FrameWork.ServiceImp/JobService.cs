@@ -300,7 +300,7 @@ IF NOT EXISTS (SELECT 1 FROM dbo.T_CVDelivery cd WHERE cd.IsDel = 0 AND cd.UserI
 	            jw.IsDel = 0 AND w.IsDel = 0 
 	            AND jw.JobId = @jobId";
 
-            return DbPartJob.Fetch<T_EPWelfare>(sql, new {jobId});
+            return DbPartJob.Fetch<T_EPWelfare>(sql, new { jobId });
         }
 
         /// <summary>
@@ -311,6 +311,31 @@ IF NOT EXISTS (SELECT 1 FROM dbo.T_CVDelivery cd WHERE cd.IsDel = 0 AND cd.UserI
             var sql = @";SELECT * FROM dbo.T_PayWay WHERE IsDel = 0";
 
             return DbPartJob.Fetch<T_PayWay>(sql);
+        }
+
+        /// <summary>
+        /// 获取岗位的预约刷新信息
+        /// </summary>
+        public GetRefreshInfoModel GetRefreshInfo(int jobId, int epId, string cityId)
+        {
+            var sql = @";
+SELECT
+	ev.VIPInfoId,
+	ev.PassDate,
+	(SELECT TOP 1 jr.StartTime FROM dbo.T_JobRefresh jr WHERE jr.JobId = @jobId AND jr.IsDel = 0)StartTime,
+	(SELECT TOP 1 jr.TimeSpan FROM dbo.T_JobRefresh jr WHERE jr.JobId = @jobId AND jr.IsDel = 0)TimeSpan,
+	(SELECT TOP 1 jr.RefreshDay FROM dbo.T_JobRefresh jr WHERE jr.JobId = @jobId AND jr.IsDel = 0)RefreshDay,
+	(SELECT TOP 1 jr.RefreshCount FROM dbo.T_JobRefresh jr WHERE jr.JobId = @jobId AND jr.IsDel = 0)RefreshCount
+FROM
+	dbo.T_Enterprise ep
+	LEFT JOIN dbo.T_EPVIP ev ON ep.Id = ev.EnterpriseId
+WHERE
+	ep.IsDel = 0 AND ep.Status = 1
+	AND ev.IsDel = 0 AND ev.CityId = @cityId
+	AND ep.Id = @epId";
+
+            return DbPartJob.FirstOrDefault<GetRefreshInfoModel>(sql, new { jobId, epId, cityId });
+
         }
     }
 }

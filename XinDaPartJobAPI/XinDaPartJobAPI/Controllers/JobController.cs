@@ -186,5 +186,25 @@ namespace XinDaPartJobAPI.Controllers
             };
             return result;
         }
+
+        /// <summary>
+        /// 获取岗位预约刷新时间
+        /// </summary>
+        [HttpPost]
+        [Route("api/Job/GetRefreshInfo")]
+        public object GetRefreshInfo(GetRefreshInfoRequest request)
+        {
+            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
+            var model = JobService.GetRefreshInfo(request.JobId, redisModel.EPId, redisModel.CityId);
+            var viewModel = new GetRefreshInfoViewModel().GetViewModel(model);
+            var result = new BaseViewModel
+            {
+                Info = viewModel,
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
+            };
+            return result;
+        }
     }
 }

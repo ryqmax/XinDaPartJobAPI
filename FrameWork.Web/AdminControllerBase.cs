@@ -61,5 +61,10 @@ namespace FrameWork.Web
         /// </summary>
         protected IVIPInfoService VIPInfoService => ServiceHelper.CreateService<IVIPInfoService>();
 
+        /// <summary>
+        /// 实例化IReportService
+        /// </summary>
+        protected IReportService ReportService => ServiceHelper.CreateService<IReportService>();
+
     }
 }

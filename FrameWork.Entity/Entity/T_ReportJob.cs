@@ -19,19 +19,14 @@ namespace FrameWork.Entity.Entity
         public byte UserType {get;set;}
 
         /// <summary>
-        /// 举报用户id或者举报企业id 
+        /// 举报用户id或者举报企业用户id 
         /// </summary>
         public int UserId {get;set;}
 
         /// <summary>
-        /// 企业id 
+        /// 企业id，如果举报者是不是企业用户，企业id为0
         /// </summary>
         public int EnterpriseId {get;set;}
-
-        /// <summary>
-        /// 用户名字或企业名字 
-        /// </summary>
-        public string UserName {get;set;}
 
         /// <summary>
         /// 简历id或者岗位id 
@@ -39,44 +34,29 @@ namespace FrameWork.Entity.Entity
         public int JobId {get;set;}
 
         /// <summary>
-        /// 技能描述 
+        /// 岗位名称
         /// </summary>
-        public string SkillDesc {get;set;}
-
-        /// <summary>
-        /// 岗位类别id，存储方式：/1/3/ 
-        /// </summary>
-        public string JobCategoryIds {get;set;}
-
-        /// <summary>
-        /// 岗位类别名字，存储方式：/教育/网站/ 
-        /// </summary>
-        public string JobCategoryNames {get;set;}
-
+        public string JobName { get;set;}
+     
         /// <summary>
         /// 举报内容，存储方式：/虚假/广告/ 
         /// </summary>
-        public string ExposeContent {get;set;}
+        public string ReportReason { get; set; }
+
+        /// <summary>
+        /// 举报原因id，存储方式：/1/2/
+        /// </summary>
+        public string ReportReasonId { get; set; }
 
         /// <summary>
         /// 备注说明 
         /// </summary>
         public string Note {get;set;}
-
+        
         /// <summary>
-        /// 被举报用户类型：1.普通用户，1.企业 
+        /// 被举报的企业名字
         /// </summary>
-        public byte ExposedUserType {get;set;}
-
-        /// <summary>
-        /// 被举报用户id或者被举报企业id 
-        /// </summary>
-        public int ExposedUserId {get;set;}
-
-        /// <summary>
-        /// 被举报的用户名字或企业名字 
-        /// </summary>
-        public string ExposedUserName {get;set;}
+        public string ExposedEPName { get;set;}
 
         /// <summary>
         /// 被举报的企业id 

@@ -47,6 +47,7 @@
     <Compile Include="IEPAddressService.cs" />
     <Compile Include="IEPService.cs" />
     <Compile Include="IJobService.cs" />
+    <Compile Include="IReportService.cs" />
     <Compile Include="ISignInService.cs" />
     <Compile Include="IBaseService.cs" />
     <Compile Include="ILogService.cs" />

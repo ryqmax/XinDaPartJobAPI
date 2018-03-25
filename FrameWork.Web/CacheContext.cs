@@ -20,6 +20,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FrameWork.Common;
 using FrameWork.Common.Const;
+using FrameWork.Common.DotNETCache;
 using FrameWork.Entity.Entity;
 using FrameWork.ServiceImp;
 
@@ -35,7 +36,7 @@ namespace FrameWork.Web
         /// </summary>
         public static List<DicRegion> DicRegions
         {
-            get { return RedisInfoHelper.Get(CommonData.RegionRedisCache, () => new DicRegionService().GetAlList()); }
+            get { return CacheHelper.Get(CommonData.RegionRedisCache, () => new DicRegionService().GetAlList()); }
         }
 
         /// <summary>

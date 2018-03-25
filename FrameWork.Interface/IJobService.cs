@@ -55,5 +55,10 @@ namespace FrameWork.Interface
         /// 获取岗位的预约刷新信息
         /// </summary>
         GetRefreshInfoModel GetRefreshInfo(int jobId, int epId, string cityId);
+
+        /// <summary>
+        /// 提交刷新信息
+        /// </summary>
+        int SubmitRefreshInfo(SubmitRefreshInfoRequest request);
     }
 }

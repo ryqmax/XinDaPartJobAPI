@@ -41,7 +41,12 @@ namespace FrameWork.Entity.ViewModel.Job
     public class GetRefreshInfoViewModel
     {
         /// <summary>
-        /// 刷新开始时间:1992-03
+        /// 刷新id
+        /// </summary>
+        public int RefreshId { set; get; }
+
+        /// <summary>
+        /// 刷新开始时间:03月26日 00:00
         /// </summary>
         public string StartTime { set; get; }
 
@@ -82,7 +87,8 @@ namespace FrameWork.Entity.ViewModel.Job
                 MaxRefreshDay = (int)(model.PassDate - DateTime.Now).TotalDays,
                 RefreshCount = model.RefreshCount,
                 RefreshDay = model.RefreshDay,
-                TimeSpan = model.TimeSpan
+                TimeSpan = model.TimeSpan,
+                RefreshId = model.RefreshId
             };
             return viewModel;
         }

@@ -325,7 +325,8 @@ SELECT
 	(SELECT TOP 1 jr.StartTime FROM dbo.T_JobRefresh jr WHERE jr.JobId = @jobId AND jr.IsDel = 0)StartTime,
 	(SELECT TOP 1 jr.TimeSpan FROM dbo.T_JobRefresh jr WHERE jr.JobId = @jobId AND jr.IsDel = 0)TimeSpan,
 	(SELECT TOP 1 jr.RefreshDay FROM dbo.T_JobRefresh jr WHERE jr.JobId = @jobId AND jr.IsDel = 0)RefreshDay,
-	(SELECT TOP 1 jr.RefreshCount FROM dbo.T_JobRefresh jr WHERE jr.JobId = @jobId AND jr.IsDel = 0)RefreshCount
+	(SELECT TOP 1 jr.RefreshCount FROM dbo.T_JobRefresh jr WHERE jr.JobId = @jobId AND jr.IsDel = 0)RefreshCount,
+	(SELECT TOP 1 jr.Id FROM dbo.T_JobRefresh jr WHERE jr.JobId = @jobId AND jr.IsDel = 0)RefreshId
 FROM
 	dbo.T_Enterprise ep
 	LEFT JOIN dbo.T_EPVIP ev ON ep.Id = ev.EnterpriseId
@@ -336,6 +337,71 @@ WHERE
 
             return DbPartJob.FirstOrDefault<GetRefreshInfoModel>(sql, new { jobId, epId, cityId });
 
+        }
+
+        /// <summary>
+        /// 提交刷新信息
+        /// </summary>
+        public int SubmitRefreshInfo(SubmitRefreshInfoRequest request)
+        {
+            var startTime = Convert.ToDateTime(request.StartTime);
+            var endTime = startTime.AddDays(request.RefreshDay);
+            var sql = @";
+            IF EXISTS (SELECT 1 FROM dbo.T_JobRefresh WHERE JobId = @JobId AND IsDel = 0)
+            BEGIN
+               UPDATE
+	                    dbo.T_JobRefresh
+                    SET
+	                    StartTime =@startTime,
+	                    TimeSpan=@TimeSpan,
+	                    RefreshDay=@RefreshDay,
+	                    RefreshCount = @RefreshCount
+                    WHERE
+	                    JobId = @JobId AND IsDel = 0         
+            END
+                ELSE
+	                BEGIN
+                        INSERT
+                        INTO
+                        dbo.T_JobRefresh
+                                ( 
+                                  TimeSpan ,
+                                  StartTime ,
+                                  JobId,
+                                  RefreshDay ,RefreshCount,
+                                  EndTime ,
+                                  IsDel ,
+                                  ModifyUserId ,
+                                  ModifyTime ,
+                                  CreateUserId ,
+                                  CreateTime
+                                )
+                        VALUES  ( 
+                                  @TimeSpan , -- TimeSpan - int
+                                  @startTime ,
+                                  @JobId,
+                                  @RefreshDay ,@RefreshCount,
+                                  @endTime , -- EndTime - smalldatetime
+                                  0 , -- IsDel - bit
+                                  0 , -- ModifyUserId - int
+                                  GETDATE() , -- ModifyTime - datetime
+                                  0 , -- CreateUserId - int
+                                  GETDATE()  -- CreateTime - datetime
+                                )
+	            END
+";
+            DbPartJob.Execute(sql, new
+            {
+                endTime,
+                startTime,
+                request.JobId,
+                request.RefreshDay,
+                request.RefreshCount,
+                request.TimeSpan
+            });
+            var qsql = @";SELECT TOP 1 Id FROM dbo.T_JobRefresh WHERE JobId = @JobId AND IsDel = 0";
+
+            return DbPartJob.ExecuteScalar<int>(qsql,new {request.JobId});
         }
     }
 }

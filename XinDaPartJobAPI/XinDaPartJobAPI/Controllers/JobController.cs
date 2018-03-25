@@ -126,7 +126,7 @@ namespace XinDaPartJobAPI.Controllers
             if (redisModel.Mark == TokenMarkEnum.Enterprise)
                 userId = 0;
             var models = JobService.GetUserPostPartCVList(userId);
-            var viewModels = new GetUserPostPartCVListViewModel().GetViewModel(models,request.JobCategoryName);
+            var viewModels = new GetUserPostPartCVListViewModel().GetViewModel(models, request.JobCategoryName);
             var result = new BaseViewModel
             {
                 Info = viewModels,
@@ -212,14 +212,14 @@ namespace XinDaPartJobAPI.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/Job/SubmitRefreshInfo")]
-        public object SubmitRefreshInfo(GetRefreshInfoRequest request)
+        public object SubmitRefreshInfo(SubmitRefreshInfoRequest request)
         {
             var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
-            var model = JobService.GetRefreshInfo(request.JobId, redisModel.EPId, redisModel.CityId);
-            var viewModel = new GetRefreshInfoViewModel().GetViewModel(model);
+            var id = JobService.SubmitRefreshInfo(request);
+
             var result = new BaseViewModel
             {
-                Info = viewModel,
+                Info = new SubmitRefreshInfoViewModel { RefreshId = id },
                 Message = CommonData.SuccessStr,
                 Msg = true,
                 ResultCode = CommonData.SuccessCode

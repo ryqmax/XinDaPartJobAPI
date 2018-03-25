@@ -70,7 +70,7 @@ namespace FrameWork.ServiceImp
                                 AND payway.IsDel = 0
                                 {where}
 		                        AND job.Type=@type
-		                        AND job.CityId=@cityId;
+		                        AND epaddress.CityId=@cityId;
 
                         SELECT  *
                         INTO    #JobIdPageTemp

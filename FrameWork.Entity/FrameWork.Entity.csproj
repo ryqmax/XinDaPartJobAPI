@@ -131,9 +131,11 @@
     <Compile Include="ViewModel\EP\SaveAccountPermissionViewModel.cs" />
     <Compile Include="ViewModel\EP\SaveEPContactsViewModel.cs" />
     <Compile Include="ViewModel\EP\UploadImgViewModel.cs" />
+    <Compile Include="ViewModel\Job\GetIndexBaseDataRespInfo.cs" />
     <Compile Include="ViewModel\Job\GetFullJobViewModel.cs" />
     <Compile Include="ViewModel\Job\GetPartJobViewModel.cs" />
     <Compile Include="ViewModel\Job\GetUserPostPartCVListViewModel.cs" />
+    <Compile Include="ViewModel\Job\GetIndexBaseDataReq.cs" />
     <Compile Include="ViewModel\Job\UserPostCVViewModel.cs" />
     <Compile Include="ViewModel\Region\GetCityListViewModel.cs" />
     <Compile Include="ViewModel\Job\GetJobListReq.cs" />

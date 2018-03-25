@@ -69,50 +69,50 @@ namespace FrameWork.Common.Enum
     }
 
     /// <summary>
-    /// 等级信息：0.未认证，1.普通，2.一级雇主，3.二级，4.三级，5.四级，6.五级
+    /// 等级信息：1.未认证，2.普通，3.一级雇主，4.二级，5.三级，6.四级，7.五级
     /// </summary>
     public enum JobEmployerLevelEnum
     {
         /// <summary>
-        /// 0.未认证
+        /// 1.未认证
         /// </summary>
         [Description("未认证")]
-        NotAuth,
+        NotAuth=1,
 
         /// <summary>
-        /// 1.普通
+        /// 2.普通
         /// </summary>
         [Description("普通")]
-        Common,
+        Common=2,
 
         /// <summary>
-        /// 2、一级雇主
+        /// 3、一级雇主
         /// </summary>
         [Description("一级雇主")]
-        LevelOne,
+        LevelOne=3,
 
         /// <summary>
-        /// 3、二级雇主
+        /// 4、二级雇主
         /// </summary>
         [Description("二级雇主")]
-        LevelTwo,
+        LevelTwo=4,
 
         /// <summary>
-        /// 4、三级雇主
+        /// 5、三级雇主
         /// </summary>
         [Description("三级雇主")]
-        LevelThree,
+        LevelThree=5,
 
         /// <summary>
-        /// 5、四级雇主
+        /// 6、四级雇主
         /// </summary>
         [Description("四级雇主")]
-        LevelFour,
+        LevelFour=6,
 
         /// <summary>
-        /// 6、五级雇主
+        /// 7、五级雇主
         /// </summary>
         [Description("五级雇主")]
-        LevelFive
+        LevelFive=7
     }
 }

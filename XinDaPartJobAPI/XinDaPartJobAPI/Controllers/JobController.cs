@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 using FrameWork.Common;
 using FrameWork.Common.Const;
@@ -164,6 +166,47 @@ namespace XinDaPartJobAPI.Controllers
                 };
             }
             JobService.UserPostCV(userId, request.CVId, request.JobId);
+            return result;
+        }
+
+        /// <summary>
+        /// 获取首页基础数据
+        /// </summary>
+        [HttpPost]
+        [Route("api/Job/GetIndexBaseData")]
+        public object GetIndexBaseData(GetIndexBaseDataReq request)
+        {
+            var result = new BaseViewModel
+            {
+                Info = CommonData.FailStr,
+                Message = CommonData.FailStr,
+                Msg = false,
+                ResultCode = CommonData.FailCode
+            };
+            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
+            var userId = redisModel.UserId;
+            
+            var resultInfo=new GetIndexBaseDataRespInfo();
+
+            //地区数据
+            resultInfo.Region = CacheContext.DicRegions.Where(r => !r.IsDel&&r.ParentId==redisModel.CityId).Select(r=>new RegionListItem{RegionId = r.Id,Name = r.Description}).ToList();
+            //foreach (var jb in JobEmployerLevelEnum)
+            //{
+            //    resultInfo.JobType = CacheContext.DicRegions.Where(r => !r.IsDel&&r.ParentId== redisModel.CityId).Select(r=>new RegionListItem{RegionId = r.Id,Name = r.Description}).ToList();
+            //}
+
+            //雇主级别数据
+            
+            foreach (JobEmployerLevelEnum jobEmployerLevel in Enum.GetValues(typeof(JobEmployerLevelEnum)))
+            {
+                var currentEmployer = new EmployerListItem
+                {
+                    EmployerId = ((int)jobEmployerLevel).ToString(),
+                    Name = EnumHelper.GetDescription(jobEmployerLevel)
+                };
+                resultInfo.Employer.Add(currentEmployer);
+            }
+
             return result;
         }
     }

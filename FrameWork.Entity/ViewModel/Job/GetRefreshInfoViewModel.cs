@@ -77,7 +77,7 @@ namespace FrameWork.Entity.ViewModel.Job
         {
             var viewModel = new GetRefreshInfoViewModel
             {
-                StartTime = model.StartTime?.ToString("yyyy-MM")??string.Empty,
+                StartTime = model.StartTime?.ToString("MM月dd日 HH:mm")??string.Empty,
                 MaxRefreshCount = GetMaxCount(model.VIPInfoId),
                 MaxRefreshDay = (int)(model.PassDate - DateTime.Now).TotalDays,
                 RefreshCount = model.RefreshCount,

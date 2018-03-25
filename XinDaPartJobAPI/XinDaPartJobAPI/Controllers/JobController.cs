@@ -206,5 +206,26 @@ namespace XinDaPartJobAPI.Controllers
             };
             return result;
         }
+
+        /// <summary>
+        /// 提交预约刷新
+        /// </summary>
+        [HttpPost]
+        [Route("api/Job/SubmitRefreshInfo")]
+        public object SubmitRefreshInfo(GetRefreshInfoRequest request)
+        {
+            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
+            var model = JobService.GetRefreshInfo(request.JobId, redisModel.EPId, redisModel.CityId);
+            var viewModel = new GetRefreshInfoViewModel().GetViewModel(model);
+            var result = new BaseViewModel
+            {
+                Info = viewModel,
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
+            };
+            return result;
+        }
+
     }
 }

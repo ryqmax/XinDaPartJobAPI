@@ -28,7 +28,7 @@ namespace FrameWork.ServiceImp
     /// <summary>
     /// ReportService
     /// </summary>
-    public class ReportService:BaseService<T_ReportCV>,IReportService
+    public class ReportService : BaseService<T_ReportCV>, IReportService
     {
         /// <summary>
         /// 举报简历接口
@@ -45,7 +45,6 @@ INTO
 dbo.T_ReportCV
         ( UserType ,
           UserId ,
-          UserName ,
           EnterpriseId ,
           CVId ,
           SkillDesc ,
@@ -66,27 +65,69 @@ dbo.T_ReportCV
         )
 VALUES  ( @userType , -- UserType - tinyint
           @UserId , -- UserId - int
-          N'' , -- UserName - nvarchar(50)
-          0 , -- EnterpriseId - int
-          0 , -- CVId - int
-          N'' , -- SkillDesc - nvarchar(500)
-          '' , -- JobCategoryIds - varchar(100)
-          N'' , -- JobCategoryNames - nvarchar(200)
-          N'' , -- ReportReasonId - nvarchar(300)
-          N'' , -- ReportReason - nvarchar(300)
+          @EPId , -- EnterpriseId - int
+          @CVId , -- CVId - int
+          @SkillDesc , -- SkillDesc - nvarchar(500)
+          @jobCategoryIds , -- JobCategoryIds - varchar(100)
+          @jobCategoryNames , -- JobCategoryNames - nvarchar(200)
+          @reasonIds , -- ReportReasonId - nvarchar(300)
+          @reasons , -- ReportReason - nvarchar(300)
           N'' , -- Note - nvarchar(500)
-          (SELECT cv.UserId FROM dbo.T_CV cv WHERE cv.Id = @cvId) , -- ExposedUserId - int
-          (SELECT TOP 1 u.RealName FROM dbo.T_CV cv LEFT JOIN dbo.T_User u ON cv.UserId = u.Id WHERE cv.Id = @cvId) , -- ExposedUserName - nvarchar(50)
-          N'' , -- Reply - nvarchar(500)
+          (SELECT cv.UserId FROM dbo.T_CV cv WHERE cv.Id = @CVId) , -- ExposedUserId - int
+          @UserName , -- ExposedUserName - nvarchar(50)
+          @Note , -- Reply - nvarchar(500)
           0 , -- Status - tinyint
-          NULL , -- IsDel - bit
+          0 , -- IsDel - bit
           0 , -- ModifyUserId - int
           GETDATE() , -- ModifyTime - datetime
           0 , -- CreateUserId - int
           GETDATE()  -- CreateTime - datetime
-        )";
-
-            return 1;
+        )
+	SELECT @@@IDENTITY
+";
+            var jobCategoryIds = $"/{string.Join("/", request.JobCategoryIds)}/";
+            var jobCategoryNames = $"/{string.Join("/", request.JobCategoryNames)}/";
+            var reasonIds = $"/{string.Join("/", request.ReasonIds)}/";
+            var reasons = $"/{string.Join("/", request.Reasons)}/";
+            var id = DbPartJob.ExecuteScalar<int>(sql, new
+            {
+                userType,
+                redisModel.UserId,
+                redisModel.EPId,
+                request.CVId,
+                request.SkillDesc,
+                jobCategoryIds,
+                jobCategoryNames,
+                reasonIds,
+                reasons,
+                request.UserName,
+                request.Note
+            });
+            foreach (var img in request.NoteImgUrl)
+            {
+                var imgSql = @";
+                        INSERT
+                        INTO
+                        dbo.T_ReportCVImg
+                                ( ReportCVId ,
+                                  PicUrl ,
+                                  IsDel ,
+                                  ModifyUserId ,
+                                  ModifyTime ,
+                                  CreateUserId ,
+                                  CreateTime
+                                )
+                        VALUES  ( @id , -- ReportCVId - int
+                                  @img , -- PicUrl - nvarchar(255)
+                                  0 , -- IsDel - bit
+                                  0 , -- ModifyUserId - int
+                                  GETDATE() , -- ModifyTime - datetime
+                                  0 , -- CreateUserId - int
+                                  GETDATE()  -- CreateTime - datetime
+                                )";
+                DbPartJob.Execute(imgSql, new { id, img });
+            }
+            return id;
         }
     }
 }

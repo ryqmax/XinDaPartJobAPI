@@ -72,10 +72,10 @@ VALUES  ( @userType , -- UserType - tinyint
           @jobCategoryNames , -- JobCategoryNames - nvarchar(200)
           @reasonIds , -- ReportReasonId - nvarchar(300)
           @reasons , -- ReportReason - nvarchar(300)
-          N'' , -- Note - nvarchar(500)
+          @Note  , -- Note - nvarchar(500)
           (SELECT cv.UserId FROM dbo.T_CV cv WHERE cv.Id = @CVId) , -- ExposedUserId - int
           @UserName , -- ExposedUserName - nvarchar(50)
-          @Note , -- Reply - nvarchar(500)
+          N'', -- Reply - nvarchar(500)
           0 , -- Status - tinyint
           0 , -- IsDel - bit
           0 , -- ModifyUserId - int
@@ -118,6 +118,99 @@ VALUES  ( @userType , -- UserType - tinyint
                                   CreateTime
                                 )
                         VALUES  ( @id , -- ReportCVId - int
+                                  @img , -- PicUrl - nvarchar(255)
+                                  0 , -- IsDel - bit
+                                  0 , -- ModifyUserId - int
+                                  GETDATE() , -- ModifyTime - datetime
+                                  0 , -- CreateUserId - int
+                                  GETDATE()  -- CreateTime - datetime
+                                )";
+                DbPartJob.Execute(imgSql, new { id, img });
+            }
+            return id;
+        }
+
+        /// <summary>
+        /// 举报岗位接口
+        /// </summary>
+        public int ReportJob(ReportJobRequest request, RedisModel redisModel)
+        {
+            var userType = 1;
+            if (redisModel.Mark == TokenMarkEnum.Enterprise)
+                userType = 2;
+
+            var sql = @";
+INSERT
+INTO
+dbo.T_ReportJob
+        (UserType ,
+          UserId ,
+          EnterpriseId ,
+          JobId ,
+          JobName ,
+          ReportReasonId ,
+          ReportReason ,
+          Note ,
+          ExposedEPName ,
+          ExposedEnterpriseId ,
+          Reply ,
+          Status ,
+          IsDel ,
+          ModifyUserId ,
+          ModifyTime ,
+          CreateUserId ,
+          CreateTime
+        )
+VALUES  ( @userType , -- UserType - tinyint
+          @UserId , -- UserId - int
+          @EPId , -- EnterpriseId - int
+          @JobId , -- CVId - int
+          @JobName , -- SkillDesc - nvarchar(500)
+          @reasonIds , -- ReportReasonId - nvarchar(300)
+          @reasons , -- ReportReason - nvarchar(300)
+          @Note , -- Note - nvarchar(500)
+          @EPName,
+          @EPId , -- ExposedUserId - int
+           N'', -- Reply - nvarchar(500)
+          0 , -- Status - tinyint
+          0 , -- IsDel - bit
+          0 , -- ModifyUserId - int
+          GETDATE() , -- ModifyTime - datetime
+          0 , -- CreateUserId - int
+          GETDATE()  -- CreateTime - datetime
+        )
+	SELECT @@@IDENTITY
+";
+           
+            var reasonIds = $"/{string.Join("/", request.ReasonIds)}/";
+            var reasons = $"/{string.Join("/", request.Reasons)}/";
+            var id = DbPartJob.ExecuteScalar<int>(sql, new
+            {
+                userType,
+                redisModel.UserId,
+                redisModel.EPId,
+                request.JobId,
+                request.JobName,
+                reasonIds,
+                reasons,
+                request.EPName,
+                request.Note
+            });
+            foreach (var img in request.NoteImgUrl)
+            {
+                var imgSql = @";
+                        INSERT
+                        INTO
+                        dbo.T_ReportJobImg
+                                ( ReportJobId ,
+                                  PicUrl ,
+                                  IsDel ,
+                                  ModifyUserId ,
+                                  ModifyTime ,
+                                  CreateUserId ,
+                                  CreateTime
+                                )
+                        VALUES  ( @id , 
                                   @img , -- PicUrl - nvarchar(255)
                                   0 , -- IsDel - bit
                                   0 , -- ModifyUserId - int

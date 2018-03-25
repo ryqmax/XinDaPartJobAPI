@@ -27,7 +27,7 @@ namespace XinDaPartJobAPI.Controllers
     /// <summary>
     /// ReportController
     /// </summary>
-    public class ReportController:AdminControllerBase
+    public class ReportController : AdminControllerBase
     {
         /// <summary>
         /// 举报简历
@@ -48,5 +48,23 @@ namespace XinDaPartJobAPI.Controllers
             return result;
         }
 
+        /// <summary>
+        /// 举报岗位接口
+        /// </summary>
+        [HttpPost]
+        [Route("api/Report/ReportJob")]
+        public object ReportJob(ReportJobRequest request)
+        {
+            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
+            ReportService.ReportJob(request, redisModel);
+            var result = new BaseViewModel
+            {
+                Info = CommonData.SuccessStr,
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
+            };
+            return result;
+        }
     }
 }

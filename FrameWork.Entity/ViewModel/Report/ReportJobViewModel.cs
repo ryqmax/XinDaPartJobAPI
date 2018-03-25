@@ -1,15 +1,15 @@
 ﻿/************************************************************************************
  *      Copyright (C) 2015 yuwei,All Rights Reserved
  *      File:
- *                ReportCVViewModel.cs
+ *                ReportJobViewModel.cs
  *      Description:
- *            ReportCVViewModel
+ *            ReportJobViewModel
  *      Author:
  *                yxw
  *                
  *                
  *      Finish DateTime:
- *                2018/3/24 21:24:49
+ *                2018/3/25 11:57:11
  *      History:
  ***********************************************************************************/
 
@@ -22,9 +22,9 @@ using System.Threading.Tasks;
 namespace FrameWork.Entity.ViewModel.Report
 {
     /// <summary>
-    /// ReportCVRequest
+    /// ReportJobRequest
     /// </summary>
-    public class ReportCVRequest
+    public class ReportJobRequest
     {
         /// <summary>
         /// 令牌
@@ -32,29 +32,19 @@ namespace FrameWork.Entity.ViewModel.Report
         public string Token { set; get; }
 
         /// <summary>
-        /// 简历id
+        /// 岗位id
         /// </summary>
-        public int CVId { set; get; }
+        public int JobId { set; get; }
 
         /// <summary>
-        /// 用户名
+        /// 岗位名称
         /// </summary>
-        public string UserName { set; get; }
+        public int JobName { set; get; }
 
         /// <summary>
-        /// 兼职简历技能描述
+        /// 企业名称
         /// </summary>
-        public string SkillDesc { set; get; }
-
-        /// <summary>
-        /// 简历类别id字符串
-        /// </summary>
-        public List<int> JobCategoryIds { set; get; }
-
-        /// <summary>
-        /// 岗位类别名称字符串
-        /// </summary>
-        public List<string> JobCategoryNames { set; get; }
+        public string EPName { set; get; }
 
         /// <summary>
         /// 举报原因Id
@@ -75,6 +65,5 @@ namespace FrameWork.Entity.ViewModel.Report
         /// 图片地址
         /// </summary>
         public List<string> NoteImgUrl { set; get; }
-
     }
 }

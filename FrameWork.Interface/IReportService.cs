@@ -33,5 +33,10 @@ namespace FrameWork.Interface
         /// 举报简历接口
         /// </summary>
         int ReportCV(ReportCVRequest request, RedisModel redisModel);
+
+        /// <summary>
+        /// 举报岗位接口
+        /// </summary>
+        int ReportJob(ReportJobRequest request, RedisModel redisModel);
     }
 }

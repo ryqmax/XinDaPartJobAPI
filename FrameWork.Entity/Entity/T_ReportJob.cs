@@ -19,7 +19,7 @@ namespace FrameWork.Entity.Entity
         public byte UserType {get;set;}
 
         /// <summary>
-        /// 举报用户id或者举报企业id 
+        /// 举报用户id或者举报企业用户id 
         /// </summary>
         public int UserId {get;set;}
 
@@ -34,20 +34,10 @@ namespace FrameWork.Entity.Entity
         public int JobId {get;set;}
 
         /// <summary>
-        /// 技能描述 
+        /// 岗位名称
         /// </summary>
-        public string SkillDesc {get;set;}
-
-        /// <summary>
-        /// 岗位类别id，存储方式：/1/3/ 
-        /// </summary>
-        public string JobCategoryIds {get;set;}
-
-        /// <summary>
-        /// 岗位类别名字，存储方式：/教育/网站/ 
-        /// </summary>
-        public string JobCategoryNames {get;set;}
-
+        public string JobName { get;set;}
+     
         /// <summary>
         /// 举报内容，存储方式：/虚假/广告/ 
         /// </summary>
@@ -62,16 +52,11 @@ namespace FrameWork.Entity.Entity
         /// 备注说明 
         /// </summary>
         public string Note {get;set;}
-
+        
         /// <summary>
-        /// 被举报企业用户id
+        /// 被举报的企业名字
         /// </summary>
-        public int ExposedUserId {get;set;}
-
-        /// <summary>
-        /// 被举报的企业用户名字
-        /// </summary>
-        public string ExposedUserName {get;set;}
+        public string ExposedEPName { get;set;}
 
         /// <summary>
         /// 被举报的企业id 

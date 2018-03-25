@@ -39,6 +39,16 @@ namespace FrameWork.Entity.ViewModel.Job
         /// </summary>
         public int JobId { set; get; }
 
+        /// <summary>
+        /// 经度 
+        /// </summary>
+        public decimal Lng { get; set; }
+
+        /// <summary>
+        /// 纬度 
+        /// </summary>
+        public decimal Lat { get; set; }
+
     }
 
     /// <summary>
@@ -157,7 +167,7 @@ namespace FrameWork.Entity.ViewModel.Job
         public List<WelFare> WelFareList = new List<WelFare>();
 
 
-        public GetFullJobViewModel GetViewModel(GetFullJobModel model, List<T_EPAddress> addrList, List<DicRegion> regions, List<T_EPWelfare> welfares)
+        public GetFullJobViewModel GetViewModel(GetFullJobModel model, List<T_EPAddress> addrList, List<DicRegion> regions, List<T_EPWelfare> welfares, GetFullJobRequest request)
         {
             var viewModel = new GetFullJobViewModel
             {
@@ -186,13 +196,15 @@ namespace FrameWork.Entity.ViewModel.Job
                 var province = regions.FirstOrDefault(r => r.Id == address.ProvinceId) ?? new DicRegion();
                 var city = regions.FirstOrDefault(r => r.Id == address.CityId) ?? new DicRegion();
                 var area = regions.FirstOrDefault(r => r.Id == address.AreaId) ?? new DicRegion();
-                viewModel.JobAddressList.Add(new FullJobAddress
+                var temp = new FullJobAddress
                 {
                     Address = $@"{province.Description} {city.Description} {area.Description}",
                     AddressId = address.Id,
                     Lat = address.Lat ?? 0,
                     Lng = address.Lng ?? 0
-                });
+                };
+                temp.Distance = DistanceHelper.GetDistance(request.Lat, request.Lng, temp.Lat, temp.Lng);
+                viewModel.JobAddressList.Add(temp);
             }
 
             foreach (var welfare in welfares)
@@ -271,6 +283,11 @@ namespace FrameWork.Entity.ViewModel.Job
         /// 工作地点
         /// </summary>
         public string Address { set; get; }
+
+        /// <summary>
+        /// 距离
+        /// </summary>
+        public string Distance { set; get; }
 
         /// <summary>
         /// 经度 

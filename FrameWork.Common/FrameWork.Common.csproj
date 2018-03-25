@@ -72,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Const\CommonData.cs" />
+    <Compile Include="DistanceHelper.cs" />
     <Compile Include="DotNETCache\CacheConfigContext.cs" />
     <Compile Include="DotNETCache\CacheHelper.cs" />
     <Compile Include="DotNETCache\Caching.cs" />

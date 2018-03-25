@@ -260,5 +260,43 @@ namespace XinDaPartJobAPI.Controllers
 
             return result;
         }
+
+        [HttpPost]
+        [Route("api/Job/ShieldJob")]
+        public object ShieldJob(ShieldJobReq request)
+        {
+            var result = new BaseViewModel()
+            {
+                Info = CommonData.FailStr,
+                Message = CommonData.FailStr,
+                Msg = false,
+                ResultCode = CommonData.FailCode
+            };
+
+            var userInfo = RedisInfoHelper.GetRedisModel(request.Token);
+
+            //根据用户类型进行不同的操作
+            var shieldResult = false;
+            switch (userInfo.Mark)
+            {
+                case TokenMarkEnum.User:
+                    shieldResult = JobService.UserShieldJob(userInfo.UserId, request.JobId, request.ShieldDay);
+                    break;
+                case TokenMarkEnum.Enterprise:
+                    var b = 0;
+                    shieldResult = JobService.EnterpriseShieldJob(userInfo.EPId, request.JobId, request.ShieldDay);
+                    break;
+            }
+
+            if (shieldResult)
+            {
+                result.Info = CommonData.SuccessStr;
+                result.Message = CommonData.SuccessStr;
+                result.ResultCode = CommonData.SuccessCode;
+                result.Msg = true;
+            }
+
+            return result.ToJson();
+        }
     }
 }

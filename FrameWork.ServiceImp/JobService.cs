@@ -312,5 +312,62 @@ IF NOT EXISTS (SELECT 1 FROM dbo.T_CVDelivery cd WHERE cd.IsDel = 0 AND cd.UserI
 
             return DbPartJob.Fetch<T_PayWay>(sql);
         }
+
+        /// <summary>
+        /// 用户屏蔽岗位
+        /// </summary>
+        /// <param name="userId">用户Id</param>
+        /// <param name="jobId">岗位Id</param>
+        /// <param name="shieldDay">屏蔽天数</param>
+        public bool UserShieldJob(int userId, int jobId, int shieldDay)
+        {
+            var sql = @"INSERT dbo.T_UserShieldJob
+                                ( UserId ,
+                                  JobId ,
+                                  TimeSpan ,
+                                  EndTime ,
+                                  IsDel ,
+                                  CreateUserId ,
+                                  CreateTime
+                                )
+                        VALUES  ( @userId , -- UserId - int
+                                  @jobId , -- CVId - int
+                                  @shieldDay , -- TimeSpan - int
+                                  GETDATE() , -- EndTime - date
+                                  0 , -- IsDel - bit
+                                  @userId , -- CreateUserId - int
+                                  GETDATE()  -- CreateTime - datetime
+                                )";
+            return DbPartJob.Execute(sql, new { userId, jobId, shieldDay }) > 0;
+        }
+
+
+        /// <summary>
+        /// 企业屏蔽岗位
+        /// </summary>
+        /// <param name="epId">企业Id</param>
+        /// <param name="jobId">岗位Id</param>
+        /// <param name="shieldDay">屏蔽天数</param>
+        public bool EnterpriseShieldJob(int epId, int jobId, int shieldDay)
+        {
+            var sql = @"INSERT dbo.T_EPShieldJob
+                                ( UserId ,
+                                  CVId ,
+                                  TimeSpan ,
+                                  EndTime ,
+                                  IsDel ,
+                                  CreateUserId ,
+                                  CreateTime
+                                )
+                        VALUES  ( @epId , -- UserId - int
+                                  @jobId , -- CVId - int
+                                  @shieldDay , -- TimeSpan - int
+                                  GETDATE() , -- EndTime - date
+                                  0 , -- IsDel - bit
+                                  @epId , -- CreateUserId - int
+                                  GETDATE()  -- CreateTime - datetime
+                                )";
+            return DbPartJob.Execute(sql, new { epId, jobId, shieldDay }) > 0;
+        }
     }
 }

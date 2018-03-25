@@ -24,11 +24,6 @@ namespace FrameWork.Entity.Entity
         public int UserId {get;set;}
 
         /// <summary>
-        /// 用户名字或企业名字 
-        /// </summary>
-        public string UserName {get;set;}
-
-        /// <summary>
         /// 企业id，如果举报者是不是企业用户，企业id为0
         /// </summary>
         public int EnterpriseId {get;set;}

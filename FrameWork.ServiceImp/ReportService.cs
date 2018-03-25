@@ -36,6 +36,8 @@ namespace FrameWork.ServiceImp
         public int ReportCV(ReportCVRequest request, RedisModel redisModel)
         {
             var userType = 1;
+            if (redisModel.Mark == TokenMarkEnum.Enterprise)
+                userType = 2;
 
             var sql = @";
 INSERT
@@ -62,8 +64,8 @@ dbo.T_ReportCV
           CreateUserId ,
           CreateTime
         )
-VALUES  ( 1 , -- UserType - tinyint
-          0 , -- UserId - int
+VALUES  ( @userType , -- UserType - tinyint
+          @UserId , -- UserId - int
           N'' , -- UserName - nvarchar(50)
           0 , -- EnterpriseId - int
           0 , -- CVId - int

@@ -29,11 +29,6 @@ namespace FrameWork.Entity.Entity
         public int EnterpriseId {get;set;}
 
         /// <summary>
-        /// 用户名字
-        /// </summary>
-        public string UserName {get;set;}
-
-        /// <summary>
         /// 简历id或者岗位id 
         /// </summary>
         public int JobId {get;set;}

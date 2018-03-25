@@ -46,6 +46,9 @@
     <Compile Include="IDicRegionService.cs" />
     <Compile Include="IEPAddressService.cs" />
     <Compile Include="IEPService.cs" />
+    <Compile Include="ICVServicecs.cs" />
+    <Compile Include="IJobBannerServicecs.cs" />
+    <Compile Include="IJobCategoryServicecs.cs" />
     <Compile Include="IJobService.cs" />
     <Compile Include="IReportService.cs" />
     <Compile Include="ISignInService.cs" />

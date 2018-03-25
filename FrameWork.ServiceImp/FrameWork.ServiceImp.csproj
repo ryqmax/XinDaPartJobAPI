@@ -44,6 +44,9 @@
     <Compile Include="DicRegionService.cs" />
     <Compile Include="EPAddressService.cs" />
     <Compile Include="EPService.cs" />
+    <Compile Include="CVServicecs.cs" />
+    <Compile Include="JobBannerServicecs.cs" />
+    <Compile Include="JobCategoryServicecs.cs" />
     <Compile Include="JobService.cs" />
     <Compile Include="ReportService.cs" />
     <Compile Include="SignInService.cs" />

@@ -254,36 +254,5 @@ namespace XinDaPartJobAPI.Controllers
             return result.ToJson();
 
         }
-
-//        SELECT job.Id JobId ,
-//        ep.Id JobEmployerId,
-//        ep.Level JobEmployerLevel,
-//        job.Name JobName,
-//        job.SalaryLower ,
-//        job.SalaryUpper ,
-//        payway.Unit ,
-//        dicregion.[Description] JobAddress,
-//        job.WorkTime JobTime,
-//        (SELECT TOP 1
-//                    vipinfo.Name
-//          FROM      dbo.T_VIPInfo vipinfo
-//                    LEFT JOIN dbo.T_EPVIP epvip ON epvip.VIPInfoId = vipinfo.Id
-//          WHERE epvip.EnterpriseId = ep.Id
-//                    AND vipinfo.IsDel = 0
-//                    AND epvip.IsDel = 0
-//          ORDER BY  vipinfo.OldPrice DESC
-//        ) JobMember ,
-//        (CASE WHEN 1 = ep.Id THEN 1
-//               ELSE 0
-//          END ) IsSelf ,
-//        job.IsPractice IsPractice
-//FROM dbo.T_Job job
-//        LEFT JOIN dbo.T_Enterprise ep ON job.EnterpriseId = ep.Id
-//        LEFT JOIN dbo.T_JobAddress jobaddress ON job.Id = jobaddress.JobId
-//        LEFT JOIN dbo.T_EPAddress epaddress ON epaddress.Id = jobaddress.EPAddressId
-//        LEFT JOIN dbo.DicRegion dicregion ON epaddress.AreaId = dicregion.Id
-//        LEFT JOIN dbo.T_PayWay payway ON payway.Id = job.PayWayId;
-
-
     }
 }

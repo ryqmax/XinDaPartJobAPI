@@ -81,6 +81,7 @@
     <Compile Include="Entity\T_EPViewJobLog.cs" />
     <Compile Include="Entity\T_EPVIP.cs" />
     <Compile Include="Entity\T_EPWelfare.cs" />
+    <Compile Include="Entity\T_JobBanner.cs" />
     <Compile Include="Entity\T_Job.cs" />
     <Compile Include="Entity\T_JobAddress.cs" />
     <Compile Include="Entity\T_JobCategory.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\Account\UserViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\CV\ShieldCVReq.cs" />
     <Compile Include="ViewModel\EPAddress\AddEPAddressViewModel.cs" />
     <Compile Include="ViewModel\EPAddress\DelEPAddressViewModel.cs" />
     <Compile Include="ViewModel\EPAddress\GetAddressListViewModel.cs" />
@@ -132,6 +134,7 @@
     <Compile Include="ViewModel\EP\SaveAccountPermissionViewModel.cs" />
     <Compile Include="ViewModel\EP\SaveEPContactsViewModel.cs" />
     <Compile Include="ViewModel\EP\UploadImgViewModel.cs" />
+    <Compile Include="ViewModel\Job\GetIndexBaseDataRespInfo.cs" />
     <Compile Include="ViewModel\Job\GetFullJobViewModel.cs" />
     <Compile Include="ViewModel\Job\GetPartJobViewModel.cs" />
     <Compile Include="ViewModel\Job\GetPayWayViewModel.cs" />
@@ -139,6 +142,7 @@
     <Compile Include="ViewModel\Job\GetUserPostPartCVListViewModel.cs" />
     <Compile Include="ViewModel\Job\SubmitPartJobViewModel.cs" />
     <Compile Include="ViewModel\Job\SubmitRefreshInfoViewModel.cs" />
+    <Compile Include="ViewModel\Job\GetIndexBaseDataReq.cs" />
     <Compile Include="ViewModel\Job\UserPostCVViewModel.cs" />
     <Compile Include="ViewModel\Region\GetCityListViewModel.cs" />
     <Compile Include="ViewModel\Job\GetJobListReq.cs" />

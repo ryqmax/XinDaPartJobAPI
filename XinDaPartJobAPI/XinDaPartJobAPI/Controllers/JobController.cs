@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using FrameWork.Common;
@@ -28,14 +29,21 @@ namespace XinDaPartJobAPI.Controllers
 
             var userInfo = RedisInfoHelper.GetRedisModel(request.Token);
 
-            var jobInfoList = JobService.GetJobList(request, userInfo.CityId);
+            var jobInfoList = JobService.GetJobList(request, userInfo.CityId, userInfo.EPId);
 
             //todo:获取广告信息
 
-            var getJobListRespInfoList = new List<GetJobListRespInfo>();
+            var getJobListRespInfoList = new GetJobListRespInfo();
+
+            var firstOrDefualtJobInfo = jobInfoList.FirstOrDefault();
+            if (firstOrDefualtJobInfo != null)
+            {
+                getJobListRespInfoList.IsEnd = !PageHelper.JudgeNextPage(firstOrDefualtJobInfo.TotalNum, request.Page, request.PageSize);
+            }
+
             foreach (var jobInfo in jobInfoList)
             {
-                var getJobListRespInfo = new GetJobListRespInfo
+                var getJobListRespInfo = new JobInfoList
                 {
                     JobId = jobInfo.JobId,
                     JobEmployerId = jobInfo.JobEmployerId,
@@ -49,9 +57,8 @@ namespace XinDaPartJobAPI.Controllers
                     IsSelf = jobInfo.IsSelf,
                     IsAdvert = false,
                     IsPractice = jobInfo.IsPractice,
-                    IsEnd = PageHelper.JudgeNextPage(jobInfo.TotalNum, request.Page, request.PageSize)
                 };
-                getJobListRespInfoList.Add(getJobListRespInfo);
+                getJobListRespInfoList.JobInfoList.Add(getJobListRespInfo);
             }
 
             result.Info = getJobListRespInfoList;
@@ -185,6 +192,72 @@ namespace XinDaPartJobAPI.Controllers
                 Msg = true,
                 ResultCode = CommonData.SuccessCode
             };
+            return result;
+        }
+
+        /// <summary>
+        /// 获取首页基础数据
+        /// </summary>
+        [HttpPost]
+        [Route("api/Job/GetIndexBaseData")]
+        public object GetIndexBaseData(GetIndexBaseDataReq request)
+        {
+            var result = new BaseViewModel
+            {
+                Info = CommonData.FailStr,
+                Message = CommonData.FailStr,
+                Msg = false,
+                ResultCode = CommonData.FailCode
+            };
+            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
+            
+            var resultInfo=new GetIndexBaseDataRespInfo();
+
+            //地区数据
+            resultInfo.Region = CacheContext.DicRegions.Where(r => !r.IsDel&&r.ParentId==redisModel.CityId).Select(r=>new RegionListItem{RegionId = r.Id,Name = r.Description}).ToList();
+            
+            //雇主级别数据
+            
+            foreach (JobEmployerLevelEnum jobEmployerLevel in Enum.GetValues(typeof(JobEmployerLevelEnum)))
+            {
+                var currentEmployer = new EmployerListItem
+                {
+                    EmployerId = ((int)jobEmployerLevel).ToString(),
+                    Name = EnumHelper.GetDescription(jobEmployerLevel)
+                };
+                resultInfo.Employer.Add(currentEmployer);
+            }
+
+            //岗位类型
+            var jobCategoryList = JobCategoryServicec.GetJobCategorieList();
+            foreach (var jobCategory in jobCategoryList)
+            {
+                var currentjobCategory = new JobTypeListItem()
+                {
+                    JobTypeId = jobCategory.Id.ToString(),
+                    Name = jobCategory.Name
+                };
+                resultInfo.JobType.Add(currentjobCategory);
+            }
+
+            //bannner
+            var jobBannerList = JobBannerServicec.GetJobBannerList();
+            foreach (var jobBanner in jobBannerList)
+            {
+                var currentjobCategory = new BannerListItem()
+                {
+                    BannerId = jobBanner.Id.ToString(),
+                    ImgUrl = PictureHelper.ConcatPicUrl(jobBanner.PicUrl),
+                    BannerUrl = StringHelper.NullOrEmpty(jobBanner.OpenUrl)
+                };
+                resultInfo.BannerList.Add(currentjobCategory);
+            }
+
+            result.Info = resultInfo;
+            result.Message = CommonData.SuccessStr;
+            result.ResultCode = CommonData.SuccessCode;
+            result.Msg = true;
+
             return result;
         }
 

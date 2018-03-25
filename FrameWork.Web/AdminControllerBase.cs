@@ -66,5 +66,19 @@ namespace FrameWork.Web
         /// </summary>
         protected IReportService ReportService => ServiceHelper.CreateService<IReportService>();
 
+        /// <summary>
+        /// 实例化IJobCategoryServicecs
+        /// </summary>
+        protected IJobCategoryServicecs JobCategoryServicec => ServiceHelper.CreateService<IJobCategoryServicecs>();
+
+        /// <summary>
+        /// 实例化IJobBannerServicecs
+        /// </summary>
+        protected IJobBannerServicecs JobBannerServicec => ServiceHelper.CreateService<IJobBannerServicecs>();
+
+        /// <summary>
+        /// 实例化ICVServicecs
+        /// </summary>
+        protected ICVServicecs CVServicecs => ServiceHelper.CreateService<ICVServicecs>();
     }
 }

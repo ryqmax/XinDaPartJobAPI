@@ -32,6 +32,10 @@ namespace FrameWork.Entity.ViewModel.EPAddress
         /// </summary>
         public string Token { set; get; }
 
+        /// <summary>
+        /// 地址所属类别：0.全部，1.兼职，2.全职 
+        /// </summary>
+        public int Type { get; set; }
     }
 
     /// <summary>

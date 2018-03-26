@@ -29,9 +29,13 @@ namespace FrameWork.ServiceImp
         /// 获取该企业下的所有地址列表
         /// </summary>
         /// <param name="epId">企业id</param>
-        public List<T_EPAddress> GetAddresseList(int epId)
+        /// <param name="type">0.全部，1.兼职，2.全职 </param>
+        public List<T_EPAddress> GetAddresseList(int epId, int type)
         {
-            var sql = @";SELECT * FROM dbo.T_EPAddress WHERE EnterpriseId = @epId AND IsDel = 0";
+            var where = "";
+            if(type>0)
+                where = $" AND Type = {type}";
+            var sql = $@";SELECT * FROM dbo.T_EPAddress WHERE EnterpriseId = @epId AND IsDel = 0 {where}";
             return DbPartJob.Fetch<T_EPAddress>(sql, new { epId });
         }
 

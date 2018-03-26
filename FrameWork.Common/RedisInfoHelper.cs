@@ -90,7 +90,7 @@ namespace FrameWork.Common
         /// </summary>
         public static RedisModel GetRedisModel(string token)
         {
-            var model = new RedisModel { Mark = TokenMarkEnum.CacheInvalid };
+            var model = new RedisModel { Mark = TokenMarkEnum.CacheInvalid, EPId = -1, UserId = -1, OpenId = "-1", Phone = "-1" };
 
             if (!string.IsNullOrEmpty(token))
             {

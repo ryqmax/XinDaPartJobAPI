@@ -63,11 +63,6 @@ namespace FrameWork.Interface
         int SubmitRefreshInfo(SubmitRefreshInfoRequest request);
 
         /// <summary>
-        /// 新增兼职岗位
-        /// </summary>
-        int SubmitPartJob(SubmitPartJobViewModel request, RedisModel redisModel,string provinceId);
-
-        /// <summary>
         /// 用户屏蔽岗位
         /// </summary>
         /// <param name="userId">用户Id</param>
@@ -75,12 +70,32 @@ namespace FrameWork.Interface
         /// <param name="shieldDay">屏蔽天数</param>
         bool UserShieldJob(int userId, int jobId, int shieldDay);
 
-        /// <summary>
-        /// 企业屏蔽岗位
-        /// </summary>
         /// <param name="epId">企业Id</param>
         /// <param name="jobId">岗位Id</param>
         /// <param name="shieldDay">屏蔽天数</param>
         bool EnterpriseShieldJob(int epId, int jobId, int shieldDay);
+
+        /// <summary>
+        /// 企业屏蔽岗位
+        /// </summary>
+        int SubmitPartJob(SubmitPartJobRequest request, RedisModel redisModel,string provinceId);
+
+        /// <summary>
+        /// 新增兼职岗位
+        /// </summary>
+        int SubmitFullJob(SubmitFullJobRequest request, RedisModel redisModel, string provinceId);
+
+        /// <summary>
+        /// 保存福利
+        /// </summary>
+        /// <param name="epId">企业id</param>
+        /// <param name="welfareName">福利名称</param>
+        int SaveWelfare(int epId, string welfareName);
+
+        /// <summary>
+        /// 获取企业下的福利
+        /// </summary>
+        /// <param name="epId">企业id</param>
+        List<T_EPWelfare> GetWelfares(int epId);
     }
 }

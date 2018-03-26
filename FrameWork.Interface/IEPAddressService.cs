@@ -11,7 +11,8 @@ namespace FrameWork.Interface
         /// 获取该企业下的所有地址列表
         /// </summary>
         /// <param name="epId">企业id</param>
-        List<T_EPAddress> GetAddresseList(int epId);
+        /// <param name="type">0.全部，1.兼职，2.全职 </param>
+        List<T_EPAddress> GetAddresseList(int epId,int type);
 
         /// <summary>
         /// 删除地址

@@ -144,6 +144,9 @@
     <Compile Include="ViewModel\Job\GetPayWayViewModel.cs" />
     <Compile Include="ViewModel\Job\GetRefreshInfoViewModel.cs" />
     <Compile Include="ViewModel\Job\GetUserPostPartCVListViewModel.cs" />
+    <Compile Include="ViewModel\Job\GetWelfareListViewModel.cs" />
+    <Compile Include="ViewModel\Job\SaveWelfareViewModel.cs" />
+    <Compile Include="ViewModel\Job\SubmitFullJobViewModel.cs" />
     <Compile Include="ViewModel\Job\SubmitPartJobViewModel.cs" />
     <Compile Include="ViewModel\Job\SubmitRefreshInfoViewModel.cs" />
     <Compile Include="ViewModel\Job\GetIndexBaseDataReq.cs" />

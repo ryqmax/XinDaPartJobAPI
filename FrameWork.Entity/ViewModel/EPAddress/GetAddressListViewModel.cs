@@ -32,6 +32,10 @@ namespace FrameWork.Entity.ViewModel.EPAddress
         /// </summary>
         public string Token { set; get; }
 
+        /// <summary>
+        /// 地址所属类别：0.全部，1.兼职，2.全职 
+        /// </summary>
+        public int Type { get; set; }
     }
 
     /// <summary>
@@ -82,7 +86,7 @@ namespace FrameWork.Entity.ViewModel.EPAddress
         /// <summary>
         /// 数据库数据模型转化为视图模型返回给请求端
         /// </summary>
-        public List<GetAddressListViewModel> GetViewModels(List<T_EPAddress> models, List<DicRegion> regions)
+        public List<GetAddressListViewModel> GetViewModels(List<T_EPAddress> models, List<DicRegion> regions, int type)
         {
             var viewModels = new List<GetAddressListViewModel>();
             foreach (var model in models)
@@ -97,7 +101,18 @@ namespace FrameWork.Entity.ViewModel.EPAddress
                     Type = model.Type
                 });
             }
-
+            if (type > 0)
+            {
+                viewModels.Add(new GetAddressListViewModel
+                {
+                    AddressId = -1,
+                    Address = "不限地点",
+                    Province = string.Empty,
+                    City = string.Empty,
+                    Area = string.Empty,
+                    Type = type
+                });
+            }
             return viewModels;
         }
 

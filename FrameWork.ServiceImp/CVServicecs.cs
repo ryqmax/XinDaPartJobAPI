@@ -55,7 +55,7 @@ namespace FrameWork.ServiceImp
                                   @shieldDay , -- TimeSpan - int
                                   GETDATE() , -- EndTime - date
                                   0 , -- IsDel - bit
-                                  @userId , -- CreateUserId - int
+                                  @epId , -- CreateUserId - int
                                   GETDATE()  -- CreateTime - datetime
                                 )";
             return DbPartJob.Execute(sql, new { epId, cVId, shieldDay }) > 0;

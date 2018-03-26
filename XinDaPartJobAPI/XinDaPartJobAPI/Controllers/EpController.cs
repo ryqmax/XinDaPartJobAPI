@@ -25,6 +25,7 @@ using FrameWork.Common;
 using FrameWork.Common.Const;
 using FrameWork.Entity.ViewModel;
 using FrameWork.Entity.ViewModel.EP;
+using FrameWork.Entity.ViewModel.Job;
 using FrameWork.Web;
 using Microsoft.AspNet.Identity;
 
@@ -394,6 +395,50 @@ namespace XinDaPartJobAPI.Controllers
             result = new BaseViewModel
             {
                 Info = CommonData.SuccessStr,
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
+            };
+            return result;
+        }
+
+        /// <summary>
+        /// 获取企业详情
+        /// </summary>
+        [HttpPost]
+        [Route("api/EP/GetEPDetailInfo")]
+        public object GetEPDetailInfo(GetEPDetailInfoReq request)
+        {
+            var result = new BaseViewModel
+            {
+                Info = CommonData.FailStr,
+                Message = CommonData.FailStr,
+                Msg = false,
+                ResultCode = CommonData.FailCode
+            };
+            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
+            var epDetailInfo = EPService.GetEpDetailInfoById(redisModel.EPId);
+            var getEPDetailInfoRespInfo = new GetEPDetailInfoRespInfo
+            {
+                CompanyId = epDetailInfo.CompanyId,
+                CompanyEmployerId=(int)epDetailInfo.CompanyEmployerId,
+                CompanyEmployerName=epDetailInfo.CompanyEmployerName,
+                CompanyName = epDetailInfo.CompanyName,
+                CompanyAddress = epDetailInfo.CompanyAddress,
+                CompanyFullName = epDetailInfo.CompanyFullName,
+                CompanyDesc = epDetailInfo.CompanyDesc
+            };
+
+            //获取企业发布的岗位列表
+            var epJobList = EPService.GetEpJobListById(redisModel.EPId);
+            getEPDetailInfoRespInfo.JobList = epJobList;
+            //获取企业的实景图片列表
+            var epImgList = EPService.GetEpImgListById(redisModel.EPId);
+            getEPDetailInfoRespInfo.CompanyImgList = epImgList;
+
+            result = new BaseViewModel
+            {
+                Info = getEPDetailInfoRespInfo,
                 Message = CommonData.SuccessStr,
                 Msg = true,
                 ResultCode = CommonData.SuccessCode

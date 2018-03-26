@@ -65,6 +65,24 @@ namespace FrameWork.Interface
         /// <summary>
         /// 新增兼职岗位
         /// </summary>
+        int SubmitPartJob(SubmitPartJobViewModel request, RedisModel redisModel,string provinceId);
+
+        /// <summary>
+        /// 用户屏蔽岗位
+        /// </summary>
+        /// <param name="userId">用户Id</param>
+        /// <param name="jobId">岗位Id</param>
+        /// <param name="shieldDay">屏蔽天数</param>
+        bool UserShieldJob(int userId, int jobId, int shieldDay);
+
+        /// <param name="epId">企业Id</param>
+        /// <param name="jobId">岗位Id</param>
+        /// <param name="shieldDay">屏蔽天数</param>
+        bool EnterpriseShieldJob(int epId, int jobId, int shieldDay);
+
+        /// <summary>
+        /// 企业屏蔽岗位
+        /// </summary>
         int SubmitPartJob(SubmitPartJobRequest request, RedisModel redisModel,string provinceId);
 
         /// <summary>

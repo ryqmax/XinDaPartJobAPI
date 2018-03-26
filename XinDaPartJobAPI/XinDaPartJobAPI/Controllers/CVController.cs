@@ -46,7 +46,6 @@ namespace XinDaPartJobAPI.Controllers
             }
 
             return result.ToJson();
-
         }
     }
 }

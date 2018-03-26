@@ -47,5 +47,34 @@ namespace XinDaPartJobAPI.Controllers
 
             return result.ToJson();
         }
+
+        /// <summary>
+        /// 获取简历列表
+        /// </summary>
+        [HttpPost]
+        [Route("api/CV/GetCVList")]
+        public object GetCVList(GetCVReq request)
+        {
+            var result = new BaseViewModel()
+            {
+                Info = CommonData.FailStr,
+                Message = CommonData.FailStr,
+                Msg = false,
+                ResultCode = CommonData.FailCode
+            };
+
+            var userInfo = RedisInfoHelper.GetRedisModel(request.Token);
+
+            var cvInfoList = CVServicecs.GetCVList(request, userInfo.CityId, userInfo.EPId);
+
+            
+            result.Info = CommonData.SuccessStr;
+            result.Message = CommonData.SuccessStr;
+            result.ResultCode = CommonData.SuccessCode;
+            result.Msg = true;
+            
+
+            return result.ToJson();
+        }
     }
 }

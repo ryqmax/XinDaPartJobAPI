@@ -1,4 +1,7 @@
-﻿using FrameWork.Entity.Entity;
+﻿using System.Collections.Generic;
+using FrameWork.Entity.Entity;
+using FrameWork.Entity.ViewModel.CV;
+using FrameWork.Entity.ViewModel.Job;
 
 namespace FrameWork.Interface
 {
@@ -19,5 +22,11 @@ namespace FrameWork.Interface
         /// <param name="cVId">简历Id</param>
         /// <param name="shieldDay">屏蔽天数</param>
         bool EnterpriseShieldCV(int epId, int cVId, int shieldDay);
+
+        
+        /// <summary>
+        /// 获取简历列表
+        /// </summary>
+        List<JobInfo> GetCVList(GetCVReq getJobListReq, string cityId, int ePId);
     }
 }

@@ -40,8 +40,16 @@ namespace FrameWork.ServiceImp
             var jobAddressWhere = string.Empty;
             if (getJobListReq.RegionId != 0)
             {
-                where += " AND epaddress.AreaId = @areaid";
-                jobAddressWhere += " AND epaddress.AreaId = @areaid";
+                if (getJobListReq.RegionId == -1)
+                {
+                    where += " AND jobaddress.EPAddressId = @areaid";
+                    jobAddressWhere += " AND jobaddress.EPAddressId = @areaid";
+                }
+                else
+                {
+                    where += " AND epaddress.AreaId = @areaid";
+                    jobAddressWhere += " AND epaddress.AreaId = @areaid";
+                }
             }
             if (getJobListReq.EmployerRankId > 0)
             {
@@ -60,14 +68,12 @@ namespace FrameWork.ServiceImp
                         FROM    dbo.T_Job job
                                 LEFT JOIN dbo.T_Enterprise ep ON job.EnterpriseId = ep.Id
                                 LEFT JOIN dbo.T_JobAddress jobaddress ON job.Id = jobaddress.JobId
-                                LEFT JOIN dbo.T_EPAddress epaddress ON epaddress.Id = jobaddress.EPAddressId
-                                LEFT JOIN dbo.DicRegion dicregion ON epaddress.AreaId = dicregion.Id
+                                LEFT JOIN dbo.T_EPAddress epaddress ON epaddress.Id = jobaddress.EPAddressId AND epaddress.IsDel = 0
+                                LEFT JOIN dbo.DicRegion dicregion ON epaddress.AreaId = dicregion.Id AND dicregion.IsDel = 0   
                                 LEFT JOIN dbo.T_PayWay payway ON payway.Id = job.PayWayId
                         WHERE   job.IsDel = 0
                                 AND ep.IsDel = 0        
-                                AND jobaddress.IsDel = 0
-                                AND epaddress.IsDel = 0
-                                AND dicregion.IsDel = 0                                
+                                AND jobaddress.IsDel = 0   
                                 AND payway.IsDel = 0
                                 {where}
 		                        AND job.Type=@type
@@ -90,24 +96,22 @@ namespace FrameWork.ServiceImp
                                 job.SalaryUpper ,
                                 payway.Unit ,
                                 ( CASE WHEN ( SELECT TOP 1
-                                                        epaddress.AreaId
+                                                        jobaddress.EPAddressId
                                               FROM      dbo.T_JobAddress jobaddress
-                                                        LEFT JOIN dbo.T_EPAddress epaddress ON epaddress.Id = jobaddress.EPAddressId
+                                                        LEFT JOIN dbo.T_EPAddress epaddress ON epaddress.Id = jobaddress.EPAddressId AND epaddress.IsDel = 0
+                                                        LEFT JOIN dbo.DicRegion dicregion ON epaddress.AreaId = dicregion.Id AND dicregion.IsDel = 0
                                               WHERE     1 = 1
-                                                        AND jobaddress.IsDel = 0
-                                                        AND epaddress.IsDel = 0
+                                                        AND jobaddress.IsDel = 0                                                        
                                                         AND job.Id = jobaddress.JobId
                                                         {jobAddressWhere}
                                             ) = -1 THEN '不限地点'
                                        ELSE ( SELECT TOP 1
                                                         dicregion.Description
                                               FROM      dbo.T_JobAddress jobaddress
-                                                        LEFT JOIN dbo.T_EPAddress epaddress ON epaddress.Id = jobaddress.EPAddressId
-                                                        LEFT JOIN dbo.DicRegion dicregion ON epaddress.AreaId = dicregion.Id
+                                                        LEFT JOIN dbo.T_EPAddress epaddress ON epaddress.Id = jobaddress.EPAddressId AND epaddress.IsDel = 0
+                                                        LEFT JOIN dbo.DicRegion dicregion ON epaddress.AreaId = dicregion.Id AND dicregion.IsDel = 0
                                               WHERE     1 = 1
-                                                        AND jobaddress.IsDel = 0
-                                                        AND epaddress.IsDel = 0
-                                                        AND dicregion.IsDel = 0
+                                                        AND jobaddress.IsDel = 0                                                        
                                                         AND job.Id = jobaddress.JobId
                                                         {jobAddressWhere}
                                             )

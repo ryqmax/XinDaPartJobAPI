@@ -768,8 +768,7 @@ WHERE
                                 )";
             return DbPartJob.Execute(sql, new { userId, jobId, shieldDay }) > 0;
         }
-
-
+        
         /// <summary>
         /// 企业屏蔽岗位
         /// </summary>
@@ -796,6 +795,39 @@ WHERE
                                   GETDATE()  -- CreateTime - datetime
                                 )";
             return DbPartJob.Execute(sql, new { epId, jobId, shieldDay }) > 0;
+        }
+
+        /// <summary>
+        /// 保存福利
+        /// </summary>
+        /// <param name="epId">企业id</param>
+        /// <param name="welfareName">福利名称</param>
+        public int SaveWelfare(int epId, string welfareName)
+        {
+            var sql = @";
+                INSERT
+                INTO
+                dbo.T_EPWelfare
+                        ( EnterpriseId ,
+                          Name ,
+                          IsUsed ,
+                          IsDel ,
+                          ModifyUserId ,
+                          ModifyTime ,
+                          CreateUserId ,
+                          CreateTime
+                        )
+                VALUES  ( @epId , -- EnterpriseId - int
+                          @welfareName , -- Name - nvarchar(50)
+                          1 , -- IsUsed - bit
+                          0 , -- IsDel - bit
+                          0 , -- ModifyUserId - int
+                          GETDATE() , -- ModifyTime - datetime
+                          0 , -- CreateUserId - int
+                          GETDATE()  -- CreateTime - datetime
+                        )
+	            SELECT @@@IDENTITY";
+            return DbPartJob.ExecuteScalar<int>(sql, new {epId, welfareName});
         }
     }
 }

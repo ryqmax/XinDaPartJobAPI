@@ -85,5 +85,12 @@ namespace FrameWork.Interface
         /// </summary>
         int SubmitFullJob(SubmitFullJobRequest request, RedisModel redisModel, string provinceId);
 
+        /// <summary>
+        /// 保存福利
+        /// </summary>
+        /// <param name="epId">企业id</param>
+        /// <param name="welfareName">福利名称</param>
+        int SaveWelfare(int epId, string welfareName);
+
     }
 }

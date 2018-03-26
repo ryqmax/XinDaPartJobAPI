@@ -383,5 +383,24 @@ namespace XinDaPartJobAPI.Controllers
             };
             return result;
         }
+        
+        /// <summary>
+        /// 保存福利
+        /// </summary>
+        [HttpPost]
+        [Route("api/Job/SaveWelfare")]
+        public object SaveWelfare(SaveWelfareRequest request)
+        {
+            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
+            var welfareId = JobService.SaveWelfare(redisModel.EPId, request.WelfareName);
+            var result = new BaseViewModel
+            {
+                Info = new { WelfareId = welfareId, WelfareName= request.WelfareName },
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
+            };
+            return result;
+        }
     }
 }

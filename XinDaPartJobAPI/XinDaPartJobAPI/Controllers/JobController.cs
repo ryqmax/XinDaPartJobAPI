@@ -210,14 +210,14 @@ namespace XinDaPartJobAPI.Controllers
                 ResultCode = CommonData.FailCode
             };
             var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
-            
-            var resultInfo=new GetIndexBaseDataRespInfo();
+
+            var resultInfo = new GetIndexBaseDataRespInfo();
 
             //地区数据
-            resultInfo.Region = CacheContext.DicRegions.Where(r => !r.IsDel&&r.ParentId==redisModel.CityId).Select(r=>new RegionListItem{RegionId = r.Id,Name = r.Description}).ToList();
-            
+            resultInfo.Region = CacheContext.DicRegions.Where(r => !r.IsDel && r.ParentId == redisModel.CityId).Select(r => new RegionListItem { RegionId = r.Id, Name = r.Description }).ToList();
+
             //雇主级别数据
-            
+
             foreach (JobEmployerLevelEnum jobEmployerLevel in Enum.GetValues(typeof(JobEmployerLevelEnum)))
             {
                 var currentEmployer = new EmployerListItem
@@ -383,7 +383,7 @@ namespace XinDaPartJobAPI.Controllers
             };
             return result;
         }
-        
+
         /// <summary>
         /// 保存福利
         /// </summary>
@@ -395,12 +395,33 @@ namespace XinDaPartJobAPI.Controllers
             var welfareId = JobService.SaveWelfare(redisModel.EPId, request.WelfareName);
             var result = new BaseViewModel
             {
-                Info = new { WelfareId = welfareId, WelfareName= request.WelfareName },
+                Info = new { WelfareId = welfareId, WelfareName = request.WelfareName },
                 Message = CommonData.SuccessStr,
                 Msg = true,
                 ResultCode = CommonData.SuccessCode
             };
             return result;
         }
+
+        /// <summary>
+        /// 获取福利列表
+        /// </summary>
+        [HttpPost]
+        [Route("api/Job/GetWelfareList")]
+        public object GetWelfareList(GetWelfareListRequest request)
+        {
+            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
+            var models = JobService.GetWelfares(redisModel.EPId);
+            var viewModels = new GetWelfareListViewModel().GetViewModels(models);
+            var result = new BaseViewModel
+            {
+                Info = viewModels,
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
+            };
+            return result;
+        }
+
     }
 }

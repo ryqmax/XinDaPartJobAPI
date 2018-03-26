@@ -92,5 +92,10 @@ namespace FrameWork.Interface
         /// <param name="welfareName">福利名称</param>
         int SaveWelfare(int epId, string welfareName);
 
+        /// <summary>
+        /// 获取企业下的福利
+        /// </summary>
+        /// <param name="epId">企业id</param>
+        List<T_EPWelfare> GetWelfares(int epId);
     }
 }

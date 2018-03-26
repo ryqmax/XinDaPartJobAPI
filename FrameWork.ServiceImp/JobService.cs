@@ -829,5 +829,15 @@ WHERE
 	            SELECT @@@IDENTITY";
             return DbPartJob.ExecuteScalar<int>(sql, new {epId, welfareName});
         }
+
+        /// <summary>
+        /// 获取企业下的福利
+        /// </summary>
+        /// <param name="epId">企业id</param>
+        public List<T_EPWelfare> GetWelfares(int epId)
+        {
+            var sql = @";SELECT * FROM dbo.T_EPWelfare WHERE (EnterpriseId = 0 OR EnterpriseId = @epId) AND IsDel = 0 AND IsUsed = 1";
+            return DbPartJob.Fetch<T_EPWelfare>(sql, new {epId});
+        }
     }
 }

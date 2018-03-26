@@ -408,7 +408,7 @@ WHERE
         /// <summary>
         /// 新增兼职岗位
         /// </summary>
-        public int SubmitPartJob(SubmitPartJobViewModel request, RedisModel redisModel, string provinceId)
+        public int SubmitPartJob(SubmitPartJobRequest request, RedisModel redisModel, string provinceId)
         {
 
             if (request.JobId > 0) //更新岗位信息
@@ -551,6 +551,183 @@ WHERE
                               GETDATE()  -- CreateTime - datetime
                             )";
                 DbPartJob.Execute(insertSql, new {request.JobId, addrId});
+            }
+            return 1;
+        }
+
+        /// <summary>
+        /// 新增全职岗位
+        /// </summary>
+        public int SubmitFullJob(SubmitFullJobRequest request, RedisModel redisModel, string provinceId)
+        {
+
+            if (request.JobId > 0) //更新岗位信息
+            {
+                var updateSql = @";
+                    UPDATE
+	                    dbo.T_Job
+                    SET
+	                    Name =@Name,
+	                    JobCategoryId = @JobCategoryId,
+	                    EducationId = @EducationId,
+	                    SalaryLower = @SalaryLower,
+                        SalaryUpper=@SalaryUpper ,IsPractice=@IsPractice,
+	                    WorkTime = @WorkTime,
+                        WorkContent = @WorkContent,
+                        OfficeRequire  = @OfficeRequire,
+	                    EPHiringManagerId = @EPHiringManagerId ,
+                        RefreshWay  = @RefreshWay
+                    WHERE
+	                    Id = @JobId";
+                DbPartJob.Execute(updateSql, new
+                {
+                    request.Name,
+                    request.EducationId,
+                    request.SalaryLower,
+                    request.SalaryUpper,
+                    request.IsPractice,
+                    request.WorkTime,
+                    request.WorkContent,
+                    request.OfficeRequire,
+                    request.EPHiringManagerId,
+                    request.RefreshWay,
+                    request.JobCategoryId,
+                    request.JobId
+                });
+            }
+            else  //插入岗位信息
+            {
+                var sql = @";
+                INSERT
+                INTO
+                dbo.T_Job
+                        ( EnterpriseId ,
+                          Type ,
+                          Name ,
+                          JobCategoryId ,
+                          EducationId ,
+                          PayWayId ,
+                          SalaryLower ,
+                          SalaryUpper ,
+                          IsPractice ,
+                          WorkTime ,
+                          WorkContent ,
+                          OfficeRequire ,
+                          ProvinceId ,
+                          CityId ,
+                          AreaId ,
+                          EPHiringManagerId ,
+                          RefreshWay ,
+                          RefreshTime ,
+                          Status ,
+                          ViewCount ,
+                          IsRecommand ,
+                          IsDel ,
+                          ModifyUserId ,
+                          ModifyTime ,
+                          CreateUserId ,
+                          CreateTime
+                        )
+                VALUES  ( @EPId , -- EnterpriseId - int
+                          1 , -- Type - tinyint
+                          @Name , -- Name - nvarchar(50)
+                          @JobCategoryId , -- JobCategoryId - int
+                          @EducationId , -- EducationId - int
+                          0 , -- PayWayId - int
+                          @SalaryLower , -- SalaryLower - int
+                          @SalaryUpper , -- SalaryUpper - int
+                          @IsPractice , -- IsPractice - bit
+                          @WorkTime , -- WorkTime - nvarchar(200)
+                          @WorkContent , -- WorkContent - nvarchar(2000)
+                          @OfficeRequire , -- OfficeRequire - nvarchar(2000)
+                          @provinceId , -- ProvinceId - varchar(6)
+                          @CityId , -- CityId - varchar(6)
+                          '' , -- AreaId - varchar(6)
+                          @EPHiringManagerId , -- EPHiringManagerId - int
+                          @RefreshWay , -- RefreshWay - tinyint
+                          GETDATE() , -- RefreshTime - datetime
+                          0 , -- Status - tinyint
+                          0 , -- ViewCount - int
+                          0 , -- IsRecommand - bit
+                          0 , -- IsDel - bit
+                          @UserId , -- ModifyUserId - int
+                          GETDATE() , -- ModifyTime - datetime
+                          @UserId , -- CreateUserId - int
+                          GETDATE()  -- CreateTime - datetime
+                        )
+	                SELECT @@@IDENTITY";
+                var jobId = DbPartJob.ExecuteScalar<int>(sql, new
+                {
+                    redisModel.EPId,
+                    redisModel.UserId,
+                    request.Name,
+                    request.EducationId,
+                    request.SalaryLower,
+                    request.SalaryUpper,
+                    request.IsPractice,
+                    request.WorkTime,
+                    request.WorkContent,
+                    request.OfficeRequire,
+                    provinceId,
+                    redisModel.CityId,
+                    request.EPHiringManagerId,
+                    request.RefreshWay,
+                    request.JobCategoryId
+                });
+                sql = @";UPDATE dbo.T_JobRefresh SET JobId = @jobId WHERE Id = @RefreshId";
+                DbPartJob.Execute(sql, new { jobId, request.RefreshId });
+                request.JobId = jobId;
+            }
+            var delSql = @";UPDATE dbo.T_JobAddress SET IsDel = 1 WHERE JobId = @JobId";
+            DbPartJob.Execute(delSql, new { request.JobId });//删除原来的工作地点，插入新的工作地点
+            foreach (var addrId in request.AddressList)
+            {
+                var insertSql = @";
+                    INSERT
+                    INTO
+                    dbo.T_JobAddress
+                            ( JobId ,
+                              EPAddressId ,
+                              IsDel ,
+                              ModifyUserId ,
+                              ModifyTime ,
+                              CreateUserId ,
+                              CreateTime
+                            )
+                    VALUES  ( @JobId , -- JobId - int
+                              @addrId , -- EPAddressId - int
+                              0 , -- IsDel - bit
+                              0 , -- ModifyUserId - int
+                              GETDATE() , -- ModifyTime - datetime
+                              0 , -- CreateUserId - int
+                              GETDATE()  -- CreateTime - datetime
+                            )";
+                DbPartJob.Execute(insertSql, new { request.JobId, addrId });
+            }
+
+            foreach (var welfareId in request.WelFareList)
+            {
+                var welfareSql = @";
+                                INSERT
+                                INTO
+                                dbo.T_JobWelfare
+                                        ( EPWelfareId ,
+                                          JobId ,
+                                          IsDel ,
+                                          ModifyUserId ,
+                                          ModifyTime ,
+                                          CreateUserId ,
+                                          CreateTime
+                                        )
+                                VALUES  ( @welfareId , -- EPWelfareId - int
+                                          @JobId , -- JobId - int
+                                          0 , -- IsDel - bit
+                                          0 , -- ModifyUserId - int
+                                          GETDATE() , -- ModifyTime - datetime
+                                          0 , -- CreateUserId - int
+                                          GETDATE()  -- CreateTime - datetime
+                                        )";
+                DbPartJob.Execute(welfareSql, new {welfareId, request.JobId});
             }
             return 1;
         }

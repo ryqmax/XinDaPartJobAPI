@@ -65,6 +65,12 @@ namespace FrameWork.Interface
         /// <summary>
         /// 新增兼职岗位
         /// </summary>
-        int SubmitPartJob(SubmitPartJobViewModel request, RedisModel redisModel,string provinceId);
+        int SubmitPartJob(SubmitPartJobRequest request, RedisModel redisModel,string provinceId);
+
+        /// <summary>
+        /// 新增兼职岗位
+        /// </summary>
+        int SubmitFullJob(SubmitFullJobRequest request, RedisModel redisModel, string provinceId);
+
     }
 }

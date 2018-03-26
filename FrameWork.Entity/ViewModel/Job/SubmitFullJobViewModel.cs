@@ -22,9 +22,9 @@ using System.Threading.Tasks;
 namespace FrameWork.Entity.ViewModel.Job
 {
     /// <summary>
-    /// SubmitPartJobRequest
+    /// SubmitFullJobRequest
     /// </summary>
-    public class SubmitPartJobRequest
+    public class SubmitFullJobRequest
     {
         /// <summary>
         /// 用户token
@@ -47,9 +47,9 @@ namespace FrameWork.Entity.ViewModel.Job
         public int JobCategoryId { set; get; }
 
         /// <summary>
-        /// 结算方式id
+        /// 学历id
         /// </summary>
-        public int PayWayId { set; get; }
+        public int EducationId { set; get; }
 
         /// <summary>
         /// 薪资下限 
@@ -60,6 +60,16 @@ namespace FrameWork.Entity.ViewModel.Job
         /// 薪资上限 
         /// </summary>
         public int SalaryUpper { get; set; }
+
+        /// <summary>
+        /// 是否实习
+        /// </summary>
+        public bool IsPractice { set; get; }
+
+        /// <summary>
+        /// 福利id列表
+        /// </summary>
+        public List<int> WelFareList { set; get; }
 
         /// <summary>
         /// 工作时间：单双休 

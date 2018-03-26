@@ -306,7 +306,7 @@ namespace XinDaPartJobAPI.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/Job/SubmitPartJob")]
-        public object SubmitPartJob(SubmitPartJobViewModel request)
+        public object SubmitPartJob(SubmitPartJobRequest request)
         {
             var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
             //var redisModel = new RedisModel {EPId = 1,UserId = 1,CityId = "3202"};
@@ -322,5 +322,25 @@ namespace XinDaPartJobAPI.Controllers
             return result;
         }
 
+        /// <summary>
+        /// 保存全职岗位信息
+        /// </summary>
+        [HttpPost]
+        [Route("api/Job/SubmitFullJob")]
+        public object SubmitFullJob(SubmitFullJobRequest request)
+        {
+            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
+            //var redisModel = new RedisModel { EPId = 1, UserId = 1, CityId = "3202" };
+            var provinceId = CacheContext.DicRegions.FirstOrDefault(r => r.Id == redisModel.CityId)?.ParentId ?? string.Empty;
+            JobService.SubmitFullJob(request, redisModel, provinceId);
+            var result = new BaseViewModel
+            {
+                Info = CommonData.SuccessStr,
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
+            };
+            return result;
+        }
     }
 }

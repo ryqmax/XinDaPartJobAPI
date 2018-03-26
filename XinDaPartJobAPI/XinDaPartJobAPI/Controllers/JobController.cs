@@ -322,6 +322,9 @@ namespace XinDaPartJobAPI.Controllers
             return result;
         }
 
+        /// <summary>
+        /// 屏蔽岗位
+        /// </summary>
         [HttpPost]
         [Route("api/Job/ShieldJob")]
         public object ShieldJob(ShieldJobReq request)

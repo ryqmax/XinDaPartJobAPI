@@ -63,11 +63,6 @@ namespace FrameWork.Interface
         int SubmitRefreshInfo(SubmitRefreshInfoRequest request);
 
         /// <summary>
-        /// 新增兼职岗位
-        /// </summary>
-        int SubmitPartJob(SubmitPartJobViewModel request, RedisModel redisModel,string provinceId);
-
-        /// <summary>
         /// 用户屏蔽岗位
         /// </summary>
         /// <param name="userId">用户Id</param>

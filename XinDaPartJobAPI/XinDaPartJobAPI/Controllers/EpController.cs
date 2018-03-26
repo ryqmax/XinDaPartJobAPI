@@ -416,9 +416,8 @@ namespace XinDaPartJobAPI.Controllers
                 Msg = false,
                 ResultCode = CommonData.FailCode
             };
-
-            var epDetailInfo = EPService.GetEpDetailInfoById(request.EPId);
-
+            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
+            var epDetailInfo = EPService.GetEpDetailInfoById(redisModel.EPId);
             var getEPDetailInfoRespInfo = new GetEPDetailInfoRespInfo
             {
                 CompanyId = epDetailInfo.CompanyId,
@@ -431,10 +430,10 @@ namespace XinDaPartJobAPI.Controllers
             };
 
             //获取企业发布的岗位列表
-            var epJobList = EPService.GetEpJobListById(request.EPId);
+            var epJobList = EPService.GetEpJobListById(redisModel.EPId);
             getEPDetailInfoRespInfo.JobList = epJobList;
             //获取企业的实景图片列表
-            var epImgList = EPService.GetEpImgListById(request.EPId);
+            var epImgList = EPService.GetEpImgListById(redisModel.EPId);
             getEPDetailInfoRespInfo.CompanyImgList = epImgList;
 
             result = new BaseViewModel

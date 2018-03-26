@@ -40,7 +40,7 @@ namespace XinDaPartJobAPI.Controllers
             var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
             var regions = CacheContext.DicRegions;
             var models = EPAddressService.GetAddresseList(redisModel.EPId, request.Type);
-            var viewModels = new GetAddressListViewModel().GetViewModels(models, regions);
+            var viewModels = new GetAddressListViewModel().GetViewModels(models, regions, request.Type);
             var result = new BaseViewModel
             {
                 Info = viewModels,
@@ -138,6 +138,6 @@ namespace XinDaPartJobAPI.Controllers
             };
             return result;
         }
-        
+
     }
 }

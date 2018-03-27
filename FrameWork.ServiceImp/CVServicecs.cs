@@ -96,22 +96,22 @@ namespace FrameWork.ServiceImp
 
 
             var sql = $@"SELECT  DISTINCT
-                                job.Id JobId ,
-                                job.RefreshTime
-                        INTO    #JobIdTemp
-                        FROM    dbo.T_Job job
-                                LEFT JOIN dbo.T_Enterprise ep ON job.EnterpriseId = ep.Id
-                                LEFT JOIN dbo.T_JobAddress jobaddress ON job.Id = jobaddress.JobId
-                                LEFT JOIN dbo.T_EPAddress epaddress ON epaddress.Id = jobaddress.EPAddressId AND epaddress.IsDel = 0
-                                LEFT JOIN dbo.DicRegion dicregion ON epaddress.AreaId = dicregion.Id AND dicregion.IsDel = 0   
-                                LEFT JOIN dbo.T_PayWay payway ON payway.Id = job.PayWayId
-                        WHERE   job.IsDel = 0
-                                AND ep.IsDel = 0        
-                                AND jobaddress.IsDel = 0   
-                                AND payway.IsDel = 0
-                                {where}
-		                        AND job.Type=@type
-		                        AND epaddress.CityId=@cityId;
+                                cv.Id CVId ,
+                                cv.RefreshTime,
+								cv.UpCount                        
+                        FROM    dbo.T_CV cv
+                                LEFT JOIN dbo.T_CVRegion cvregion ON cvregion.CVId = cv.Id                               
+                                LEFT JOIN dbo.DicRegion dicregion ON cvregion.DicRegionId = dicregion.Id AND dicregion.IsDel = 0
+                                LEFT JOIN dbo.T_CVEduInfo cveduinfo ON cv.Id = cveduinfo.CVId
+								LEFT JOIN dbo.DicEducation diceducation ON diceducation.Id = cveduinfo.DicEducationId
+								LEFT JOIN dbo.DicGrade dicgrade ON dicgrade.Id = cveduinfo.DicGradeId
+                        WHERE 1=1   
+								AND  cv.IsDel = 0						
+                                AND cvregion.IsDel = 0 
+                                AND cveduinfo.IsDel = 0
+                                AND diceducation.IsDel = 0
+                                AND dicgrade.IsDel = 0 
+		                        AND cv.Type=0
 
                         SELECT  *
                         INTO    #JobIdPageTemp

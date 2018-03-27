@@ -25,9 +25,7 @@ using FrameWork.Common;
 using FrameWork.Common.Const;
 using FrameWork.Entity.ViewModel;
 using FrameWork.Entity.ViewModel.EP;
-using FrameWork.Entity.ViewModel.Job;
 using FrameWork.Web;
-using Microsoft.AspNet.Identity;
 
 namespace XinDaPartJobAPI.Controllers
 {

@@ -18,7 +18,6 @@ using System.Linq;
 using System.Web.Http;
 using FrameWork.Common;
 using FrameWork.Common.Const;
-using FrameWork.Common.Models;
 using FrameWork.Entity.ViewModel;
 using FrameWork.Entity.ViewModel.Report;
 using FrameWork.Web;

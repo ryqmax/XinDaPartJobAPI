@@ -473,5 +473,30 @@ namespace XinDaPartJobAPI.Controllers
             };
             return result;
         }
+
+        /// <summary>
+        /// 获取企业认证信息
+        /// </summary>
+        [HttpPost]
+        [Route("api/EP/GetEPAuth")]
+        public object GetEPAuth(GetEPAuthRequest request)
+        {
+            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
+            //var redisModel = new RedisModel { EPId = 7, UserId = 1 };
+            var regions = CacheContext.DicRegions;
+            var model = EPService.GetEnterprise(redisModel.EPId);
+            var imgs = EPService.GetBgImgs(redisModel.EPId);
+            var viewModel = new GetEPAuthViewModel().GetViewModel(model, regions, imgs);
+
+            var result = new BaseViewModel
+            {
+                Info = viewModel,
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
+            };
+            return result;
+        }
+
     }
 }

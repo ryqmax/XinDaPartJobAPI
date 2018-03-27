@@ -103,5 +103,17 @@ namespace FrameWork.Interface
         /// 保存或认证企业信息
         /// </summary>
         int SaveEP(RedisModel redisModel, SaveEPRequest request, RegionModel regionModel);
+
+        /// <summary>
+        /// 获取企业的详情
+        /// </summary>
+        /// <param name="ePId">企业id</param>
+        T_Enterprise GetEnterprise(int ePId);
+
+        /// <summary>
+        /// 获取企业的实景图片
+        /// </summary>
+        /// <param name="ePId">企业id</param>
+        List<T_EPBgImg> GetBgImgs(int ePId);
     }
 }

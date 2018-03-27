@@ -357,10 +357,37 @@ ELSE
                               @UserId , -- CreateUserId - int
                               GETDATE()  -- CreateTime - datetime
                             )";
-                DbPartJob.Execute(insertSql, new {redisModel.UserId, redisModel.EPId, photo });
+                DbPartJob.Execute(insertSql, new { redisModel.UserId, redisModel.EPId, photo });
             }
 
             return 1;
+        }
+
+        /// <summary>
+        /// 获取企业的详情
+        /// </summary>
+        /// <param name="ePId">企业id</param>
+        public T_Enterprise GetEnterprise(int ePId)
+        {
+            var sql = @";SELECT * FROM dbo.T_Enterprise WHERE Id = @ePId";
+            return DbPartJob.FirstOrDefault<T_Enterprise>(sql, new { ePId });
+        }
+
+        /// <summary>
+        /// 获取企业的实景图片
+        /// </summary>
+        /// <param name="ePId">企业id</param>
+        public List<T_EPBgImg> GetBgImgs(int ePId)
+        {
+            var sql = @";
+                    SELECT
+	                    *
+                    FROM
+	                    dbo.T_EPBgImg
+                    WHERE
+	                    EnterpriseId = @ePId AND IsDel = 0";
+
+            return DbPartJob.Fetch<T_EPBgImg>(sql, new { ePId });
         }
     }
 }

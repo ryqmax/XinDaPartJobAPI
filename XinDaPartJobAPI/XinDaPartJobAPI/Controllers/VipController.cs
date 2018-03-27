@@ -14,7 +14,6 @@
  ***********************************************************************************/
 
 using System.Web.Http;
-using FrameWork.Common;
 using FrameWork.Common.Const;
 using FrameWork.Entity.ViewModel;
 using FrameWork.Entity.ViewModel.Vip;

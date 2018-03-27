@@ -115,5 +115,10 @@ namespace FrameWork.Interface
         /// </summary>
         /// <param name="ePId">企业id</param>
         List<T_EPBgImg> GetBgImgs(int ePId);
+
+        /// <summary>
+        /// 获取企业中心信息
+        /// </summary>
+        GetEPCenterModel GetEPCenter(RedisModel redisModel);
     }
 }

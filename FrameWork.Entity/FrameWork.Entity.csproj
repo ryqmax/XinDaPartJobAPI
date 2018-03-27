@@ -105,6 +105,7 @@
     <Compile Include="Entity\T_UserViewJobLog.cs" />
     <Compile Include="Entity\T_VIPInfo.cs" />
     <Compile Include="Model\Account\EPLoginModel.cs" />
+    <Compile Include="Model\EP\GetEPCenterModel.cs" />
     <Compile Include="Model\EP\GetEPDetailInfo.cs" />
     <Compile Include="Model\EP\GetAccountListModel.cs" />
     <Compile Include="Model\EP\GetEPContactsModel.cs" />
@@ -130,6 +131,7 @@
     <Compile Include="ViewModel\EP\GetAccountListViewModel.cs" />
     <Compile Include="ViewModel\EP\GetAccountPermissionViewModel.cs" />
     <Compile Include="ViewModel\EP\GetEPAuthViewModel.cs" />
+    <Compile Include="ViewModel\EP\GetEPCenterViewModel.cs" />
     <Compile Include="ViewModel\EP\GetEPContactsDetailsViewModel.cs" />
     <Compile Include="ViewModel\EP\DelEPContactsViewModel.cs" />
     <Compile Include="ViewModel\EP\GetEPContactsViewModel.cs" />

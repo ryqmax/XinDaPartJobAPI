@@ -498,5 +498,25 @@ namespace XinDaPartJobAPI.Controllers
             return result;
         }
 
+        /// <summary>
+        /// 获取企业中心信息
+        /// </summary>
+        [HttpPost]
+        [Route("api/EP/GetEPCenter")]
+        public object GetEPCenter(GetEPCenterRequest request)
+        {
+            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
+            //var redisModel = new RedisModel { EPId = 1, UserId = 1, CityId = "3202" };
+            var model = EPService.GetEPCenter(redisModel);
+            var viewModel = new GetEPCenterViewModel().GetViewModel(model);
+            var result = new BaseViewModel
+            {
+                Info = viewModel,
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
+            };
+            return result;
+        }
     }
 }

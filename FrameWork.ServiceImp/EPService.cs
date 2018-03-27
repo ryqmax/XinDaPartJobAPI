@@ -389,5 +389,34 @@ ELSE
 
             return DbPartJob.Fetch<T_EPBgImg>(sql, new { ePId });
         }
+
+        /// <summary>
+        /// 获取企业中心信息
+        /// </summary>
+        public GetEPCenterModel GetEPCenter(RedisModel redisModel)
+        {
+            var sql = @";
+SELECT
+	ep.Name,
+	ep.Level,
+	ep.Logo,
+	ep.TotalIntegral,
+	(SELECT COUNT(1) FROM dbo.T_Job j WHERE j.IsDel = 0 AND j.EnterpriseId = ep.Id)JobCount,
+	(SELECT COUNT(1) FROM dbo.T_Job j LEFT JOIN dbo.T_CVAutoMatchJob cmj ON j.Id = cmj.JobId LEFT JOIN dbo.T_CV cv ON cv.Id = cmj.CvId WHERE j.IsDel = 0 AND cmj.EPIsDel = 0 AND cv.IsDel = 0 AND j.EnterpriseId = ep.Id)AutoJobCount,
+	(SELECT COUNT(1) FROM dbo.T_Job j LEFT JOIN dbo.T_CVDelivery cd ON cd.JobId = j.Id LEFT JOIN dbo.T_CV cv ON cv.Id = cd.CvId WHERE j.IsDel = 0 AND cd.EPIsDel= 0 AND cv.IsDel = 0 AND j.EnterpriseId = ep.Id)CVCount,
+	(SELECT COUNT(1) FROM dbo.T_EPCV ecv LEFT JOIN dbo.T_CV cv ON ecv.CvId = cv.Id WHERE cv.IsDel = 0 AND ecv.IsDel = 0 AND ecv.EnterpriseId = ep.Id)BuyCVCount,
+	(SELECT COUNT(1) FROM dbo.T_EPHiringManager h WHERE h.EnterpriseId = ep.Id AND ep.IsDel = 0 AND h.AuthStatus = 1)AuthCount, --认证的数量
+	(SELECT COUNT(1) FROM dbo.T_EPHiringManager h WHERE h.EnterpriseId = ep.Id AND ep.IsDel = 0)HTotalCount,  --总数量
+	ep.AccountMax,
+	(SELECT COUNT(1) FROM dbo.T_EPAccount ea WHERE ea.EnterpriseId = ep.Id AND ea.IsDel = 0 )AccountCount,
+    (SELECT ea.Type FROM dbo.T_EPAccount ea WHERE ea.Id = @UserId  )AccountType,
+	(SELECT v.Name FROM dbo.T_EPVIP ev LEFT JOIN dbo.T_VIPInfo v ON ev.VIPInfoId = v.Id WHERE ev.IsDel = 0 AND v.IsDel = 0 AND ev.EnterpriseId = ep.Id AND ev.CityId = @CityId)VipName,
+	(SELECT ev.PassDate FROM dbo.T_EPVIP ev WHERE ev.IsDel = 0 AND ev.EnterpriseId = ep.Id AND ev.CityId = @CityId)VipPassDate
+FROM
+	dbo.T_Enterprise ep
+WHERE
+	ep.Id = @EPId AND ep.IsDel = 0 ";
+            return DbPartJob.FirstOrDefault<GetEPCenterModel>(sql, new {redisModel.EPId, redisModel.CityId,redisModel.UserId});
+        }
     }
 }

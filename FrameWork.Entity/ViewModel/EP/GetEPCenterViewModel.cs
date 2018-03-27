@@ -68,9 +68,9 @@ namespace FrameWork.Entity.ViewModel.EP
         public int AutoJobCount { set; get; }
 
         /// <summary>
-        /// 账号类型，1：主账号，2.子账号
+        /// 是否主账号
         /// </summary>
-        public byte AccountType { set; get; }
+        public bool IsMain { set; get; }
 
         /// <summary>
         /// 投递简历数量
@@ -93,6 +93,11 @@ namespace FrameWork.Entity.ViewModel.EP
         public bool HireIsAuth { set; get; }
 
         /// <summary>
+        /// 是否是vip
+        /// </summary>
+        public bool IsVip { set; get; }
+
+        /// <summary>
         /// 子账号  1/4
         /// </summary>
         public string AccountCount { set; get; }
@@ -110,7 +115,7 @@ namespace FrameWork.Entity.ViewModel.EP
         public GetEPCenterViewModel GetViewModel(GetEPCenterModel model)
         {
             var passDate = model.VipPassDate ?? DateTime.Now;
-            var leftDays = (int) (passDate.Date - DateTime.Now).TotalDays;
+            var leftDays = (int)(passDate.Date - DateTime.Now).TotalDays;
             if (leftDays < 0)
                 leftDays = 0;
             var viewModel = new GetEPCenterViewModel
@@ -127,15 +132,16 @@ namespace FrameWork.Entity.ViewModel.EP
                 Logo = PictureHelper.ConcatPicUrl(model.Logo),
                 TotalIntegral = model.TotalIntegral,
                 VipInfo = $"{model.VipName ?? string.Empty} 剩余{leftDays}天",
-                AccountType = model.AccountType,
-                ServicePhone = "400-161-6661"
+                IsMain = model.AccountType == 1,
+                ServicePhone = "400-161-6661",
+                IsVip = string.IsNullOrEmpty(model.VipName)
             };
             if (string.IsNullOrEmpty(model.VipName))
             {
                 viewModel.ServicePhone = string.Empty;
                 viewModel.VipInfo = string.Empty;
             }
-            
+
             return viewModel;
         }
     }

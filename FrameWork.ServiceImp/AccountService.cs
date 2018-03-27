@@ -153,7 +153,7 @@ VALUES  ( N'' , -- Name - nvarchar(100)
           0 , -- CheckStatus - tinyint
           N'' , -- CheckNote - nvarchar(300)
           0 , -- TotalIntegral - int
-          0 , -- Level - tinyint
+          1 , -- Level - tinyint
           1 , -- Status - bit
           0 , -- IsDel - bit
           0 , -- ModifyUserId - int

@@ -15,6 +15,8 @@
  ***********************************************************************************/
 
 using System.Collections.Generic;
+using FrameWork.Common;
+using FrameWork.Common.Models;
 using FrameWork.Entity.Entity;
 using FrameWork.Entity.Model.EP;
 using FrameWork.Entity.ViewModel.EP;
@@ -96,5 +98,10 @@ namespace FrameWork.Interface
         /// </summary>
         /// <param name="ePId">企业Id</param>
         List<CompanyImgListItem> GetEpImgListById(int ePId);
+
+        /// <summary>
+        /// 保存或认证企业信息
+        /// </summary>
+        int SaveEP(RedisModel redisModel, SaveEPRequest request, RegionModel regionModel);
     }
 }

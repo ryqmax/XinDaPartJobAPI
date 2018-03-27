@@ -15,6 +15,8 @@
 
 
 using System.Collections.Generic;
+using FrameWork.Common;
+using FrameWork.Common.Models;
 using FrameWork.Entity.Entity;
 using FrameWork.Entity.Model.EP;
 using FrameWork.Entity.ViewModel.EP;
@@ -286,6 +288,79 @@ ELSE
                         AND IsDel=0
                         AND EnterpriseId=@ePId;";
             return DbPartJob.Fetch<CompanyImgListItem>(sql, new { ePId });
+        }
+
+        /// <summary>
+        /// 保存或认证企业信息
+        /// </summary>
+        public int SaveEP(RedisModel redisModel, SaveEPRequest request, RegionModel regionModel)
+        {
+            var where = string.Empty;
+            if (request.IsAuth)
+                where = @",CheckStatus = 1";
+            var sql = $@";
+                UPDATE 
+	                dbo.T_Enterprise
+                SET
+	                Name = @CompanyName ,
+	                ShortName = @CompanyShort,
+	                ProvinceId = @ProvinceId,
+	                CityId = @CityId,
+                    AreaId= @AreaId,
+	                Address = @Address,
+	                Lng = @Lng,
+	                Lat = @Lat,
+	                Brief = @CompanyDesc,
+	                Logo = @CompanyLogo,
+	                AuthPicUrl = @AuthPicUrl,
+	                ModifyTime = GETDATE(),
+	                ModifyUserId = @UserId
+                    {where}
+                WHERE
+	                Id = @EPId
+                ";
+            DbPartJob.Execute(sql, new
+            {
+                redisModel.EPId,
+                redisModel.UserId,
+                request.CompanyName,
+                request.CompanyShort,
+                regionModel.ProvinceId,
+                regionModel.CityId,
+                regionModel.AreaId,
+                regionModel.Address,
+                request.Lng,
+                request.Lat,
+                request.CompanyDesc,
+                request.CompanyLogo,
+                request.AuthPicUrl
+            });
+            //删除原来的数据
+            var delSql = @";UPDATE dbo.T_EPBgImg SET IsDel = 1 WHERE EnterpriseId = @EPId";
+            DbPartJob.Execute(delSql, new { redisModel.EPId });
+            //插入新的数据
+            foreach (var photo in request.CompanyPhotos)
+            {
+                var insertSql = @";
+                    INSERT
+                    INTO
+                    dbo.T_EPBgImg
+                            ( EnterpriseId ,
+                              PicUrl ,
+                              IsDel ,
+                              CreateUserId ,
+                              CreateTime
+                            )
+                    VALUES  ( @EPId , -- Id - int
+                              @photo , -- PicUrl - nvarchar(255)
+                              0 , -- IsDel - bit
+                              @UserId , -- CreateUserId - int
+                              GETDATE()  -- CreateTime - datetime
+                            )";
+                DbPartJob.Execute(insertSql, new {redisModel.UserId, redisModel.EPId, photo });
+            }
+
+            return 1;
         }
     }
 }

@@ -18,11 +18,14 @@
 using System;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Http;
 using FrameWork.Common;
 using FrameWork.Common.Const;
+using FrameWork.Common.Models;
+using FrameWork.Entity.Entity;
 using FrameWork.Entity.ViewModel;
 using FrameWork.Entity.ViewModel.EP;
 using FrameWork.Web;
@@ -170,7 +173,7 @@ namespace XinDaPartJobAPI.Controllers
                 Msg = true,
                 ResultCode = CommonData.SuccessCode
             };
-            
+
             var runTime = (HttpRuntimeSection)WebConfigurationManager.GetSection("system.web/httpRuntime");
             var maxRequestLength = (runTime.MaxRequestLength) * 1024;
             if (HttpContext.Current.Request.ContentLength > maxRequestLength)
@@ -388,7 +391,7 @@ namespace XinDaPartJobAPI.Controllers
                         model.PermissionIds = model.PermissionIds.Replace(request.MenuId + "/", "");
                     }
                 }
-                EPService.UpdateAccountPer(model.Id,model.PermissionIds);
+                EPService.UpdateAccountPer(model.Id, model.PermissionIds);
             }
             result = new BaseViewModel
             {
@@ -419,8 +422,8 @@ namespace XinDaPartJobAPI.Controllers
             var getEPDetailInfoRespInfo = new GetEPDetailInfoRespInfo
             {
                 CompanyId = epDetailInfo.CompanyId,
-                CompanyEmployerId=(int)epDetailInfo.CompanyEmployerId,
-                CompanyEmployerName=epDetailInfo.CompanyEmployerName,
+                CompanyEmployerId = (int)epDetailInfo.CompanyEmployerId,
+                CompanyEmployerName = epDetailInfo.CompanyEmployerName,
                 CompanyName = epDetailInfo.CompanyName,
                 CompanyAddress = epDetailInfo.CompanyAddress,
                 CompanyFullName = epDetailInfo.CompanyFullName,
@@ -437,6 +440,33 @@ namespace XinDaPartJobAPI.Controllers
             result = new BaseViewModel
             {
                 Info = getEPDetailInfoRespInfo,
+                Message = CommonData.SuccessStr,
+                Msg = true,
+                ResultCode = CommonData.SuccessCode
+            };
+            return result;
+        }
+
+        /// <summary>
+        /// 保存企业信息,认证企业
+        /// </summary>
+        [HttpPost]
+        [Route("api/EP/SaveEP")]
+        public object SaveEP(SaveEPRequest request)
+        {
+            var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
+            //var redisModel = new RedisModel { EPId = 7, UserId = 1 };
+            var regionModel = RegionHelper.CheckAddress(request.CompanyAddress);
+            var regions = CacheContext.DicRegions;
+            regionModel.ProvinceId = regions.FirstOrDefault(r => r.Description.Contains(regionModel.Province) && r.ParentId == null)?.Id ?? string.Empty;
+            regionModel.CityId = regions.FirstOrDefault(r => r.Description.Contains(regionModel.City) && r.ParentId == regionModel.ProvinceId)?.Id ?? string.Empty;
+            regionModel.AreaId = regions.FirstOrDefault(r => r.Description.Contains(regionModel.Area) && r.ParentId == regionModel.CityId)?.Id ?? string.Empty;
+            if (string.IsNullOrEmpty(request.AuthPicUrl))//认证图片为空，不能认证
+                request.IsAuth = false;
+            EPService.SaveEP(redisModel, request, regionModel);
+            var result = new BaseViewModel
+            {
+                Info = CommonData.SuccessStr,
                 Message = CommonData.SuccessStr,
                 Msg = true,
                 ResultCode = CommonData.SuccessCode

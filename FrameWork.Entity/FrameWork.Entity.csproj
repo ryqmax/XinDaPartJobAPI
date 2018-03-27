@@ -137,6 +137,7 @@
     <Compile Include="ViewModel\EP\SaveAccountPermissionViewModel.cs" />
     <Compile Include="ViewModel\EP\SaveEPContactsViewModel.cs" />
     <Compile Include="ViewModel\EP\GetEPDetailInfoReq.cs" />
+    <Compile Include="ViewModel\EP\SaveEPViewModel.cs" />
     <Compile Include="ViewModel\EP\UploadImgViewModel.cs" />
     <Compile Include="ViewModel\Job\GetIndexBaseDataRespInfo.cs" />
     <Compile Include="ViewModel\Job\GetFullJobViewModel.cs" />

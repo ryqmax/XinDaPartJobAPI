@@ -69,4 +69,86 @@ namespace FrameWork.Common
             return (double)d * Math.PI / 180d;
         }
     }
+
+    /// <summary>
+    /// 地址转换为省市区
+    /// </summary>
+    public class RegionHelper
+    {
+        /// <summary>
+        /// 传递过来的是全地址
+        /// </summary>
+        public static RegionModel CheckAddress(string address)
+        {
+            var model = new RegionModel();
+            var addrPros = address.Split('省');
+            if (addrPros.Length > 1)
+            {
+                model.Province = addrPros[0];
+                var addrCitys = addrPros[1].Split('市');
+                if (addrCitys.Length > 1)
+                {
+                    model.City = addrCitys[0];
+                    var addrAreas = addrCitys[1].Split('区');
+                    if (addrAreas.Length > 1)
+                    {
+                        model.Area = addrAreas[0];
+                        model.Address = addrAreas[1];
+                    }
+                    else
+                    {
+                        addrAreas = addrCitys[1].Split('县');
+                        if (addrAreas.Length > 1)
+                        {
+                            model.Area = addrAreas[0];
+                            model.Address = addrAreas[1];
+                        }
+                    }
+                }
+            }
+            return model;
+        }
+
+    }
+
+    /// <summary>
+    /// 地区实体
+    /// </summary>
+    public class RegionModel
+    {
+        /// <summary>
+        /// 省名称
+        /// </summary>
+        public string Province { get; set; }
+
+        /// <summary>
+        /// 省id
+        /// </summary>
+        public string ProvinceId { get; set; }
+
+        /// <summary>
+        /// 市名称
+        /// </summary>
+        public string City { get; set; }
+
+        /// <summary>
+        /// 市id
+        /// </summary>
+        public string CityId { get; set; }
+
+        /// <summary>
+        /// 区名称 
+        /// </summary>
+        public string Area { get; set; }
+
+        /// <summary>
+        /// 区id
+        /// </summary>
+        public string AreaId { get; set; }
+
+        /// <summary>
+        /// 详细地址
+        /// </summary>
+        public string Address { set; get; }
+    }
 }

@@ -60,12 +60,12 @@ namespace XinDaPartJobAPI.Controllers
         {
             var redisModel = RedisInfoHelper.GetRedisModel(request.Token);
             var regions = CacheContext.DicRegions;
-            CheckAddress(request);
+            var regionModel = RegionHelper.CheckAddress(request.Address);
             var model = new T_EPAddress
             {
                 Id = 0,
-                Address = request.Address,
-                ProvinceId = regions.FirstOrDefault(r => r.Description.Contains(request.Province) && r.ParentId == null)?.Id,
+                Address = regionModel.Address,
+                ProvinceId = regions.FirstOrDefault(r => r.Description.Contains(regionModel.Province) && r.ParentId == null)?.Id,
                 Type = (byte)request.Type,
                 CreateTime = DateTime.Now,
                 CreateUserId = redisModel.UserId,
@@ -76,8 +76,8 @@ namespace XinDaPartJobAPI.Controllers
                 ModifyTime = DateTime.Now,
                 ModifyUserId = redisModel.UserId
             };
-            model.CityId = regions.FirstOrDefault(r => r.Description.Contains(request.City) && r.ParentId == model.ProvinceId)?.Id;
-            model.AreaId = regions.FirstOrDefault(r => r.Description.Contains(request.Area) && r.ParentId == model.CityId)?.Id;
+            model.CityId = regions.FirstOrDefault(r => r.Description.Contains(regionModel.City) && r.ParentId == model.ProvinceId)?.Id;
+            model.AreaId = regions.FirstOrDefault(r => r.Description.Contains(regionModel.Area) && r.ParentId == model.CityId)?.Id;
             EPAddressService.Add(model);
             var result = new BaseViewModel
             {
@@ -87,38 +87,6 @@ namespace XinDaPartJobAPI.Controllers
                 ResultCode = CommonData.SuccessCode
             };
             return result;
-        }
-
-        /// <summary>
-        /// 传递过来的是全地址
-        /// </summary>
-        private void CheckAddress(AddEPAddressRequest request)
-        {
-            var addrPros = request.Address.Split('省');
-            if (addrPros.Length > 1)
-            {
-                request.Province = addrPros[0];
-                var addrCitys = addrPros[1].Split('市');
-                if (addrCitys.Length > 1)
-                {
-                    request.City = addrCitys[0];
-                    var addrAreas = addrCitys[1].Split('区');
-                    if (addrAreas.Length > 1)
-                    {
-                        request.Area = addrAreas[0];
-                        request.Address = addrAreas[1];
-                    }
-                    else
-                    {
-                        addrAreas = addrCitys[1].Split('县');
-                        if (addrAreas.Length > 1)
-                        {
-                            request.Area = addrAreas[0];
-                            request.Address = addrAreas[1];
-                        }
-                    }
-                }
-            }
         }
 
         /// <summary>

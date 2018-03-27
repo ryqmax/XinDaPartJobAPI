@@ -64,115 +64,137 @@ namespace FrameWork.ServiceImp
             return DbPartJob.Execute(sql, new { epId, cVId, shieldDay }) > 0;
         }
 
-        public List<JobInfo> GetCVList(GetCVReq getJobListReq, string cityId, int ePId)
+        public List<CVInfo> GetCVList(GetCVReq getCvReq)
         {
-            int startPage = (getJobListReq.PageSize) * (getJobListReq.Page - 1) + 1;
-            int endPage = getJobListReq.Page * getJobListReq.PageSize;
+            int startPage = (getCvReq.PageSize) * (getCvReq.Page - 1) + 1;
+            int endPage = getCvReq.Page * getCvReq.PageSize;
 
 
             var where = string.Empty;
-            var jobAddressWhere = string.Empty;
-            if (getJobListReq.RegionId != 0)
+            var order = "RefreshTime";
+            var cvAdrressWhere = string.Empty;
+            var cvSexWhere = string.Empty;
+            if (getCvReq.RegionId != 0)
             {
-                if (getJobListReq.RegionId == -1)
+                if (getCvReq.RegionId == -1)
                 {
-                    where += " AND jobaddress.EPAddressId = @areaid";
-                    jobAddressWhere += " AND jobaddress.EPAddressId = @areaid";
+                    where += " AND cvregion.DicRegionId = @areaid";
+                    cvAdrressWhere += " AND cvregion.DicRegionId = @areaid";
                 }
                 else
                 {
-                    where += " AND epaddress.AreaId = @areaid";
-                    jobAddressWhere += " AND epaddress.AreaId = @areaid";
+                    where += " AND cvregion.DicRegionId= @areaid";
+                    cvAdrressWhere += " AND cvregion.DicRegionId= @areaid";
                 }
             }
-            if (getJobListReq.EducationId > 0)
+            if (getCvReq.EducationId > 0)
             {
-                where += " AND ep.Level = @level";
+                where += " AND cveduinfo.DicEducationId = @eduid";
             }
-            if (getJobListReq.JobTypeId > 0)
+            if (getCvReq.JobTypeId > 0)
             {
-                where += " AND job.JobCategoryId = @jobcaid";
+                where += " AND cvcategory.JobCategoryId    = @jobcaid";
             }
+
+            if (getCvReq.Type == 2)
+            {
+                if (getCvReq.Sort == 1)
+                {
+                    order = "UpCount";
+                }
+            }
+            else
+            {
+                if (getCvReq.JobSex > 0)
+                {
+                    cvSexWhere = " AND tuser.Sex=@sex ";
+                }
+            }
+
 
 
             var sql = $@"SELECT  DISTINCT
                                 cv.Id CVId ,
                                 cv.RefreshTime,
-								cv.UpCount                        
+								cv.UpCount 
+								INTO #CVIdTemp                       
                         FROM    dbo.T_CV cv
                                 LEFT JOIN dbo.T_CVRegion cvregion ON cvregion.CVId = cv.Id                               
                                 LEFT JOIN dbo.DicRegion dicregion ON cvregion.DicRegionId = dicregion.Id AND dicregion.IsDel = 0
                                 LEFT JOIN dbo.T_CVEduInfo cveduinfo ON cv.Id = cveduinfo.CVId
 								LEFT JOIN dbo.DicEducation diceducation ON diceducation.Id = cveduinfo.DicEducationId
-								LEFT JOIN dbo.DicGrade dicgrade ON dicgrade.Id = cveduinfo.DicGradeId
+								LEFT JOIN dbo.DicGrade dicgrade ON dicgrade.Id = cveduinfo.DicGradeId AND dicgrade.IsDel = 0 
+								LEFT JOIN dbo.T_CVCategory cvcategory ON cvcategory.CVId = cv.Id AND cvcategory.IsDel=0
+								LEFT JOIN dbo.T_JobCategory jobcategory ON cvcategory.JobCategoryId = jobcategory.Id AND jobcategory.IsDel=0
                         WHERE 1=1   
 								AND  cv.IsDel = 0						
                                 AND cvregion.IsDel = 0 
                                 AND cveduinfo.IsDel = 0
                                 AND diceducation.IsDel = 0
-                                AND dicgrade.IsDel = 0 
-		                        AND cv.Type=0
+                                {where}
+                                {cvSexWhere}
+		                        AND cv.Type=@type
 
                         SELECT  *
-                        INTO    #JobIdPageTemp
+                        INTO    #CVIdPageTemp
                         FROM    ( SELECT    * ,
 					                        COUNT(*) OVER ( ) TotalNum,
-                                            ROW_NUMBER() OVER ( ORDER BY RefreshTime DESC ) Num
-                                  FROM      #JobIdTemp
+                                            ROW_NUMBER() OVER ( ORDER BY {order} DESC ) Num
+                                  FROM      #CVIdTemp
                                 ) temp
                         WHERE   temp.Num BETWEEN @startPage AND @endPage;
 
-                        SELECT  job.Id JobId ,
-                                ep.Id JobEmployerId ,
-                                ep.Level JobEmployerLevel ,
-                                job.Name JobName ,
-                                job.SalaryLower ,
-                                job.SalaryUpper ,
-                                payway.Unit ,
-                                ( CASE WHEN ( SELECT TOP 1
-                                                        jobaddress.EPAddressId
-                                              FROM      dbo.T_JobAddress jobaddress
-                                                        LEFT JOIN dbo.T_EPAddress epaddress ON epaddress.Id = jobaddress.EPAddressId AND epaddress.IsDel = 0
-                                                        LEFT JOIN dbo.DicRegion dicregion ON epaddress.AreaId = dicregion.Id AND dicregion.IsDel = 0
+                        SELECT  cv.Id CVId,
+                                tuser.HeadImg CVImg ,
+                                tuser.RealName CVName ,
+                                tuser.Sex CVSex ,
+                                cv.SkillSummary CVWord ,
+                               ( CASE WHEN ( SELECT TOP 1
+                                                        cvregion.DicRegionId
+                                              FROM      dbo.T_CVRegion cvregion
+                                                        LEFT JOIN dbo.DicRegion dicregion ON cvregion.DicRegionId = dicregion.Id AND dicregion.IsDel = 0
                                               WHERE     1 = 1
-                                                        AND jobaddress.IsDel = 0                                                        
-                                                        AND job.Id = jobaddress.JobId
-                                                        {jobAddressWhere}
+                                                        AND cvregion.IsDel = 0                                                        
+                                                        AND cvregion.CVId = cv.Id
+                                                        {cvAdrressWhere}
                                             ) = -1 THEN '不限地点'
                                        ELSE ( SELECT TOP 1
                                                         dicregion.Description
-                                              FROM      dbo.T_JobAddress jobaddress
-                                                        LEFT JOIN dbo.T_EPAddress epaddress ON epaddress.Id = jobaddress.EPAddressId AND epaddress.IsDel = 0
-                                                        LEFT JOIN dbo.DicRegion dicregion ON epaddress.AreaId = dicregion.Id AND dicregion.IsDel = 0
+                                              FROM      dbo.T_CVRegion cvregion
+                                                        LEFT JOIN dbo.DicRegion dicregion ON cvregion.DicRegionId = dicregion.Id AND dicregion.IsDel = 0                                                        
                                               WHERE     1 = 1
-                                                        AND jobaddress.IsDel = 0                                                        
-                                                        AND job.Id = jobaddress.JobId
-                                                        {jobAddressWhere}
+                                                        AND cvregion.IsDel = 0
+                                                        AND cvregion.CVId = cv.Id
+                                                        {cvAdrressWhere}
                                             )
-                                  END ) JobAddress ,
-                                job.WorkTime JobTime ,
-                                ( SELECT TOP 1
-                                            vipinfo.Name
-                                  FROM      dbo.T_VIPInfo vipinfo
-                                            LEFT JOIN dbo.T_EPVIP epvip ON epvip.VIPInfoId = vipinfo.Id
-                                  WHERE     epvip.EnterpriseId = ep.Id
-                                            AND vipinfo.IsDel = 0
-                                            AND epvip.IsDel = 0
-                                  ORDER BY  vipinfo.OldPrice DESC
-                                ) JobMember ,
-                                ( CASE WHEN ep.Id = @ePId THEN 1
-                                       ELSE 0
-                                  END ) IsSelf ,
-                                job.IsPractice IsPractice ,        
-		                        #JobIdPageTemp.TotalNum
-                        FROM    dbo.T_Job job
-                                LEFT JOIN dbo.T_Enterprise ep ON job.EnterpriseId = ep.Id
-                                LEFT JOIN dbo.T_PayWay payway ON payway.Id = job.PayWayId
-                                INNER JOIN #JobIdPageTemp ON #JobIdPageTemp.JobId = job.Id;
+                                  END ) CVPosition,
+                                cv.WorkTime CVTime,
+                                (SELECT TOP 1
+                                            diceducation.Name
+                                  FROM      dbo.T_CVEduInfo cveduinfo 
+											LEFT JOIN dbo.DicEducation diceducation ON diceducation.Id = cveduinfo.DicEducationId											
+                                  WHERE     1=1
+                                            AND cveduinfo.IsDel = 0
+                                            AND diceducation.IsDel = 0
+											AND cveduinfo.CVId = cv.Id                                  
+								)CVSchool,
+								(SELECT TOP 1
+										jobcategory.Name 
+									FROM dbo.T_CVCategory cvcategory 
+										LEFT JOIN dbo.T_JobCategory jobcategory ON cvcategory.JobCategoryId = jobcategory.Id AND jobcategory.IsDel=0
+									WHERE 1=1
+										AND  cvcategory.CVId = cv.Id AND cvcategory.IsDel=0
+								) CVJob,
+								cv.UpCount RecommendNum,
+                                cv.IsPractice IsPractice ,                                
+		                        #CVIdPageTemp.TotalNum
+                        FROM    dbo.T_CV cv
+								LEFT JOIN dbo.T_User tuser ON cv.UserId = tuser.Id
+                                INNER JOIN #CVIdPageTemp ON #CVIdPageTemp.CVId = cv.Id;
 
-                        DROP TABLE #JobIdTemp;
-                        DROP TABLE #JobIdPageTemp;";
-            return DbPartJob.Fetch<JobInfo>(sql, new { type = getJobListReq.Type, areaid = getJobListReq.RegionId, jobcaid = getJobListReq.JobTypeId, level = getJobListReq.EducationId, cityId, startPage, endPage, ePId });
+                        DROP TABLE #CVIdTemp;
+                        DROP TABLE #CVIdPageTemp;";
+            return DbPartJob.Fetch<CVInfo>(sql, new { type = getCvReq.Type, areaid = getCvReq.RegionId, jobcaid = getCvReq.JobTypeId, eduid = getCvReq.EducationId, cityId, startPage, endPage, ePId,sex=getCvReq.JobSex });
         }
     }
 }

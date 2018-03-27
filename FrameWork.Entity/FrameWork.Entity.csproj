@@ -121,6 +121,8 @@
     <Compile Include="ViewModel\Account\UserViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\CV\GetCVReq.cs" />
+    <Compile Include="ViewModel\CV\CVInfo.cs" />
+    <Compile Include="ViewModel\CV\GetCVListRespInfo.cs" />
     <Compile Include="ViewModel\CV\ShieldCVReq.cs" />
     <Compile Include="ViewModel\EPAddress\AddEPAddressViewModel.cs" />
     <Compile Include="ViewModel\EPAddress\DelEPAddressViewModel.cs" />

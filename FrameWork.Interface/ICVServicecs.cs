@@ -27,6 +27,6 @@ namespace FrameWork.Interface
         /// <summary>
         /// 获取简历列表
         /// </summary>
-        List<JobInfo> GetCVList(GetCVReq getJobListReq, string cityId, int ePId);
+        List<CVInfo> GetCVList(GetCVReq getCvReq);
     }
 }

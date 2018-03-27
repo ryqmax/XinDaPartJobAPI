@@ -36,7 +36,7 @@
         public int JobSex { get; set; }
 
         /// <summary>
-        /// 0：时间排序 1：女3：不限
+        /// 0：时间排序 1：推荐排序
         /// </summary>
         public int Sort { get; set; }
 

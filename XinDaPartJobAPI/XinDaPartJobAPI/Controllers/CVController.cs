@@ -1,9 +1,11 @@
-﻿using System.Web.Http;
+﻿using System.Linq;
+using System.Web.Http;
 using FrameWork.Common;
 using FrameWork.Common.Const;
 using FrameWork.Common.Models;
 using FrameWork.Entity.ViewModel;
 using FrameWork.Entity.ViewModel.CV;
+using FrameWork.Entity.ViewModel.Job;
 using FrameWork.Web;
 
 namespace XinDaPartJobAPI.Controllers
@@ -65,14 +67,42 @@ namespace XinDaPartJobAPI.Controllers
 
             var userInfo = RedisInfoHelper.GetRedisModel(request.Token);
 
-            var cvInfoList = CVServicecs.GetCVList(request, userInfo.CityId, userInfo.EPId);
+            var cvInfoList = CVServicecs.GetCVList(request);
 
-            
+            //todo:获取广告信息
+
+            var getCVListRespInfoList = new GetCVListRespInfo();
+
+            var firstOrDefualtCVInfo = cvInfoList.FirstOrDefault();
+            if (firstOrDefualtCVInfo != null)
+            {
+                getCVListRespInfoList.IsEnd = !PageHelper.JudgeNextPage(firstOrDefualtCVInfo.TotalNum, request.Page, request.PageSize);
+            }
+
+            foreach (var cvInfo in cvInfoList)
+            {
+                var cvInfoItem = new CVInfoItem
+                {
+                    CVId = cvInfo.CVId,
+                    CVImg = PictureHelper.ConcatPicUrl(cvInfo.CVImg),
+                    CVName = cvInfo.CVName,
+                    CVSex = cvInfo.CVSex==1?"男":"女",
+                    CVWord = cvInfo.CVWord,
+                    CVPosition = cvInfo.CVPosition,
+                    CVTime = cvInfo.CVTime,
+                    CVSchool = cvInfo.CVSchool,
+                    CVJob = cvInfo.CVJob,
+                    RecommendNum = cvInfo.RecommendNum,
+                    IsPractice = cvInfo.IsPractice,
+                    IsAdvert = false,
+                };
+                getCVListRespInfoList.CVList.Add(cvInfoItem);
+            }
+
             result.Info = CommonData.SuccessStr;
             result.Message = CommonData.SuccessStr;
             result.ResultCode = CommonData.SuccessCode;
             result.Msg = true;
-            
 
             return result.ToJson();
         }
